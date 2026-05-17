@@ -302,7 +302,7 @@
       <div class="planner-section-label">Cruise speed</div>
       <div class="speed-row">
         <label>Speed:</label>
-        <input class="speed-input" type="number" id="pp-speed" value="26" min="8" max="40" oninput="updateETA()">
+        <input class="speed-input" type="number" id="pp-speed" value="30" min="8" max="40" oninput="updateETA()">
         <span style="font-size:12px;color:var(--text-muted);">kts</span>
         <span class="eta-display" id="pp-eta"></span>
       </div>
@@ -933,7 +933,7 @@ function updatePlanner() {
 
 function sendEmail() {
   const stop = STOPS[currentStopIdx];
-  const speed = document.getElementById('pp-speed').value || '26';
+  const speed = document.getElementById('pp-speed').value || '30';
   const windowLabels = ['today', 'tomorrow', 'in 2 days', 'in 3 days'];
   const winLabel = currentWindowDays >= 0 ? windowLabels[currentWindowDays] : 'TBD';
 
@@ -956,7 +956,9 @@ function sendEmail() {
 
   window.location.href = 'mailto:' + PLANNER_EMAIL + '?subject=' + subject + '&body=' + body;
   return false;
-}function openPW() {
+}
+
+function openPW() {
   const PW_URLS = [
     'https://www.passageweather.com/maps/florida/m_region.htm',   // 0 Palm Beach
     'https://www.passageweather.com/maps/florida/m_region.htm',   // 1 St. Augustine
@@ -974,5 +976,6 @@ function sendEmail() {
   window.open(url, '_blank');
   return false;
 }
-
+</script>
+</body>
 </html>
