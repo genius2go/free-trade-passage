@@ -212,6 +212,61 @@
     <div class="dep-arrival">Target: <span>6&ndash;7 days underway</span></div>
   </div>
 
+  <!-- PACE OVERVIEW -->
+  <div class="pace-box">
+    <div class="pace-box-title">&#x1F4C5; Realistic 6&ndash;7 day pace &mdash; comfortable hours, no heroics</div>
+    <div class="pace-grid">
+      <div class="pace-day">
+        <div class="pace-day-num">Day 1</div>
+        <div class="pace-day-leg">Palm Beach &rarr; St. Augustine</div>
+        <div class="pace-day-dist">~185 nm &middot; ~8 hrs &middot; long but comfortable</div>
+      </div>
+      <div class="pace-day">
+        <div class="pace-day-num">Day 2</div>
+        <div class="pace-day-leg">St. Augustine &rarr; Charleston</div>
+        <div class="pace-day-dist">~165 nm &middot; comfortable full day</div>
+      </div>
+      <div class="pace-day">
+        <div class="pace-day-num">Day 3</div>
+        <div class="pace-day-leg">Charleston &rarr; Southport</div>
+        <div class="pace-day-dist">~145 nm &middot; easy day, in early</div>
+      </div>
+      <div class="pace-day">
+        <div class="pace-day-num">Day 4</div>
+        <div class="pace-day-leg">Southport &rarr; Morehead City &rarr; Coinjock overnight</div>
+        <div class="pace-day-dist">~110 nm &middot; prime rib tonight</div>
+      </div>
+      <div class="pace-day">
+        <div class="pace-day-num">Day 5</div>
+        <div class="pace-day-leg">Coinjock &rarr; Norfolk &rarr; Cape May (outside)</div>
+        <div class="pace-day-dist">~225 nm &middot; split if preferred</div>
+      </div>
+      <div class="pace-day">
+        <div class="pace-day-num">Day 6&ndash;7</div>
+        <div class="pace-day-leg">Cape May &rarr; Nantucket</div>
+        <div class="pace-day-dist">~225 nm direct &middot; or via Montauk</div>
+      </div>
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:var(--text-muted);">Pamlico Sound is worth a glance but rarely a real issue on a 55-footer. The offshore window out of Cape May is the one decision that matters most. <strong style="color:var(--text);">~400 nm range means fuel is never a limiter on any single leg.</strong></div>
+  </div>
+
+  <!-- TODAY PICKER -->
+  <div class="today-box">
+    <div class="today-label">&#x1F4CD; Where am I today? &mdash; tap your current stop</div>
+    <div class="today-stops">
+      <button class="stop-btn" onclick="setStop(0,'Palm Beach','St. Augustine City Docks (~185 nm) &mdash; long Day 1, all outside, ~8 hrs')">Palm Beach</button>
+      <button class="stop-btn" onclick="setStop(1,'St. Augustine','Charleston &mdash; Harborage at Ashley Marina (~165 nm)')">St. Augustine</button>
+      <button class="stop-btn" onclick="setStop(2,'Charleston','Southport &mdash; South Harbour Village Marina (~145 nm) &mdash; easy day, in early')">Charleston</button>
+      <button class="stop-btn" onclick="setStop(3,'Southport','Morehead City &rarr; Coinjock overnight (~110 nm) &middot; call ahead for the prime rib')">Southport</button>
+      <button class="stop-btn" onclick="setStop(4,'Morehead City','Coinjock Marina overnight (~75 nm) &middot; call ahead and order the prime rib')">Morehead City</button>
+      <button class="stop-btn" onclick="setStop(5,'Coinjock','Norfolk Waterside Marina (~40 nm) &middot; depart 6:05 AM &middot; bridge timing is everything')">Coinjock</button>
+      <button class="stop-btn" onclick="setStop(6,'Norfolk','Cape May &mdash; South Jersey Marina (~185 nm) &middot; outside via Cape Henry preferred')">Norfolk</button>
+      <button class="stop-btn" onclick="setStop(7,'Cape May','Nantucket direct (~225 nm, ~8&ndash;9 hrs) &middot; or Montauk then Nantucket &mdash; decide on the window')">Cape May NJ</button>
+      <button class="stop-btn" onclick="setStop(8,'Montauk NY','Nantucket MA (~105 nm) &mdash; easy finishing leg')">Montauk (contingency)</button>
+    </div>
+    <div class="today-next" id="today-next"></div>
+  </div>
+
   <!-- PASSAGE PLANNER -->
   <div class="planner">
     <div class="planner-header" onclick="togglePlanner()">
@@ -269,61 +324,6 @@
         Opens a pre-filled message to Peter with your current stop and departure window &mdash; handy if you want to give him a heads-up on where you are or share what you&rsquo;re seeing in PassageWeather.
       </div>
     </div>
-  </div>
-
-  <!-- PACE OVERVIEW -->
-  <div class="pace-box">
-    <div class="pace-box-title">&#x1F4C5; Realistic 6&ndash;7 day pace &mdash; comfortable hours, no heroics</div>
-    <div class="pace-grid">
-      <div class="pace-day">
-        <div class="pace-day-num">Day 1</div>
-        <div class="pace-day-leg">Palm Beach &rarr; St. Augustine</div>
-        <div class="pace-day-dist">~185 nm &middot; ~8 hrs &middot; long but comfortable</div>
-      </div>
-      <div class="pace-day">
-        <div class="pace-day-num">Day 2</div>
-        <div class="pace-day-leg">St. Augustine &rarr; Charleston</div>
-        <div class="pace-day-dist">~165 nm &middot; comfortable full day</div>
-      </div>
-      <div class="pace-day">
-        <div class="pace-day-num">Day 3</div>
-        <div class="pace-day-leg">Charleston &rarr; Southport</div>
-        <div class="pace-day-dist">~145 nm &middot; easy day, in early</div>
-      </div>
-      <div class="pace-day">
-        <div class="pace-day-num">Day 4</div>
-        <div class="pace-day-leg">Southport &rarr; Morehead City &rarr; Coinjock overnight</div>
-        <div class="pace-day-dist">~110 nm &middot; prime rib tonight</div>
-      </div>
-      <div class="pace-day">
-        <div class="pace-day-num">Day 5</div>
-        <div class="pace-day-leg">Coinjock &rarr; Norfolk &rarr; Cape May (outside)</div>
-        <div class="pace-day-dist">~225 nm &middot; split if preferred</div>
-      </div>
-      <div class="pace-day">
-        <div class="pace-day-num">Day 6&ndash;7</div>
-        <div class="pace-day-leg">Cape May &rarr; Nantucket</div>
-        <div class="pace-day-dist">~225 nm direct &middot; or via Montauk</div>
-      </div>
-    </div>
-    <div style="margin-top:10px;font-size:11px;color:var(--text-muted);">Pamlico Sound is worth a glance but rarely a real issue on a 55-footer. The offshore window out of Cape May is the one decision that matters most. <strong style="color:var(--text);">~400 nm range means fuel is never a limiter on any single leg.</strong></div>
-  </div>
-
-  <!-- TODAY PICKER -->
-  <div class="today-box">
-    <div class="today-label">&#x1F4CD; Where am I today? &mdash; tap your current stop</div>
-    <div class="today-stops">
-      <button class="stop-btn" onclick="setStop(0,'Palm Beach','St. Augustine City Docks (~185 nm) &mdash; long Day 1, all outside, ~8 hrs')">Palm Beach</button>
-      <button class="stop-btn" onclick="setStop(1,'St. Augustine','Charleston &mdash; Harborage at Ashley Marina (~165 nm)')">St. Augustine</button>
-      <button class="stop-btn" onclick="setStop(2,'Charleston','Southport &mdash; South Harbour Village Marina (~145 nm) &mdash; easy day, in early')">Charleston</button>
-      <button class="stop-btn" onclick="setStop(3,'Southport','Morehead City &rarr; Coinjock overnight (~110 nm) &middot; call ahead for the prime rib')">Southport</button>
-      <button class="stop-btn" onclick="setStop(4,'Morehead City','Coinjock Marina overnight (~75 nm) &middot; call ahead and order the prime rib')">Morehead City</button>
-      <button class="stop-btn" onclick="setStop(5,'Coinjock','Norfolk Waterside Marina (~40 nm) &middot; depart 6:05 AM &middot; bridge timing is everything')">Coinjock</button>
-      <button class="stop-btn" onclick="setStop(6,'Norfolk','Cape May &mdash; South Jersey Marina (~185 nm) &middot; outside via Cape Henry preferred')">Norfolk</button>
-      <button class="stop-btn" onclick="setStop(7,'Cape May','Nantucket direct (~225 nm, ~8&ndash;9 hrs) &middot; or Montauk then Nantucket &mdash; decide on the window')">Cape May NJ</button>
-      <button class="stop-btn" onclick="setStop(8,'Montauk NY','Nantucket MA (~105 nm) &mdash; easy finishing leg')">Montauk (contingency)</button>
-    </div>
-    <div class="today-next" id="today-next"></div>
   </div>
 
   <!-- ROUTE STRIP -->
@@ -815,7 +815,7 @@ const STOPS = [
   { name: 'Montauk NY',          next: 'Nantucket MA', nm: 105, seg: 7 },
 ];
 
-const PLANNER_EMAIL = 'peter@example.com'; // ← UPDATE with your actual email
+const PLANNER_EMAIL = 'petetech@mac.com';
 
 let currentStopIdx = -1;
 let currentWindowDays = -1;
