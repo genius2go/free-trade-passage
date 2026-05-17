@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Trade — Palm Beach to Nantucket</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0a1628; --navy-mid: #112240; --teal: #0d9488; --teal-light: #14b8a6;
+    --amber: #f59e0b; --red: #ef4444; --green: #22c55e;
+    --text: #e2e8f0; --text-muted: #94a3b8; --text-dim: #64748b;
+    --border: rgba(255,255,255,0.08); --card-bg: rgba(255,255,255,0.04);
+    --card-hover: rgba(255,255,255,0.08); --radius: 10px; --radius-sm: 6px;
+  }
+  body { background: var(--navy); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; font-size: 15px; line-height: 1.5; min-height: 100vh; }
+
+  .topbar { background: var(--navy-mid); border-bottom: 1px solid var(--border); padding: 14px 20px; position: sticky; top: 0; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  .topbar-title { font-size: 15px; font-weight: 600; }
+  .topbar-sub { font-size: 11px; color: var(--text-muted); margin-left: auto; white-space: nowrap; }
+  .container { max-width: 940px; margin: 0 auto; padding: 20px 16px 50px; }
+
+  /* DEPARTURE BANNER */
+  .dep-banner { background: rgba(13,148,136,0.1); border: 1px solid rgba(13,148,136,0.3); border-radius: var(--radius); padding: 10px 16px; margin-bottom: 20px; display: flex; align-items: center; gap: 12px; font-size: 12px; }
+  .dep-date { font-size: 14px; font-weight: 700; color: var(--teal-light); }
+  .dep-detail { color: var(--text-muted); }
+  .dep-arrival { margin-left: auto; font-size: 12px; font-weight: 600; color: var(--text-muted); }
+  .dep-arrival span { color: var(--green); }
+
+  /* PASSAGE PLANNER */
+  .planner { background: var(--navy-mid); border: 1px solid rgba(14,165,233,0.35); border-radius: var(--radius); margin-bottom: 20px; overflow: hidden; }
+  .planner-header { padding: 12px 16px; display: flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; }
+  .planner-icon { font-size: 18px; }
+  .planner-title { font-size: 13px; font-weight: 700; color: #7dd3fc; flex: 1; }
+  .planner-context { font-size: 11px; color: var(--text-muted); }
+  .planner-toggle { font-size: 13px; color: var(--text-dim); transition: transform 0.2s; }
+  .planner-toggle.open { transform: rotate(180deg); }
+  .planner-body { padding: 0 16px 16px; display: none; }
+  .planner-body.open { display: block; }
+
+  .planner-stop-label { font-size: 11px; color: var(--text-muted); margin-bottom: 6px; }
+  .planner-stop-name { font-size: 14px; font-weight: 700; color: var(--teal-light); margin-bottom: 14px; min-height: 22px; }
+
+  .planner-section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; margin-top: 14px; }
+
+  .window-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .window-btn { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 8px 14px; font-size: 12px; color: var(--text-muted); cursor: pointer; transition: all 0.15s; }
+  .window-btn:hover { border-color: rgba(14,165,233,0.4); color: var(--text); }
+  .window-btn.active { background: rgba(14,165,233,0.15); border-color: rgba(14,165,233,0.5); color: #7dd3fc; font-weight: 600; }
+  .window-btn .btn-label { font-weight: 600; display: block; }
+  .window-btn .btn-sub { font-size: 10px; color: var(--text-dim); display: block; margin-top: 1px; }
+  .window-btn.active .btn-sub { color: #7dd3fc; opacity: 0.7; }
+
+  .speed-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .speed-row label { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+  .speed-input { background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: var(--radius-sm); color: var(--text); font-size: 13px; font-weight: 600; padding: 6px 10px; width: 70px; text-align: center; }
+  .speed-input:focus { outline: none; border-color: rgba(14,165,233,0.4); }
+  .eta-display { font-size: 12px; color: var(--text-muted); flex: 1; }
+  .eta-display strong { color: #7dd3fc; }
+
+  .planner-result { background: rgba(14,165,233,0.07); border: 1px solid rgba(14,165,233,0.2); border-radius: var(--radius-sm); padding: 12px 14px; font-size: 12px; color: #93c5fd; line-height: 1.7; margin-bottom: 14px; min-height: 48px; }
+  .planner-result strong { color: #7dd3fc; }
+  .planner-result.empty { color: var(--text-dim); font-style: italic; }
+
+  .planner-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .planner-btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; text-decoration: none; border: none; cursor: pointer; transition: all 0.15s; }
+  .btn-pw { background: rgba(14,165,233,0.15); border: 1px solid rgba(14,165,233,0.3); color: #7dd3fc; }
+  .btn-pw:hover { background: rgba(14,165,233,0.25); }
+  .btn-email { background: rgba(168,85,247,0.12); border: 1px solid rgba(168,85,247,0.25); color: #d8b4fe; }
+  .btn-email:hover { background: rgba(168,85,247,0.22); }
+
+  /* PACE BOX */
+  .pace-box { background: rgba(14,165,233,0.07); border: 1px solid rgba(14,165,233,0.2); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 20px; }
+  .pace-box-title { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #7dd3fc; margin-bottom: 10px; }
+  .pace-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; }
+  .pace-day { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: var(--radius-sm); padding: 9px 11px; }
+  .pace-day-num { font-size: 10px; font-weight: 700; color: #7dd3fc; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 3px; }
+  .pace-day-leg { font-size: 12px; font-weight: 600; color: var(--text); line-height: 1.3; margin-bottom: 2px; }
+  .pace-day-dist { font-size: 11px; color: var(--text-muted); }
+
+  /* TODAY PICKER */
+  .today-box { background: var(--navy-mid); border: 1px solid var(--teal); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 20px; }
+  .today-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 10px; }
+  .today-stops { display: flex; flex-wrap: wrap; gap: 6px; }
+  .stop-btn { background: var(--card-bg); border: 1px solid var(--border); border-radius: 20px; padding: 5px 12px; font-size: 12px; color: var(--text-muted); cursor: pointer; transition: all 0.15s; white-space: nowrap; }
+  .stop-btn:hover { border-color: var(--teal); color: var(--text); }
+  .stop-btn.active { background: rgba(13,148,136,0.2); border-color: var(--teal); color: var(--teal-light); font-weight: 600; }
+  .today-next { margin-top: 10px; font-size: 12px; color: var(--text-muted); display: none; }
+  .today-next.visible { display: block; }
+  .today-next strong { color: var(--text); }
+
+  /* GO/NO-GO */
+  .gonogo { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+  @media (max-width: 520px) { .gonogo { grid-template-columns: 1fr; } }
+  .gonogo-card { border-radius: var(--radius); padding: 14px 16px; border: 1px solid; }
+  .gonogo-go { background: rgba(34,197,94,0.08); border-color: rgba(34,197,94,0.25); }
+  .gonogo-wait { background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.25); }
+  .gonogo-title { font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+  .gonogo-go .gonogo-title { color: var(--green); }
+  .gonogo-wait .gonogo-title { color: var(--red); }
+  .gonogo-list { font-size: 12px; color: var(--text-muted); padding-left: 14px; line-height: 2; }
+
+  /* SEGMENTS */
+  .segment { margin-bottom: 28px; scroll-margin-top: 70px; transition: opacity 0.3s; }
+  .segment.dimmed { opacity: 0.35; }
+  .seg-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  .seg-dot { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+  .seg-info { flex: 1; }
+  .seg-name { font-size: 14px; font-weight: 600; color: var(--text); }
+  .seg-route { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+  .seg-dist { font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 20px; white-space: nowrap; }
+  .dist-ok { background: rgba(34,197,94,0.12); color: var(--green); }
+  .dist-tight { background: rgba(245,158,11,0.12); color: var(--amber); }
+
+  /* CARDS */
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(195px, 1fr)); gap: 8px; }
+  @media (max-width: 480px) { .cards { grid-template-columns: 1fr 1fr; } }
+  a.card { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 13px; text-decoration: none; display: block; transition: background 0.15s, border-color 0.15s; }
+  a.card:hover { background: var(--card-hover); border-color: rgba(255,255,255,0.15); }
+  .card-icon { font-size: 18px; margin-bottom: 5px; }
+  .card-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 3px; line-height: 1.3; }
+  .card-sub { font-size: 11px; color: var(--text-muted); line-height: 1.4; }
+  .card-badge { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 20px; margin-top: 6px; }
+  .badge-key { background: rgba(239,68,68,0.15); color: #fca5a5; }
+  .badge-fuel { background: rgba(245,158,11,0.15); color: #fcd34d; }
+  .badge-cg { background: rgba(13,148,136,0.15); color: var(--teal-light); }
+  .badge-outside { background: rgba(59,130,246,0.15); color: #93c5fd; }
+  .badge-inside { background: rgba(139,92,246,0.15); color: #c4b5fd; }
+  .badge-contingency { background: rgba(245,158,11,0.15); color: #fcd34d; }
+
+  /* NOTES */
+  .note { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.2); border-radius: var(--radius); padding: 12px 14px; margin-bottom: 10px; font-size: 12px; color: #fcd34d; line-height: 1.6; }
+  .note strong { color: var(--amber); }
+  .note-green { background: rgba(34,197,94,0.07); border: 1px solid rgba(34,197,94,0.2); border-radius: var(--radius); padding: 12px 14px; margin-bottom: 10px; font-size: 12px; color: #86efac; line-height: 1.6; }
+  .note-green strong { color: var(--green); }
+  .note-blue { background: rgba(59,130,246,0.07); border: 1px solid rgba(59,130,246,0.2); border-radius: var(--radius); padding: 12px 14px; margin-bottom: 10px; font-size: 12px; color: #93c5fd; line-height: 1.6; }
+  .note-blue strong { color: #60a5fa; }
+  .note-rick { background: rgba(168,85,247,0.07); border: 1px solid rgba(168,85,247,0.25); border-radius: var(--radius); padding: 12px 14px; margin-bottom: 10px; font-size: 12px; color: #d8b4fe; line-height: 1.7; }
+  .note-rick .rick-header { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #a78bfa; margin-bottom: 7px; }
+  .note-rick strong { color: #c4b5fd; }
+
+  /* DECISION */
+  .decision { background: rgba(139,92,246,0.07); border: 1px solid rgba(139,92,246,0.2); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 10px; }
+  .decision-title { font-size: 13px; font-weight: 600; color: #c4b5fd; margin-bottom: 10px; }
+  .decision-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 520px) { .decision-grid { grid-template-columns: 1fr; } }
+  .decision-opt { font-size: 12px; background: rgba(255,255,255,0.03); border-radius: var(--radius-sm); padding: 10px 12px; border: 1px solid rgba(255,255,255,0.06); }
+  .opt-label { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; }
+  .opt-inside { color: #c4b5fd; }
+  .opt-outside { color: #93c5fd; }
+  .opt-contingency { color: #fcd34d; }
+  .decision-opt p { color: var(--text-muted); line-height: 1.6; }
+
+  /* BRIDGE TABLE */
+  .bridge-table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 8px; }
+  .bridge-table th { text-align: left; color: var(--teal-light); font-weight: 700; padding: 4px 8px; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .bridge-table td { padding: 6px 8px; color: #d8b4fe; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: top; line-height: 1.5; }
+  .bridge-table td:first-child { color: #c4b5fd; font-weight: 600; white-space: nowrap; }
+  .bridge-table tr:last-child td { border-bottom: none; }
+
+  /* MISC */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 12px; }
+
+  /* ROUTE STRIP */
+  .route-line { display: flex; align-items: center; overflow-x: auto; padding: 12px 0 16px; scrollbar-width: none; }
+  .route-line::-webkit-scrollbar { display: none; }
+  .route-stop { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+  .route-stop-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--teal); border: 2px solid var(--navy); transition: transform 0.2s, box-shadow 0.2s; }
+  .route-stop-dot.red-dot { background: var(--red); }
+  .route-stop-dot.purple-dot { background: #a78bfa; }
+  .route-stop-dot.green-dot { background: var(--green); }
+  .route-stop-dot.amber-dot { background: var(--amber); }
+  .route-stop-dot.current { background: var(--amber) !important; transform: scale(1.6); box-shadow: 0 0 8px var(--amber); }
+  .route-stop-label { font-size: 9px; color: var(--text-muted); margin-top: 4px; text-align: center; max-width: 58px; line-height: 1.2; }
+  .route-stop-label.active-lbl { color: var(--amber); font-weight: 700; }
+  .route-connector { height: 2px; background: var(--border); flex: 1; min-width: 14px; flex-shrink: 0; margin-bottom: 18px; }
+  .route-connector.inside { background: rgba(139,92,246,0.4); }
+  .route-connector.tight { background: rgba(245,158,11,0.35); }
+
+  .dot-blue { background: rgba(59,130,246,0.2); color: #93c5fd; }
+  .dot-teal { background: rgba(13,148,136,0.2); color: var(--teal-light); }
+  .dot-amber { background: rgba(245,158,11,0.2); color: var(--amber); }
+  .dot-red { background: rgba(239,68,68,0.2); color: #fca5a5; }
+  .dot-purple { background: rgba(139,92,246,0.2); color: #c4b5fd; }
+  .dot-green { background: rgba(34,197,94,0.2); color: var(--green); }
+  .dot-sky { background: rgba(14,165,233,0.2); color: #7dd3fc; }
+
+  /* QUICK LINKS */
+  .quick-links { display: flex; flex-wrap: wrap; gap: 8px; }
+  .quick-link { background: var(--card-bg); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 7px 12px; font-size: 12px; color: var(--text-muted); text-decoration: none; transition: background 0.15s, color 0.15s; white-space: nowrap; }
+  .quick-link:hover { background: var(--card-hover); color: var(--text); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span style="font-size:20px">&#x1F9ED;</span>
+  <span class="topbar-title">Free Trade &mdash; Palm Beach to Nantucket</span>
+  <span class="topbar-sub">Capt. Rick &middot; 55 ft &middot; ~400 nm range</span>
+</div>
+
+<div class="container">
+
+  <!-- BANNER -->
+  <div class="dep-banner">
+    <span style="font-size:20px">&#x2693;</span>
+    <div>
+      <div class="dep-date">Northbound Passage &mdash; Free Trade</div>
+      <div class="dep-detail">Palm Beach, FL &rarr; Nantucket, MA &middot; Capt. Rick</div>
+    </div>
+    <div class="dep-arrival">Target: <span>6&ndash;7 days underway</span></div>
+  </div>
+
+  <!-- PASSAGE PLANNER -->
+  <div class="planner">
+    <div class="planner-header" onclick="togglePlanner()">
+      <span class="planner-icon">&#x1F30A;</span>
+      <span class="planner-title">Passage Planner</span>
+      <span class="planner-context" id="planner-context">Tap your current stop below, then open this</span>
+      <span class="planner-toggle" id="planner-toggle">&#9660;</span>
+    </div>
+    <div class="planner-body" id="planner-body">
+      <div class="planner-stop-label">Current stop:</div>
+      <div class="planner-stop-name" id="pp-stop-name">&#x2014; tap a stop below to begin &mdash;</div>
+
+      <div class="planner-section-label">When are you planning to leave?</div>
+      <div class="window-btns">
+        <button class="window-btn" onclick="setWindow(0, this)">
+          <span class="btn-label">Today</span>
+          <span class="btn-sub">leaving now</span>
+        </button>
+        <button class="window-btn" onclick="setWindow(1, this)">
+          <span class="btn-label">Tomorrow</span>
+          <span class="btn-sub">one more night</span>
+        </button>
+        <button class="window-btn" onclick="setWindow(2, this)">
+          <span class="btn-label">+2 days</span>
+          <span class="btn-sub">waiting for window</span>
+        </button>
+        <button class="window-btn" onclick="setWindow(3, this)">
+          <span class="btn-label">+3 days</span>
+          <span class="btn-sub">weather hold</span>
+        </button>
+      </div>
+
+      <div class="planner-section-label">Cruise speed</div>
+      <div class="speed-row">
+        <label>Speed:</label>
+        <input class="speed-input" type="number" id="pp-speed" value="26" min="8" max="40" oninput="updateETA()">
+        <span style="font-size:12px;color:var(--text-muted);">kts</span>
+        <span class="eta-display" id="pp-eta"></span>
+      </div>
+
+      <div class="planner-section-label">Leg summary &amp; planning notes</div>
+      <div class="planner-result" id="pp-result">
+        <span style="color:var(--text-dim);font-style:italic;">Select your current stop and departure window above &mdash; your next leg plan will appear here.</span>
+      </div>
+
+      <div class="planner-actions">
+        <a class="planner-btn btn-pw" href="https://www.passageweather.com" target="_blank">
+          &#x1F30A; passageweather.com
+        </a>
+        <a class="planner-btn btn-email" href="#" id="pp-email-btn" onclick="return sendEmail()">
+          &#x2709;&#xFE0F; Ask Peter for a recommendation
+        </a>
+      </div>
+      <div style="margin-top:8px;font-size:10px;color:var(--text-dim);">
+        The email button opens a pre-filled message to Peter with your current stop, next leg, and departure window &mdash; just describe what you're seeing in passageweather.com and hit send.
+      </div>
+    </div>
+  </div>
+
+  <!-- PACE OVERVIEW -->
+  <div class="pace-box">
+    <div class="pace-box-title">&#x1F4C5; Realistic 6&ndash;7 day pace &mdash; comfortable hours, no heroics</div>
+    <div class="pace-grid">
+      <div class="pace-day">
+        <div class="pace-day-num">Day 1</div>
+        <div class="pace-day-leg">Palm Beach &rarr; St. Augustine</div>
+        <div class="pace-day-dist">~185 nm &middot; ~8 hrs &middot; long but comfortable</div>
+      </div>
+      <div class="pace-day">
+        <div class="pace-day-num">Day 2</div>
+        <div class="pace-day-leg">St. Augustine &rarr; Charleston</div>
+        <div class="pace-day-dist">~165 nm &middot; comfortable full day</div>
+      </div>
+      <div class="pace-day">
+        <div class="pace-day-num">Day 3</div>
+        <div class="pace-day-leg">Charleston &rarr; Southport</div>
+        <div class="pace-day-dist">~145 nm &middot; easy day, in early</div>
+      </div>
+      <div class="pace-day">
+        <div class="pace-day-num">Day 4</div>
+        <div class="pace-day-leg">Southport &rarr; Morehead City &rarr; Coinjock overnight</div>
+        <div class="pace-day-dist">~110 nm &middot; prime rib tonight</div>
+      </div>
+      <div class="pace-day">
+        <div class="pace-day-num">Day 5</div>
+        <div class="pace-day-leg">Coinjock &rarr; Norfolk &rarr; Cape May (outside)</div>
+        <div class="pace-day-dist">~225 nm &middot; split if preferred</div>
+      </div>
+      <div class="pace-day">
+        <div class="pace-day-num">Day 6&ndash;7</div>
+        <div class="pace-day-leg">Cape May &rarr; Nantucket</div>
+        <div class="pace-day-dist">~225 nm direct &middot; or via Montauk</div>
+      </div>
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:var(--text-muted);">Pamlico Sound is worth a glance but rarely a real issue on a 55-footer. The offshore window out of Cape May is the one decision that matters most. <strong style="color:var(--text);">~400 nm range means fuel is never a limiter on any single leg.</strong></div>
+  </div>
+
+  <!-- TODAY PICKER -->
+  <div class="today-box">
+    <div class="today-label">&#x1F4CD; Where am I today? &mdash; tap your current stop</div>
+    <div class="today-stops">
+      <button class="stop-btn" onclick="setStop(0,'Palm Beach','St. Augustine City Docks (~185 nm) &mdash; long Day 1, all outside, ~8 hrs')">Palm Beach</button>
+      <button class="stop-btn" onclick="setStop(1,'St. Augustine','Charleston &mdash; Harborage at Ashley Marina (~165 nm)')">St. Augustine</button>
+      <button class="stop-btn" onclick="setStop(2,'Charleston','Southport &mdash; South Harbour Village Marina (~145 nm) &mdash; easy day, in early')">Charleston</button>
+      <button class="stop-btn" onclick="setStop(3,'Southport','Morehead City &rarr; Coinjock overnight (~110 nm) &middot; call ahead for the prime rib')">Southport</button>
+      <button class="stop-btn" onclick="setStop(4,'Morehead City','Coinjock Marina overnight (~75 nm) &middot; call ahead and order the prime rib')">Morehead City</button>
+      <button class="stop-btn" onclick="setStop(5,'Coinjock','Norfolk Waterside Marina (~40 nm) &middot; depart 6:05 AM &middot; bridge timing is everything')">Coinjock</button>
+      <button class="stop-btn" onclick="setStop(6,'Norfolk','Cape May &mdash; South Jersey Marina (~185 nm) &middot; outside via Cape Henry preferred')">Norfolk</button>
+      <button class="stop-btn" onclick="setStop(7,'Cape May','Nantucket direct (~225 nm, ~8&ndash;9 hrs) &middot; or Montauk then Nantucket &mdash; decide on the window')">Cape May NJ</button>
+      <button class="stop-btn" onclick="setStop(8,'Montauk NY','Nantucket MA (~105 nm) &mdash; easy finishing leg')">Montauk (contingency)</button>
+    </div>
+    <div class="today-next" id="today-next"></div>
+  </div>
+
+  <!-- ROUTE STRIP -->
+  <div class="section-label">Free Trade route &mdash; scroll left/right if needed</div>
+  <div class="route-line">
+    <div class="route-stop"><div class="route-stop-dot" id="rd0"></div><div class="route-stop-label" id="rl0">Palm Beach</div></div>
+    <div class="route-connector"></div>
+    <div class="route-stop"><div class="route-stop-dot" id="rd1"></div><div class="route-stop-label" id="rl1">St. Augustine City Docks</div></div>
+    <div class="route-connector"></div>
+    <div class="route-stop"><div class="route-stop-dot" id="rd2"></div><div class="route-stop-label" id="rl2">Charleston Harborage</div></div>
+    <div class="route-connector"></div>
+    <div class="route-stop"><div class="route-stop-dot" id="rd3"></div><div class="route-stop-label" id="rl3">Southport S. Harbour</div></div>
+    <div class="route-connector"></div>
+    <div class="route-stop"><div class="route-stop-dot" id="rd4"></div><div class="route-stop-label" id="rl4">Morehead City</div></div>
+    <div class="route-connector inside"></div>
+    <div class="route-stop"><div class="route-stop-dot green-dot" id="rd5"></div><div class="route-stop-label" id="rl5">Coinjock &#x1F969; overnight</div></div>
+    <div class="route-connector inside"></div>
+    <div class="route-stop"><div class="route-stop-dot purple-dot" id="rd6"></div><div class="route-stop-label" id="rl6">Norfolk Waterside</div></div>
+    <div class="route-connector"></div>
+    <div class="route-stop"><div class="route-stop-dot" id="rd7"></div><div class="route-stop-label" id="rl7">Cape May S. Jersey &#x1F6A6;</div></div>
+    <div class="route-connector tight"></div>
+    <div class="route-stop"><div class="route-stop-dot amber-dot" id="rd8"></div><div class="route-stop-label" id="rl8">Montauk &#x2693; (opt)</div></div>
+    <div class="route-connector"></div>
+    <div class="route-stop"><div class="route-stop-dot green-dot" id="rd9"></div><div class="route-stop-label" id="rl9">Nantucket &#x1F3C1;</div></div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- PAMLICO ADVISORY -->
+  <div class="section-label">Pamlico Sound &mdash; worth a quick check, rarely a stress point on a 55-footer</div>
+  <div class="gonogo">
+    <div class="gonogo-card gonogo-go">
+      <div class="gonogo-title">&#x2713; Normal conditions &mdash; cross and enjoy</div>
+      <ul class="gonogo-list">
+        <li>Any westerly component to the wind</li>
+        <li>Depart early &mdash; cross before noon if possible</li>
+        <li>Free Trade handles this easily in most conditions</li>
+        <li>Neuse River &rarr; Pamlico &rarr; Alligator River &rarr; Albemarle &rarr; Coinjock</li>
+      </ul>
+    </div>
+    <div class="gonogo-card gonogo-wait">
+      <div class="gonogo-title">&#x2717; The one scenario worth pausing for</div>
+      <ul class="gonogo-list">
+        <li>Strong NE 20+ kts &mdash; steep chop even for a big boat</li>
+        <li>Active line of storms crossing the sound</li>
+        <li>Otherwise: Pamlico in a 55-footer is just scenery</li>
+        <li>Morehead City / Beaufort is comfortable if you want a night</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CAPE MAY FINAL LEG GO/NO-GO -->
+  <div class="section-label">Cape May final leg &mdash; direct to Nantucket vs. Montauk &middot; decide the morning you leave</div>
+  <div class="gonogo">
+    <div class="gonogo-card gonogo-go">
+      <div class="gonogo-title">&#x2713; Go direct &mdash; Cape May &rarr; Nantucket</div>
+      <ul class="gonogo-list">
+        <li>Settled high pressure over the Northeast</li>
+        <li>SW or W winds under 15 kts for the day</li>
+        <li>Seas under 4 ft offshore</li>
+        <li>No NE on the horizon for 24+ hrs</li>
+        <li>Depart at a normal hour &mdash; arrive Nantucket mid-afternoon</li>
+      </ul>
+    </div>
+    <div class="gonogo-card gonogo-wait">
+      <div class="gonogo-title">&#x2717; Go to Montauk first &mdash; don&rsquo;t push direct</div>
+      <ul class="gonogo-list">
+        <li>Any NE wind or swell building offshore</li>
+        <li>Settled window under 18 hrs</li>
+        <li>Front forecast within 24 hrs</li>
+        <li>Visibility under 3 nm offshore</li>
+        <li>When in doubt: Montauk 130 nm, then only 105 nm to finish</li>
+      </ul>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- SEG 0 — BIG PICTURE -->
+  <div class="segment" id="seg0">
+    <div class="seg-header">
+      <div class="seg-dot dot-blue">&#x2460;</div>
+      <div class="seg-info">
+        <div class="seg-name">Big picture &mdash; synoptic weather pattern</div>
+        <div class="seg-route">Check before committing to a departure date &middot; refresh every morning underway</div>
+      </div>
+    </div>
+    <div class="cards">
+      <a class="card" href="https://captaingeorgia.com/weather-analysis-1" target="_blank">
+        <div class="card-icon">&#x1F30A;</div><div class="card-title">Captain Georgia &mdash; Weather Analysis</div>
+        <div class="card-sub">Wind, pressure, waves, Gulf Stream, radar. Start here every morning.</div>
+        <span class="card-badge badge-cg">Daily first check</span>
+      </a>
+      <a class="card" href="https://www.passageweather.com" target="_blank">
+        <div class="card-icon">&#x26F5;</div><div class="card-title">PassageWeather.com</div>
+        <div class="card-sub">Wind, wave, and swell forecasts along your route &mdash; Rick&rsquo;s go-to forecast tool.</div>
+        <span class="card-badge badge-cg">Rick&rsquo;s favorite</span>
+      </a>
+      <a class="card" href="https://captaingeorgia.com/noaa-surface-analysis" target="_blank">
+        <div class="card-icon">&#x1F5FA;&#xFE0F;</div><div class="card-title">NOAA Surface Analysis</div>
+        <div class="card-sub">5-day pressure charts &mdash; fronts, highs, lows. You want a High over the SE to start.</div>
+        <span class="card-badge badge-cg">Synoptic view</span>
+      </a>
+      <a class="card" href="https://windy.com/?waves,26.7,-80.0,5" target="_blank">
+        <div class="card-icon">&#x1F4F1;</div><div class="card-title">Windy &mdash; Wave + Wind view</div>
+        <div class="card-sub">Best visual tool for planning your full route. Toggle Wave and Wind layers.</div>
+        <span class="card-badge badge-cg">Best on iPhone</span>
+      </a>
+      <a class="card" href="https://captaingeorgia.com/nws-marine-forecast" target="_blank">
+        <div class="card-icon">&#x1F4CB;</div><div class="card-title">NWS Marine Forecast</div>
+        <div class="card-sub">Official zone forecasts by coastal section.</div>
+      </a>
+      <a class="card" href="https://captaingeorgia.com/7-day-tropical-outlook" target="_blank">
+        <div class="card-icon">&#x1F300;</div><div class="card-title">7-Day Tropical Outlook</div>
+        <div class="card-sub">Check before departure and once or twice a week en route.</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- SEG 1 — PALM BEACH → ST. AUGUSTINE -->
+  <div class="segment" id="seg1">
+    <div class="seg-header">
+      <div class="seg-dot dot-teal">&#x2461;</div>
+      <div class="seg-info">
+        <div class="seg-name">Palm Beach &rarr; St. Augustine &mdash; City Marina</div>
+        <div class="seg-route">Day 1 &mdash; all outside &middot; depart at a civilized hour &middot; ~8 hrs running</div>
+      </div>
+      <span class="seg-dist dist-ok">~185 nm &middot; well within range</span>
+    </div>
+    <div class="note-rick">
+      <div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div>
+      <strong>St. Augustine City Docks &middot; (904) 825-1026</strong><br>
+      About an 8-hour run from Ft. Lauderdale at cruise speed &mdash; call ahead for your slip. Downtown location, easy walking to everything.
+    </div>
+    <div class="note">
+      <strong>The Gulf Stream runs close to shore between Palm Beach and Cape Canaveral.</strong> With any NE wind it stacks up fast &mdash; check conditions before you leave. Ft. Pierce (~110 nm) is a natural mid-leg contingency if you want to break it up or conditions aren&rsquo;t ideal. <strong>St. Augustine bar: cross at or near high tide</strong> &mdash; work backwards from tide tables when planning your departure.
+    </div>
+    <div class="cards">
+      <a class="card" href="https://captaingeorgia.com/fl-port-weather" target="_blank">
+        <div class="card-icon">&#x2693;</div><div class="card-title">FL Port Weather</div>
+        <div class="card-sub">Live buoy data for the Palm Beach departure zone</div>
+        <span class="card-badge badge-cg">Departure check</span>
+      </a>
+      <a class="card" href="https://www.ndbc.noaa.gov/station_page.php?station=41047" target="_blank">
+        <div class="card-icon">&#x1F4E1;</div><div class="card-title">SE Florida Offshore Buoy (41047)</div>
+        <div class="card-sub">Offshore conditions departing Palm Beach &mdash; Gulf Stream watch</div>
+      </a>
+      <a class="card" href="https://www.ndbc.noaa.gov/station_page.php?station=41009" target="_blank">
+        <div class="card-icon">&#x1F4E1;</div><div class="card-title">Canaveral Buoy (41009)</div>
+        <div class="card-sub">Mid-leg offshore check</div>
+        <span class="card-badge badge-outside">Offshore check</span>
+      </a>
+      <a class="card" href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=8720218" target="_blank">
+        <div class="card-icon">&#x1F30A;</div><div class="card-title">St. Augustine Inlet Tides</div>
+        <div class="card-sub">Cross the bar near high tide &mdash; plan your departure time around this</div>
+        <span class="card-badge badge-fuel">Timing matters</span>
+      </a>
+      <a class="card" href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=8722670" target="_blank">
+        <div class="card-icon">&#x1F30A;</div><div class="card-title">Ft. Pierce Inlet Tides</div>
+        <div class="card-sub">Optional mid-stop if you want to break the leg</div>
+        <span class="card-badge badge-inside">Optional mid-stop</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- SEG 2 — ST. AUGUSTINE → CHARLESTON -->
+  <div class="segment" id="seg2">
+    <div class="seg-header">
+      <div class="seg-dot dot-teal">&#x2462;</div>
+      <div class="seg-info">
+        <div class="seg-name">St. Augustine &rarr; Charleston &mdash; Harborage at Ashley Marina</div>
+        <div class="seg-route">Day 2 &mdash; comfortable outside run &middot; Brunswick/St. Simons GA is your mid-leg backup</div>
+      </div>
+      <span class="seg-dist dist-ok">~165 nm &middot; comfortable day</span>
+    </div>
+    <div class="note-rick">
+      <div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div>
+      <strong>Harborage at Ashley Marina &middot; (843) 722-1996</strong><br>
+      &ldquo;Running 30 knots with one foot in the sand&rdquo; &mdash; fast outside leg, close to shore. Good marina on the Ashley River side of Charleston. Call ahead.
+    </div>
+    <div class="note-green">
+      Brunswick / St. Simons Island GA (~130 nm from St. Aug) is an easy contingency if you want to break it up. <strong>Charleston tidal range is 5+ ft &mdash; real current in the harbor on arrival. Check timing on the approach.</strong>
+    </div>
+    <div class="cards">
+      <a class="card" href="https://www.ndbc.noaa.gov/station_page.php?station=41004" target="_blank">
+        <div class="card-icon">&#x1F4E1;</div><div class="card-title">SE Atlantic Buoy (41004)</div>
+        <div class="card-sub">Offshore between Savannah and Charleston &mdash; mid-leg conditions</div>
+        <span class="card-badge badge-outside">Offshore check</span>
+      </a>
+      <a class="card" href="https://captaingeorgia.com/south-east-port-weather" target="_blank">
+        <div class="card-icon">&#x1F4E1;</div><div class="card-title">SE Port Weather</div>
+        <div class="card-sub">Charleston buoy and harbor conditions</div>
+        <span class="card-badge badge-cg">Captain Georgia</span>
+      </a>
+      <a class="card" href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=8665530" target="_blank">
+        <div class="card-icon">&#x1F30A;</div><div class="card-title">Charleston Tides</div>
+        <div class="card-sub">5+ ft mean range &mdash; plan your entry around the current</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- SEG 3 — CHARLESTON → SOUTHPORT -->
+  <div class="segment" id="seg3">
+    <div class="seg-header">
+      <div class="seg-dot dot-amber">&#x2463;</div>
+      <div class="seg-info">
+        <div class="seg-name">Charleston &rarr; Southport &mdash; South Harbour Village Marina</div>
+        <div class="seg-route">Day 3 &mdash; easy day, in by early afternoon &middot; Cape Fear River approach</div>
+      </div>
+      <span class="seg-dist dist-ok">~145 nm &middot; relaxed pace</span>
+    </div>
+    <div class="note-rick">
+      <div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div>
+      <strong>South Harbour Village Marina &middot; (910) 454-7486</strong><br>
+      Ask for <strong>Bill Gregory</strong>, Manager &middot; Cell: <strong>(910) 352-8469</strong><br>
+      <strong>Dinner:</strong> Great Italian restaurant right at the marina. Local favorite &mdash; <strong>Home Run Place</strong>, north of the bridge.
+    </div>
+    <div class="cards">
+      <a class="card" href="https://captaingeorgia.com/south-east-port-weather" target="_blank">
+        <div class="card-icon">&#x1F4E1;</div><div class="card-title">SE Port Weather &mdash; SC/NC Coast</div>
+        <div class="card-sub">Buoy data covering Charleston through Wilmington</div>
+        <span class="card-badge badge-cg">Captain Georgia</span>
+      </a>
+      <a class="card" href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=8658163" target="_blank">
+        <div class="card-icon">&#x1F30A;</div><div class="card-title">Cape Fear River Tides</div>
+        <div class="card-sub">Southport approach &mdash; tidal current runs strong in Cape Fear River</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- SEG 4 — SOUTHPORT → MOREHEAD CITY → COINJOCK -->
+  <div class="segment" id="seg4">
+    <div class="seg-header">
+      <div class="seg-dot dot-amber">&#x2464;</div>
+      <div class="seg-info">
+        <div class="seg-name">Southport &rarr; Morehead City &rarr; Coinjock &mdash; overnight &#x1F969;</div>
+        <div class="seg-route">Day 4 &middot; Masonboro Inlet outside to Morehead &middot; then inside via Neuse River &rarr; Pamlico &rarr; Alligator River &rarr; Coinjock</div>
+      </div>
+      <span class="seg-dist dist-ok">~110 nm &middot; call ahead for the prime rib</span>
+    </div>
+    <div class="note-rick">
+      <div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div>
+      Northbound from Southport: up the ICW toward Wrightsville Beach, then exit via Masonboro Inlet to Morehead City. After Morehead, inside via Neuse River to the outer banks, through the bridges, Currituck Sound, and on to Coinjock.
+    </div>
+    <div class="note-green">
+      <strong>Pamlico Sound is a non-event on a 55-footer in normal conditions.</strong> Depart Morehead City at a reasonable hour and cross before afternoon winds build. The only scenario worth pausing for is a strong NE blowing 20+ knots. <strong>Coinjock is tonight&rsquo;s destination &mdash; call ahead and order the prime rib before you arrive.</strong>
+    </div>
+    <div class="note-rick" style="margin-top:0;">
+      <div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes &mdash; Coinjock overnight</div>
+      <strong>Midway Marina &middot; (252) 453-3271</strong> &mdash; dock is on the <strong>west side</strong> of the channel.<br>
+      <strong>Call ahead and order the prime rib before you arrive</strong> &mdash; it won&rsquo;t be ready if you don&rsquo;t.<br>
+      &#x26A0;&#xFE0F; <strong>Tip the dock hands in cash &mdash; do not tip on the credit card machine.</strong>
+    </div>
+    <div class="cards">
+      <a class="card" href="https://captaingeorgia.com/south-east-port-weather" target="_blank">
+        <div class="card-icon">&#x1F4E1;</div><div class="card-title">SE Port Weather &mdash; NC Coast</div>
+        <div class="card-sub">Offshore conditions Wilmington to Morehead City</div>
+        <span class="card-badge badge-cg">Captain Georgia</span>
+      </a>
+      <a class="card" href="https://www.navcen.uscg.gov/?pageName=lnmDistrict&region=05" target="_blank">
+        <div class="card-icon">&#x26A0;&#xFE0F;</div><div class="card-title">USCG District 5 &mdash; LNMs</div>
+        <div class="card-sub">Current buoy positions and shoaling &mdash; check morning of departure</div>
+        <span class="card-badge badge-key">Check morning of</span>
+      </a>
+      <a class="card" href="https://www.ndbc.noaa.gov/station_page.php?station=41036" target="_blank">
+        <div class="card-icon">&#x1F4E1;</div><div class="card-title">Pamlico Sound Buoy (41036)</div>
+        <div class="card-sub">Monitor conditions during the Pamlico crossing</div>
+      </a>
+      <a class="card" href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=8651370" target="_blank">
+        <div class="card-icon">&#x1F30A;</div><div class="card-title">Duck / Currituck Sound Tides</div>
+        <div class="card-sub">Northern Albemarle / Currituck Sound approach to Coinjock</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- SEG 5 — COINJOCK → NORFOLK -->
+  <div class="segment" id="seg5">
+    <div class="seg-header">
+      <div class="seg-dot dot-purple">&#x2465;</div>
+      <div class="seg-info">
+        <div class="seg-name">Coinjock &rarr; Norfolk &mdash; Waterside Marina</div>
+        <div class="seg-route">Day 5 morning &middot; depart 6:05 AM &middot; Virginia Cut &rarr; Great Bridge Lock &rarr; Hampton Roads</div>
+      </div>
+      <span class="seg-dist dist-ok">~40 nm &middot; short morning run &middot; in Norfolk by midday</span>
+    </div>
+    <div class="note-rick">
+      <div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes &mdash; Bridge Timing, Coinjock to Norfolk</div>
+      Depart Coinjock at <strong>6:05 AM</strong> running 26 knots to make the <strong>North Landing Bridge at 7:30 AM</strong>. Monitor <strong>VHF Channel 13</strong> for all bridge openings.
+      <table class="bridge-table">
+        <thead>
+          <tr><th>Bridge</th><th>Schedule</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>North Landing Bridge</td>
+            <td>On demand</td>
+            <td>Target 7:30 AM &middot; depart Coinjock at 6:05 AM at 26 kts &middot; call Ch 13</td>
+          </tr>
+          <tr>
+            <td>Centerville Turnpike Bridge</td>
+            <td>On the hour &amp; half hour</td>
+            <td>Short run from North Landing &mdash; take your time, don&rsquo;t rush this one</td>
+          </tr>
+          <tr>
+            <td>Great Bridge Bascule Bridge</td>
+            <td>On the hour (northbound)</td>
+            <td>Just north of the lock &mdash; coordinate with lock timing</td>
+          </tr>
+          <tr>
+            <td>Great Bridge Lock</td>
+            <td>NB on the hour &middot; SB on the half hour</td>
+            <td>On demand &mdash; opens on the hour heading north, call Ch 13 ahead of arrival</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">
+      <strong>Norfolk &mdash; Waterside Marina &middot; (757) 625-3625</strong><br>
+      Right on the downtown waterfront. Good overnight stop, fuel available, walkable to everything. <strong>Hampton Roads ship traffic is heavy and fast &mdash; they have the right of way. Monitor VHF 16 through the harbor.</strong>
+    </div>
+    <div class="cards">
+      <a class="card" href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=8638901" target="_blank">
+        <div class="card-icon">&#x1F30A;</div><div class="card-title">Hampton Roads / Norfolk Tides</div>
+        <div class="card-sub">Tidal current in the Norfolk channel and Waterside approach</div>
+      </a>
+      <a class="card" href="https://www.ndbc.noaa.gov/station_page.php?station=44099" target="_blank">
+        <div class="card-icon">&#x1F4E1;</div><div class="card-title">Chesapeake Bay Entrance (44099)</div>
+        <div class="card-sub">Cape Henry / Hampton Roads approach conditions</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- SEG 6 — NORFOLK → CAPE MAY -->
+  <div class="segment" id="seg6">
+    <div class="seg-header">
+      <div class="seg-dot dot-sky">&#x2466;</div>
+      <div class="seg-info">
+        <div class="seg-name">Norfolk &rarr; Cape May &mdash; South Jersey Marina</div>
+        <div class="seg-route">Outside preferred &middot; exit Cape Henry &middot; run NE up the coast past Delmarva &middot; enter Cape May Inlet from the ocean &middot; Chesapeake City/C&amp;D Canal if offshore is rough</div>
+      </div>
+      <span class="seg-dist dist-ok">~185 nm outside &middot; comfortable full day at cruise speed</span>
+    </div>
+    <div class="note-rick">
+      <div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div>
+      Outside is Rick&rsquo;s preferred route &mdash; and the right call on a 55-footer with a good window.<br><br>
+      <strong>South Jersey Marina, Cape May &middot; (609) 884-2400</strong><br>
+      &ldquo;Outside is good&rdquo; &mdash; excellent staging marina for the final leg. Good fuel dock, easy approach. Enter from the ocean side. <strong>Top off completely here before deciding anything about the Nantucket run.</strong>
+    </div>
+    <div class="decision">
+      <div class="decision-title">&#x2696;&#xFE0F; Outside via Cape Henry (preferred) or inside via Chesapeake City / C&amp;D Canal</div>
+      <div class="decision-grid">
+        <div class="decision-opt">
+          <div class="opt-label opt-outside">&#x25B6; Outside &mdash; exit Cape Henry (Rick&rsquo;s route)</div>
+          <p>Exit Hampton Roads via Cape Henry, pass the Chesapeake Light Tower, run NE up the coast past the Delmarva Peninsula, and enter Cape May Inlet directly from the ocean on the east side. ~185 nm, a comfortable full day. You want SW or W winds under 15 kts, seas under 4 ft.</p>
+        </div>
+        <div class="decision-opt">
+          <div class="opt-label opt-inside">&#x25B6; Inside &mdash; up the Bay &middot; Chesapeake City &middot; C&amp;D Canal (if offshore is rough)</div>
+          <p>Head north up the Chesapeake Bay to Chesapeake City (~100 nm), overnight or fuel stop, then through the C&amp;D Canal into Delaware Bay, run south to Cape May and enter from the bay/canal side (~80 nm more). Longer but fully protected. Delaware Bay also chops up with NE winds.</p>
+        </div>
+      </div>
+    </div>
+    <div class="cards">
+      <a class="card" href="https://www.ndbc.noaa.gov/station_page.php?station=44100" target="_blank">
+        <div class="card-icon">&#x1F4E1;</div><div class="card-title">Chesapeake Light Tower (44100)</div>
+        <div class="card-sub">Departure waypoint &mdash; open ocean conditions just outside Cape Henry</div>
+        <span class="card-badge badge-outside">Departure buoy</span>
+      </a>
+      <a class="card" href="https://captaingeorgia.com/south-east-port-weather" target="_blank">
+        <div class="card-icon">&#x1F4E1;</div><div class="card-title">SE Port Weather &mdash; Mid-Atlantic</div>
+        <div class="card-sub">Cape Henry through Delaware Bay &mdash; buoy data for the outside run</div>
+        <span class="card-badge badge-cg">Captain Georgia</span>
+      </a>
+      <a class="card" href="https://www.ndbc.noaa.gov/station_page.php?station=44009" target="_blank">
+        <div class="card-icon">&#x1F4E1;</div><div class="card-title">Delaware Bay Buoy (44009)</div>
+        <div class="card-sub">Offshore Delmarva / Delaware Bay mouth &mdash; mid-leg and arrival check</div>
+      </a>
+      <a class="card" href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=8536110" target="_blank">
+        <div class="card-icon">&#x1F30A;</div><div class="card-title">Cape May Inlet Tides</div>
+        <div class="card-sub">Enter from the ocean on the east side &mdash; direct approach running up the coast</div>
+      </a>
+      <a class="card" href="https://captaingeorgia.com/north-east-port-weather" target="_blank">
+        <div class="card-icon">&#x1F4E1;</div><div class="card-title">NE Port Weather</div>
+        <div class="card-sub">NJ shore and Cape May approaches</div>
+        <span class="card-badge badge-cg">Captain Georgia</span>
+      </a>
+      <a class="card" href="https://windy.com/?waves,37.5,-74.5,7" target="_blank">
+        <div class="card-icon">&#x1F4F1;</div><div class="card-title">Windy &mdash; Delmarva / Cape May offshore</div>
+        <div class="card-sub">Wave layer for the outside run up the coast</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- SEG 7 — CAPE MAY → NANTUCKET -->
+  <div class="segment" id="seg7">
+    <div class="seg-header">
+      <div class="seg-dot dot-sky">&#x2467;</div>
+      <div class="seg-info">
+        <div class="seg-name">Cape May &rarr; Nantucket &mdash; Direct or via Montauk &#x1F3C1;</div>
+        <div class="seg-route">Direct ~225 nm &middot; or Cape May &rarr; Montauk (~130 nm) then Montauk &rarr; Nantucket (~105 nm)</div>
+      </div>
+      <span class="seg-dist dist-ok">~225 nm direct &middot; ~8&ndash;9 hrs at cruise &middot; well within range</span>
+    </div>
+    <div class="note-blue">
+      <strong>With Free Trade&rsquo;s range, fuel is not the question &mdash; weather is.</strong> At cruise speed, ~225 nm is roughly an 8&ndash;9 hour run. Depart Cape May at a normal hour and you&rsquo;re in Nantucket by mid-afternoon. Montauk is a completely legitimate option &mdash; 130 nm there, overnight, then a relaxed 105 nm finish the next morning with a fresh look at Nantucket Sound conditions.
+    </div>
+    <div class="decision">
+      <div class="decision-title">&#x2696;&#xFE0F; Direct to Nantucket or stage at Montauk &mdash; decide in Cape May</div>
+      <div class="decision-grid">
+        <div class="decision-opt">
+          <div class="opt-label opt-outside">&#x25B6; Cape May &rarr; Nantucket direct</div>
+          <p>Exit Delaware Bay, round the tip of NJ, run NE offshore past Fire Island and Block Island into Nantucket Sound. ~225 nm, ~8&ndash;9 hrs. Depart at a normal hour, arrive mid-afternoon. You want settled W or SW, seas under 4 ft, no NE on the horizon.</p>
+        </div>
+        <div class="decision-opt">
+          <div class="opt-label opt-contingency">&#x25B6; Cape May &rarr; Montauk &rarr; Nantucket</div>
+          <p>~130 nm to Montauk, a comfortable day run. Fuel up, sleep, finish with a fresh 105 nm leg. <strong>Nantucket Sound with afternoon SW against ebb builds fast &mdash; time arrival for before midday.</strong></p>
+        </div>
+      </div>
+    </div>
+    <div class="cards">
+      <a class="card" href="https://www.ndbc.noaa.gov/station_page.php?station=44025" target="_blank">
+        <div class="card-icon">&#x1F4E1;</div><div class="card-title">NY Bight Buoy (44025)</div>
+        <div class="card-sub">Offshore NJ/NY &mdash; first 75 nm out of Cape May</div>
+        <span class="card-badge badge-outside">Offshore check</span>
+      </a>
+      <a class="card" href="https://www.ndbc.noaa.gov/station_page.php?station=44017" target="_blank">
+        <div class="card-icon">&#x1F4E1;</div><div class="card-title">Montauk Pt Buoy (44017)</div>
+        <div class="card-sub">Eastern LI / Block Island Sound &mdash; approaching Montauk</div>
+        <span class="card-badge badge-contingency">Contingency check</span>
+      </a>
+      <a class="card" href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=8510560" target="_blank">
+        <div class="card-icon">&#x1F30A;</div><div class="card-title">Montauk Harbor Tides</div>
+        <div class="card-sub">Lake Montauk inlet &mdash; straightforward entry, good fuel dock</div>
+      </a>
+      <a class="card" href="https://www.ndbc.noaa.gov/station_page.php?station=44020" target="_blank">
+        <div class="card-icon">&#x1F4E1;</div><div class="card-title">Nantucket Sound Buoy (44020)</div>
+        <div class="card-sub">Final approach conditions into Nantucket Sound</div>
+        <span class="card-badge badge-key">Final leg check</span>
+      </a>
+      <a class="card" href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=8449130" target="_blank">
+        <div class="card-icon">&#x1F30A;</div><div class="card-title">Nantucket Sound Tides</div>
+        <div class="card-sub">Arrive before early afternoon &mdash; Sound gets sporty with SW wind against ebb</div>
+      </a>
+      <a class="card" href="https://captaingeorgia.com/north-east-port-weather" target="_blank">
+        <div class="card-icon">&#x1F30A;</div><div class="card-title">NE Port Weather</div>
+        <div class="card-sub">NY to Cape Cod &mdash; all buoy data for the final run</div>
+        <span class="card-badge badge-cg">Captain Georgia</span>
+      </a>
+      <a class="card" href="https://windy.com/?waves,41.0,-71.0,8" target="_blank">
+        <div class="card-icon">&#x1F4F1;</div><div class="card-title">Windy &mdash; Block Island / Nantucket Sound</div>
+        <div class="card-sub">Wave layer for the final approach</div>
+      </a>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-label">Weather resources &mdash; full quick links</div>
+  <div class="quick-links">
+    <a class="quick-link" href="https://www.passageweather.com" target="_blank">&#x26F5; PassageWeather.com</a>
+    <a class="quick-link" href="https://captaingeorgia.com/weather-analysis-1" target="_blank">&#x1F30A; Captain Georgia (main)</a>
+    <a class="quick-link" href="https://captaingeorgia.com/fl-port-weather" target="_blank">FL Port Weather</a>
+    <a class="quick-link" href="https://captaingeorgia.com/south-east-port-weather" target="_blank">SE Port Weather</a>
+    <a class="quick-link" href="https://captaingeorgia.com/north-east-port-weather" target="_blank">NE Port Weather</a>
+    <a class="quick-link" href="https://captaingeorgia.com/noaa-surface-analysis" target="_blank">NOAA Surface Analysis</a>
+    <a class="quick-link" href="https://captaingeorgia.com/7-day-tropical-outlook" target="_blank">7-Day Tropical Outlook</a>
+    <a class="quick-link" href="https://captaingeorgia.com/cyclonic-weather-status" target="_blank">Cyclonic Status</a>
+    <a class="quick-link" href="https://captaingeorgia.com/nws-marine-forecast" target="_blank">NWS Marine Forecast</a>
+    <a class="quick-link" href="https://captaingeorgia.com/high-seas-weather" target="_blank">High Seas Weather</a>
+    <a class="quick-link" href="https://windy.com/?waves,26.7,-80.0,5" target="_blank">&#x1F4F1; Windy (wave view)</a>
+  </div>
+
+  <div style="margin-top:32px;text-align:center;font-size:11px;color:var(--text-dim);">
+    Free Trade &middot; Capt. Rick &middot; 55 ft &middot; ~400 nm range &middot; Palm Beach FL &rarr; Nantucket MA &middot; 6&ndash;7 days &middot; Norfolk Waterside &middot; South Jersey Marina Cape May &middot; Montauk contingency
+  </div>
+
+</div><!-- end container -->
+
+<script>
+// ─── STOP DATA ────────────────────────────────────────────────────────────────
+const STOPS = [
+  { name: 'Palm Beach',          next: 'St. Augustine City Docks', nm: 185, seg: 1 },
+  { name: 'St. Augustine',       next: 'Charleston (Harborage at Ashley Marina)', nm: 165, seg: 2 },
+  { name: 'Charleston',          next: 'Southport (South Harbour Village Marina)', nm: 145, seg: 3 },
+  { name: 'Southport',           next: 'Coinjock (via Morehead City & Pamlico Sound)', nm: 110, seg: 4 },
+  { name: 'Morehead City',       next: 'Coinjock Marina overnight', nm: 75, seg: 4 },
+  { name: 'Coinjock',            next: 'Norfolk Waterside Marina', nm: 40, seg: 5 },
+  { name: 'Norfolk',             next: 'Cape May South Jersey Marina (outside via Cape Henry)', nm: 185, seg: 6 },
+  { name: 'Cape May NJ',         next: 'Nantucket direct (or Montauk then Nantucket)', nm: 225, seg: 7 },
+  { name: 'Montauk NY',          next: 'Nantucket MA', nm: 105, seg: 7 },
+];
+
+const PLANNER_EMAIL = 'peter@example.com'; // ← UPDATE with your actual email
+
+let currentStopIdx = -1;
+let currentWindowDays = -1;
+
+// ─── STOP PICKER ──────────────────────────────────────────────────────────────
+const dotCount = 10;
+
+function setStop(idx, name, info) {
+  currentStopIdx = idx;
+
+  // stop buttons
+  document.querySelectorAll('.stop-btn').forEach((b,i) => b.classList.toggle('active', i===idx));
+
+  // today-next bar
+  const el = document.getElementById('today-next');
+  el.innerHTML = '<strong>&#x1F4CD; ' + name + ' &rarr; </strong>' + info;
+  el.classList.add('visible');
+
+  // route strip
+  for(let i=0;i<dotCount;i++){
+    const d=document.getElementById('rd'+i); const l=document.getElementById('rl'+i);
+    if(d) d.classList.remove('current');
+    if(l) l.classList.remove('active-lbl');
+  }
+  if(document.getElementById('rd'+idx)) document.getElementById('rd'+idx).classList.add('current');
+  if(document.getElementById('rl'+idx)) document.getElementById('rl'+idx).classList.add('active-lbl');
+
+  // dim past segments
+  for(let i=0;i<10;i++){
+    const s=document.getElementById('seg'+i);
+    if(s) s.classList.toggle('dimmed', i < (STOPS[idx]?.seg || 0));
+  }
+
+  // scroll to segment
+  const seg = document.getElementById('seg'+(STOPS[idx]?.seg||0));
+  if(seg) setTimeout(()=>seg.scrollIntoView({behavior:'smooth',block:'start'}),150);
+
+  // update planner
+  updatePlanner();
+}
+
+// ─── PASSAGE PLANNER ──────────────────────────────────────────────────────────
+function togglePlanner() {
+  const body = document.getElementById('planner-body');
+  const toggle = document.getElementById('planner-toggle');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  toggle.classList.toggle('open', !isOpen);
+}
+
+function setWindow(days, btn) {
+  currentWindowDays = days;
+  document.querySelectorAll('.window-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  updatePlanner();
+}
+
+function updateETA() {
+  updatePlanner();
+}
+
+function updatePlanner() {
+  const stop = STOPS[currentStopIdx];
+
+  // update stop name display
+  const stopNameEl = document.getElementById('pp-stop-name');
+  const contextEl = document.getElementById('planner-context');
+  if(!stop) {
+    stopNameEl.textContent = '\u2014 tap a stop below to begin \u2014';
+    contextEl.textContent = 'Tap your current stop below, then open this';
+    return;
+  }
+  stopNameEl.textContent = stop.name;
+  contextEl.textContent = stop.name + ' \u2192 ' + stop.next;
+
+  // ETA calc
+  const speed = parseFloat(document.getElementById('pp-speed').value) || 26;
+  const hrs = stop.nm / speed;
+  const hrsWhole = Math.floor(hrs);
+  const mins = Math.round((hrs - hrsWhole) * 60);
+  const etaEl = document.getElementById('pp-eta');
+  etaEl.innerHTML = '&nbsp;&nbsp;<strong>' + stop.nm + ' nm</strong> &mdash; ~<strong>' + hrsWhole + 'h ' + (mins > 0 ? mins + 'm' : '') + '</strong> at ' + speed + ' kts';
+
+  // Result panel
+  const resultEl = document.getElementById('pp-result');
+  if(currentWindowDays < 0) {
+    resultEl.innerHTML = '<span style="color:var(--text-dim);font-style:italic;">Select a departure window above to see your planning notes.</span>';
+    return;
+  }
+
+  const windowLabels = ['today','tomorrow','in 2 days','in 3 days'];
+  const windowLabel = windowLabels[currentWindowDays] || 'soon';
+  const depAdj = currentWindowDays === 0 ? 'Departing ' : ('Departing ' + windowLabel + ', ');
+
+  let notes = '';
+  if(currentStopIdx === 0) { // Palm Beach
+    notes = depAdj + 'heading to <strong>St. Augustine City Docks (~185 nm, ~' + hrsWhole + ' hrs)</strong>. Long first leg &mdash; Gulf Stream close to shore between Palm Beach and Cape Canaveral. Check offshore buoy 41047 and Windy before leaving. St. Augustine bar: plan arrival near high tide.';
+  } else if(currentStopIdx === 1) { // St. Augustine
+    notes = depAdj + 'heading to <strong>Charleston Harborage at Ashley Marina (~165 nm, ~' + hrsWhole + ' hrs)</strong>. Comfortable outside run. Brunswick/St. Simons GA (~130 nm) is your mid-leg backup. Check buoy 41004 and Charleston tides &mdash; 5+ ft range, strong harbor current.';
+  } else if(currentStopIdx === 2) { // Charleston
+    notes = depAdj + 'heading to <strong>Southport South Harbour Village Marina (~145 nm, ~' + hrsWhole + ' hrs)</strong>. Easy day &mdash; call Bill Gregory at (910) 454-7486. Italian restaurant at the marina, Home Run Place north of the bridge.';
+  } else if(currentStopIdx === 3 || currentStopIdx === 4) { // Southport or Morehead
+    notes = depAdj + 'heading to <strong>Coinjock overnight (~' + stop.nm + ' nm, ~' + hrsWhole + ' hrs)</strong>. Depart early &mdash; cross Pamlico before noon. <strong>Call Midway Marina (252) 453-3271 and order the prime rib before you arrive. Dock is on the west side. Tip dock hands in cash.</strong>';
+  } else if(currentStopIdx === 5) { // Coinjock
+    notes = depAdj + 'heading to <strong>Norfolk Waterside Marina (~40 nm)</strong>. <strong>Depart 6:05 AM</strong> to make North Landing Bridge at 7:30 AM running 26 kts. VHF Ch 13 for all bridges. Great Bridge Lock opens northbound on the hour. Waterside Marina: (757) 625-3625.';
+  } else if(currentStopIdx === 6) { // Norfolk
+    notes = depAdj + 'heading to <strong>Cape May South Jersey Marina (~185 nm, ~' + hrsWhole + ' hrs)</strong>. Exit Cape Henry, run NE up the Delmarva coast, enter Cape May from the ocean on the east side. Check Chesapeake Light buoy 44100 and Delmarva offshore buoy 44009 before leaving. Top off fuel completely at South Jersey Marina (609) 884-2400.';
+  } else if(currentStopIdx === 7) { // Cape May
+    notes = depAdj + 'heading to <strong>Nantucket (~225 nm, ~' + hrsWhole + ' hrs at ' + speed + ' kts)</strong>. Check NY Bight buoy 44025, Montauk buoy 44017, and Nantucket Sound buoy 44020. Depart at a normal hour &mdash; arrive mid-afternoon. If the window looks soft, <strong>Montauk (~130 nm) is your staging stop</strong> &mdash; overnight there, then 105 nm to Nantucket fresh.';
+  } else if(currentStopIdx === 8) { // Montauk
+    notes = depAdj + 'heading to <strong>Nantucket (~105 nm, ~' + hrsWhole + ' hrs)</strong>. Check Nantucket Sound buoy 44020. Arrive before early afternoon &mdash; Sound builds fast with SW wind against ebb. <strong>You\'re almost there.</strong>';
+  }
+
+  resultEl.innerHTML = notes || '<span style="color:var(--text-dim);font-style:italic;">Select your current stop below to see planning notes.</span>';
+}
+
+function sendEmail() {
+  const stop = STOPS[currentStopIdx];
+  const speed = document.getElementById('pp-speed').value || '26';
+  const windowLabels = ['today', 'tomorrow', 'in 2 days', 'in 3 days'];
+  const winLabel = currentWindowDays >= 0 ? windowLabels[currentWindowDays] : 'TBD';
+
+  const stopName = stop ? stop.name : 'unknown stop';
+  const nextLeg = stop ? stop.next : 'next leg';
+  const nm = stop ? stop.nm : '?';
+
+  const subject = encodeURIComponent('Free Trade — Passage Recommendation: ' + stopName + ' \u2192 ' + nextLeg);
+  const body = encodeURIComponent(
+    'Hi Peter,\n\n' +
+    'I\'m currently at: ' + stopName + '\n' +
+    'Next leg: ' + nextLeg + ' (~' + nm + ' nm)\n' +
+    'Planning to depart: ' + winLabel + '\n' +
+    'Cruise speed: ' + speed + ' kts\n\n' +
+    'Here\'s what I\'m seeing in PassageWeather / conditions:\n' +
+    '[describe what you see here]\n\n' +
+    'What do you think?\n\n' +
+    'Rick\nFree Trade'
+  );
+
+  window.location.href = 'mailto:' + PLANNER_EMAIL + '?subject=' + subject + '&body=' + body;
+  return false;
+}
+</script>
+</body>
+</html>
