@@ -217,7 +217,7 @@
     <div class="planner-header" onclick="togglePlanner()">
       <span class="planner-icon">&#x1F30A;</span>
       <span class="planner-title">Passage Planner</span>
-      <span class="planner-context" id="planner-context">Tap your current stop below, then open this</span>
+      <span class="planner-context" id="planner-context">quick reference &mdash; tap your current stop below</span>
       <span class="planner-toggle" id="planner-toggle">&#9660;</span>
     </div>
     <div class="planner-body" id="planner-body">
@@ -262,11 +262,11 @@
           &#x1F30A; passageweather.com
         </a>
         <a class="planner-btn btn-email" href="#" id="pp-email-btn" onclick="return sendEmail()">
-          &#x2709;&#xFE0F; Ask Peter for a recommendation
+          &#x2709;&#xFE0F; Text or email Peter
         </a>
       </div>
       <div style="margin-top:8px;font-size:10px;color:var(--text-dim);">
-        The email button opens a pre-filled message to Peter with your current stop, next leg, and departure window &mdash; just describe what you're seeing in passageweather.com and hit send.
+        Opens a pre-filled message to Peter with your current stop and departure window &mdash; handy if you want to give him a heads-up on where you are or share what you&rsquo;re seeing in PassageWeather.
       </div>
     </div>
   </div>
@@ -573,8 +573,8 @@
     </div>
     <div class="note-rick" style="margin-top:0;">
       <div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes &mdash; Coinjock overnight</div>
-      <strong>Midway Marina &middot; (252) 453-3271</strong> &mdash; dock is on the <strong>west side</strong> of the channel.<br>
-      <strong>Call ahead and order the prime rib before you arrive</strong> &mdash; it won&rsquo;t be ready if you don&rsquo;t.<br>
+      <strong>Coinjock Marina &middot; (252) 453-3271</strong> &mdash; dock is on the <strong>east side</strong> of the channel &mdash; restaurant is right there.<br>
+      <strong>Call ahead and order the prime rib before you arrive</strong> &mdash; it won&rsquo;t be ready if you don&rsquo;t. Two sizes: 16 oz and 32 oz.<br>
       &#x26A0;&#xFE0F; <strong>Tip the dock hands in cash &mdash; do not tip on the credit card machine.</strong>
     </div>
     <div class="cards">
@@ -619,8 +619,8 @@
         <tbody>
           <tr>
             <td>North Landing Bridge</td>
-            <td>On demand</td>
-            <td>Target 7:30 AM &middot; depart Coinjock at 6:05 AM at 26 kts &middot; call Ch 13</td>
+            <td>On the hour &amp; half hour</td>
+            <td>Target 7:30 AM &middot; depart Coinjock at 6:05 AM at 26 kts &middot; call Ch 13 &middot; ⚠️ <em>Some sources say on-demand &mdash; confirm with Coinjock Marina staff over dinner the night before, or call the bridge direct on Ch 13</em> &middot; <a href="https://coinjockmarina.com/coinjock-nc-icw-dockage/" target="_blank" style="color:#7dd3fc;">Coinjock bridge schedule page</a></td>
           </tr>
           <tr>
             <td>Centerville Turnpike Bridge</td>
@@ -815,7 +815,7 @@ const STOPS = [
   { name: 'Montauk NY',          next: 'Nantucket MA', nm: 105, seg: 7 },
 ];
 
-const PLANNER_EMAIL = 'petetech@mac.com'; // ← UPDATE with your actual email
+const PLANNER_EMAIL = 'peter@example.com'; // ← UPDATE with your actual email
 
 let currentStopIdx = -1;
 let currentWindowDays = -1;
@@ -918,7 +918,7 @@ function updatePlanner() {
   } else if(currentStopIdx === 2) { // Charleston
     notes = depAdj + 'heading to <strong>Southport South Harbour Village Marina (~145 nm, ~' + hrsWhole + ' hrs)</strong>. Easy day &mdash; call Bill Gregory at (910) 454-7486. Italian restaurant at the marina, Home Run Place north of the bridge.';
   } else if(currentStopIdx === 3 || currentStopIdx === 4) { // Southport or Morehead
-    notes = depAdj + 'heading to <strong>Coinjock overnight (~' + stop.nm + ' nm, ~' + hrsWhole + ' hrs)</strong>. Depart early &mdash; cross Pamlico before noon. <strong>Call Midway Marina (252) 453-3271 and order the prime rib before you arrive. Dock is on the west side. Tip dock hands in cash.</strong>';
+    notes = depAdj + 'heading to <strong>Coinjock overnight (~' + stop.nm + ' nm, ~' + hrsWhole + ' hrs)</strong>. Depart early &mdash; cross Pamlico before noon. <strong>Call Coinjock Marina (252) 453-3271 and order the prime rib before you arrive. Dock is on the east side (restaurant right there). Tip dock hands in cash.</strong>';
   } else if(currentStopIdx === 5) { // Coinjock
     notes = depAdj + 'heading to <strong>Norfolk Waterside Marina (~40 nm)</strong>. <strong>Depart 6:05 AM</strong> to make North Landing Bridge at 7:30 AM running 26 kts. VHF Ch 13 for all bridges. Great Bridge Lock opens northbound on the hour. Waterside Marina: (757) 625-3625.';
   } else if(currentStopIdx === 6) { // Norfolk
@@ -942,16 +942,16 @@ function sendEmail() {
   const nextLeg = stop ? stop.next : 'next leg';
   const nm = stop ? stop.nm : '?';
 
-  const subject = encodeURIComponent('Free Trade — Passage Recommendation: ' + stopName + ' \u2192 ' + nextLeg);
+  const subject = encodeURIComponent('Free Trade — ' + stopName + ' \u2192 ' + nextLeg);
   const body = encodeURIComponent(
     'Hi Peter,\n\n' +
-    'I\'m currently at: ' + stopName + '\n' +
+    'Just a heads-up on where I am:\n\n' +
+    'Current stop: ' + stopName + '\n' +
     'Next leg: ' + nextLeg + ' (~' + nm + ' nm)\n' +
     'Planning to depart: ' + winLabel + '\n' +
     'Cruise speed: ' + speed + ' kts\n\n' +
-    'Here\'s what I\'m seeing in PassageWeather / conditions:\n' +
+    'PassageWeather is showing:\n' +
     '[describe what you see here]\n\n' +
-    'What do you think?\n\n' +
     'Rick\nFree Trade'
   );
 
