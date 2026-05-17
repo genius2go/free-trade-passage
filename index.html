@@ -313,7 +313,7 @@
       </div>
 
       <div class="planner-actions">
-        <a class="planner-btn btn-pw" href="https://www.passageweather.com" target="_blank" id="pp-pw-btn">
+        <a class="planner-btn btn-pw" href="#" target="_blank" id="pp-pw-btn" onclick="return openPW()">
           &#x1F30A; passageweather.com
         </a>
         <a class="planner-btn btn-email" href="#" id="pp-email-btn" onclick="return sendEmail()">
@@ -891,34 +891,6 @@ function updatePlanner() {
   stopNameEl.textContent = stop.name;
   contextEl.textContent = stop.name + ' \u2192 ' + stop.next;
 
-  // PassageWeather regional deep links
-  const PW_REGIONS = [
-    'https://www.passageweather.com/maps/florida/m_region.htm',      // 0 Palm Beach
-    'https://www.passageweather.com/maps/florida/m_region.htm',      // 1 St. Augustine
-    'https://www.passageweather.com/maps/chesdel/m_region.htm',      // 2 Charleston (closest useful region)
-    'https://www.passageweather.com/maps/chesdel/m_region.htm',      // 3 Southport
-    'https://www.passageweather.com/maps/chesdel/m_region.htm',      // 4 Morehead City
-    'https://www.passageweather.com/maps/chesdel/m_region.htm',      // 5 Coinjock
-    'https://www.passageweather.com/maps/chesdel/m_region.htm',      // 6 Norfolk
-    'https://www.passageweather.com/maps/bermuda/m_region.htm',      // 7 Cape May → Nantucket offshore
-    'https://www.passageweather.com/maps/bermuda/m_region.htm',      // 8 Montauk → Nantucket
-  ];
-  const PW_LABELS = [
-    'FL region', 'FL region', 'Ches/Del region', 'Ches/Del region',
-    'Ches/Del region', 'Ches/Del region', 'Ches/Del region',
-    'Offshore NE region', 'Offshore NE region',
-  ];
-  const pwBtn = document.getElementById('pp-pw-btn');
-  if(pwBtn && currentStopIdx >= 0) {
-    const pwUrl = PW_REGIONS[currentStopIdx] || 'https://www.passageweather.com';
-    const pwLabel = PW_LABELS[currentStopIdx] || '';
-    pwBtn.href = pwUrl;
-    pwBtn.innerHTML = '&#x1F30A; PassageWeather &mdash; ' + pwLabel;
-  } else if(pwBtn) {
-    pwBtn.href = 'https://www.passageweather.com';
-    pwBtn.innerHTML = '&#x1F30A; passageweather.com';
-  }
-
   const speed = parseFloat(document.getElementById('pp-speed').value) || 26;
   const hrs = stop.nm / speed;
   const hrsWhole = Math.floor(hrs);
@@ -984,7 +956,23 @@ function sendEmail() {
 
   window.location.href = 'mailto:' + PLANNER_EMAIL + '?subject=' + subject + '&body=' + body;
   return false;
+}function openPW() {
+  const PW_URLS = [
+    'https://www.passageweather.com/maps/florida/m_region.htm',   // 0 Palm Beach
+    'https://www.passageweather.com/maps/florida/m_region.htm',   // 1 St. Augustine
+    'https://www.passageweather.com/maps/chesdel/m_region.htm',   // 2 Charleston
+    'https://www.passageweather.com/maps/chesdel/m_region.htm',   // 3 Southport
+    'https://www.passageweather.com/maps/chesdel/m_region.htm',   // 4 Morehead City
+    'https://www.passageweather.com/maps/chesdel/m_region.htm',   // 5 Coinjock
+    'https://www.passageweather.com/maps/chesdel/m_region.htm',   // 6 Norfolk
+    'https://www.passageweather.com/maps/bermuda/m_region.htm',   // 7 Cape May
+    'https://www.passageweather.com/maps/bermuda/m_region.htm',   // 8 Montauk
+  ];
+  const url = (currentStopIdx >= 0 && PW_URLS[currentStopIdx])
+    ? PW_URLS[currentStopIdx]
+    : 'https://www.passageweather.com';
+  window.open(url, '_blank');
+  return false;
 }
-</script>
-</body>
+
 </html>
