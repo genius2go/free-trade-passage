@@ -1047,7 +1047,14 @@ function nbCalc(){
   html+=bpRow('Arrive Norfolk Waterside Marina','\ud83c\udfc1','<strong>'+bpFmt(arrWS[0],arrWS[1])+'</strong>','slow',6);
   var resEl=document.getElementById('nb-resultBox');if(resEl)resEl.innerHTML=html;
   var sumCls=hasConflict?'warn':'go';
-  var sumMsg=hasConflict?'One or more bridges hit a rush-hour restriction. Try the '+(nbLock+1)+':00 lock instead.':'Leave Coinjock at <strong>'+bpFmt(depCoinjock[0],depCoinjock[1])+'</strong>. Make the '+bpFmt(LH,0)+' lock. Arrive Waterside ~<strong>'+bpFmt(arrWS[0],arrWS[1])+'</strong>.';
+  var earlyDep=bpSub(depCoinjock[0],depCoinjock[1],30);
+  var sumMsg=hasConflict
+    ?'One or more bridges hit a rush-hour restriction. Try the '+(nbLock+1)+':00 lock instead.'
+    :'<strong>Departure window \u2014 Coinjock to Waterside:</strong><br>'
+    +'&#x1F7E2; <strong>Earliest (buffer for traffic):</strong> '+bpFmt(earlyDep[0],earlyDep[1])+' &mdash; arrive early, wait on DPS. No stress.<br>'
+    +'&#x1F7E1; <strong>Sweet spot:</strong> '+bpFmt(depCoinjock[0],depCoinjock[1])+' &mdash; some cushion, makes the '+bpFmt(LH,0)+' lock comfortably.<br>'
+    +'&#x1F534; <strong>Latest (no traffic margin):</strong> '+bpFmt(bpAdd(depCoinjock[0],depCoinjock[1],15)[0],bpAdd(depCoinjock[0],depCoinjock[1],15)[1])+' &mdash; math only, assumes zero delays. Cutting it close.<br>'
+    +'<span style="font-size:10px;color:var(--text-dim);margin-top:4px;display:block;">ICW traffic will compress this window. Earlier is always better &mdash; DPS at bridges is free.</span>';
   var sumEl=document.getElementById('nb-summaryBox');if(sumEl)sumEl.innerHTML='<div class="bp-summary '+sumCls+'">'+sumMsg+'</div>';
   var missArr=bpAdd(arrWS[0],arrWS[1],60);var missEl=document.getElementById('nb-missBox');
   if(missEl)missEl.innerHTML='<div class="bp-miss"><strong>If you miss the '+bpFmt(LH,0)+' lock</strong> \u2014 DPS on in staging. Next northbound lock at <strong>'+bpFmt(LH+1,0)+'</strong>. Arrive Waterside ~<strong>'+bpFmt(missArr[0],missArr[1])+'</strong>. Still an easy morning \u2014 call Waterside to confirm your slip.</div>';
@@ -1097,7 +1104,14 @@ function sbBpCalc(){
   html+=bpRow('Arrive Coinjock Marina \u2014 east side','\ud83e\udd69','<strong>'+bpFmt(arrCoinjock[0],arrCoinjock[1])+'</strong>','slow',6);
   var resEl=document.getElementById('sb-resultBox');if(resEl)resEl.innerHTML=html;
   var sumCls=hasConflict?'warn':'go';
-  var sumMsg=hasConflict?'One or more bridges hit a rush-hour restriction. Try the '+(sbBpLock+1)+':30 lock instead.':'Leave Waterside at <strong>'+bpFmt(depWS[0],depWS[1])+'</strong>. Hit the :30 lock, clear all bridges. Arrive Coinjock ~<strong>'+bpFmt(arrCoinjock[0],arrCoinjock[1])+'</strong>.';
+  var earlyDepSB=bpSub(depWS[0],depWS[1],30);
+  var sumMsg=hasConflict
+    ?'One or more bridges hit a rush-hour restriction. Try the '+(sbBpLock+1)+':30 lock instead.'
+    :'<strong>Departure window \u2014 Waterside to Coinjock:</strong><br>'
+    +'&#x1F7E2; <strong>Earliest (buffer for traffic):</strong> '+bpFmt(earlyDepSB[0],earlyDepSB[1])+' &mdash; arrive early, wait on DPS. No stress.<br>'
+    +'&#x1F7E1; <strong>Sweet spot:</strong> '+bpFmt(depWS[0],depWS[1])+' &mdash; some cushion, makes the '+bpFmt(LH,LM)+' lock comfortably.<br>'
+    +'&#x1F534; <strong>Latest (no traffic margin):</strong> '+bpFmt(bpAdd(depWS[0],depWS[1],15)[0],bpAdd(depWS[0],depWS[1],15)[1])+' &mdash; math only, assumes zero delays. Cutting it close.<br>'
+    +'<span style="font-size:10px;color:var(--text-dim);margin-top:4px;display:block;">ICW traffic will compress this window. Earlier is always better &mdash; DPS at bridges is free.</span>';
   var sumEl=document.getElementById('sb-summaryBox');if(sumEl)sumEl.innerHTML='<div class="bp-summary '+sumCls+'">'+sumMsg+'</div>';
   var missArr=bpAdd(arrCoinjock[0],arrCoinjock[1],60);var missEl=document.getElementById('sb-missBox');
   if(missEl)missEl.innerHTML='<div class="bp-miss"><strong>If you miss the '+bpFmt(LH,LM)+' lock</strong> \u2014 DPS on in staging. Next southbound lock at <strong>'+bpFmt(LH+1,LM)+'</strong>. Arrive Coinjock ~<strong>'+bpFmt(missArr[0],missArr[1])+'</strong>. Still in time for prime rib \u2014 call ahead to confirm.</div>';
