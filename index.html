@@ -14,6 +14,35 @@
   --card-hover:rgba(255,255,255,0.08);--radius:10px;--radius-sm:6px;
 }
 body{background:var(--navy);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;font-size:15px;line-height:1.5;min-height:100vh;}
+/* DOCKWA BUTTON + SUB-SECTIONS */
+.dockwa-btn{display:inline-flex;align-items:center;gap:5px;background:rgba(13,148,136,0.18);border:1px solid rgba(13,148,136,0.5);color:var(--teal-light);font-size:11px;font-weight:700;padding:4px 11px;border-radius:14px;text-decoration:none;margin-left:6px;transition:all 0.15s;font-family:inherit;letter-spacing:0.02em;vertical-align:middle;}
+.dockwa-btn:hover{background:rgba(13,148,136,0.3);border-color:var(--teal-light);}
+.rick-tag{display:inline-block;font-size:10px;font-weight:600;color:var(--teal-light);background:rgba(13,148,136,0.12);border:1px solid rgba(13,148,136,0.3);padding:1px 7px;border-radius:10px;margin-left:8px;vertical-align:middle;letter-spacing:0.02em;}
+.tel-link{color:#7dd3fc;text-decoration:none;border-bottom:1px dotted rgba(125,211,252,0.4);}
+.tel-link:hover{border-bottom-color:#7dd3fc;}
+.sub-section{margin-top:12px;padding-top:10px;border-top:1px dashed rgba(255,255,255,0.08);}
+.sub-toggle{display:inline-block;font-size:11px;font-weight:600;color:var(--text-muted);cursor:pointer;user-select:none;-webkit-user-select:none;padding:3px 0;transition:color 0.15s;letter-spacing:0.02em;}
+.sub-toggle::before{content:"\25B8";display:inline-block;margin-right:6px;transition:transform 0.15s;font-size:9px;}
+.sub-toggle.open::before{transform:rotate(90deg);}
+.sub-toggle:hover{color:var(--text);}
+.sub-toggle.open{color:var(--teal-light);}
+.sub-body{display:none;margin-top:10px;padding:10px 12px;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.05);border-radius:var(--radius-sm);}
+.sub-body.open{display:block;}
+.cont-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:var(--radius-sm);padding:10px 12px;margin-bottom:8px;}
+.cont-card:last-child{margin-bottom:0;}
+.cont-marina{font-size:12px;font-weight:600;color:var(--text);margin-bottom:3px;}
+.cont-meta{font-size:11px;color:var(--text-muted);line-height:1.55;}
+.cont-meta strong{color:var(--text);}
+.cont-actions{margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+.town-block{margin-bottom:11px;}
+.town-block:last-child{margin-bottom:0;}
+.town-block-title{font-size:11px;font-weight:700;color:var(--text);margin-bottom:4px;letter-spacing:0.03em;}
+.town-block-body{font-size:12px;color:var(--text-muted);line-height:1.55;}
+.town-block-body strong{color:var(--text);}
+.rick-quote{color:#fbbf24;font-style:italic;}
+.rick-quote::before{content:"\201C";}
+.rick-quote::after{content:"\201D";}
+.town-source{font-size:10px;color:var(--text-dim);font-style:italic;margin-top:6px;}
 /* TOPBAR */
 .topbar{background:var(--navy-mid);border-bottom:1px solid var(--border);padding:10px 16px;position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:10px;}
 .topbar-title{font-size:13px;font-weight:600;flex:1;}
@@ -253,7 +282,7 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
 <div class="dep-banner nb nb-flex">
   <span style="font-size:18px">&#9875;</span>
   <div><div class="dep-date">Northbound Passage &mdash; Free Trade</div><div class="dep-detail">Palm Beach, FL &rarr; Nantucket, MA &middot; Capt. Rick</div></div>
-  <div class="dep-arrival">Target: <span>6&ndash;7 days underway</span></div>
+  <div class="dep-arrival">Target: <span>7 days underway</span></div>
 </div>
 <div class="dep-banner sb sb-flex">
   <span style="font-size:18px">&#9875;</span>
@@ -265,14 +294,15 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
      PACE OVERVIEW — NB
 ═══════════════════════════════════════════════════ -->
 <div class="pace-box nb-only">
-  <div class="pace-box-title">&#x1F4C5; Northbound &mdash; realistic 6&ndash;7 day pace</div>
+  <div class="pace-box-title">&#x1F4C5; Northbound &mdash; realistic 7-day pace</div>
   <div class="pace-grid">
     <div class="pace-day"><div class="pace-day-num">Day 1</div><div class="pace-day-leg">Palm Beach &rarr; St. Augustine</div><div class="pace-day-dist">~185 nm &middot; ~6 hrs &middot; all outside</div></div>
     <div class="pace-day"><div class="pace-day-num">Day 2</div><div class="pace-day-leg">St. Augustine &rarr; Charleston</div><div class="pace-day-dist">~165 nm &middot; comfortable full day</div></div>
     <div class="pace-day"><div class="pace-day-num">Day 3</div><div class="pace-day-leg">Charleston &rarr; Southport</div><div class="pace-day-dist">~145 nm &middot; easy day, in early</div></div>
-    <div class="pace-day"><div class="pace-day-num">Day 4</div><div class="pace-day-leg">Southport &rarr; Coinjock overnight</div><div class="pace-day-dist">~110 nm &middot; prime rib tonight &#x1F969;</div></div>
-    <div class="pace-day"><div class="pace-day-num">Day 5</div><div class="pace-day-leg">Coinjock &rarr; Norfolk &rarr; Cape May</div><div class="pace-day-dist">~225 nm &middot; split if preferred</div></div>
-    <div class="pace-day"><div class="pace-day-num">Day 6&ndash;7</div><div class="pace-day-leg">Cape May &rarr; Nantucket</div><div class="pace-day-dist">~225 nm direct &middot; or via Montauk</div></div>
+    <div class="pace-day"><div class="pace-day-num">Day 4</div><div class="pace-day-leg">Southport &rarr; Morehead City</div><div class="pace-day-dist">~75 nm &middot; outside via Masonboro, or inside</div></div>
+    <div class="pace-day"><div class="pace-day-num">Day 5</div><div class="pace-day-leg">Morehead City &rarr; Coinjock overnight</div><div class="pace-day-dist">~110 nm &middot; prime rib tonight &#x1F969;</div></div>
+    <div class="pace-day"><div class="pace-day-num">Day 6</div><div class="pace-day-leg">Coinjock &rarr; Norfolk &rarr; Cape May</div><div class="pace-day-dist">~225 nm &middot; split if preferred</div></div>
+    <div class="pace-day"><div class="pace-day-num">Day 7</div><div class="pace-day-leg">Cape May &rarr; Nantucket</div><div class="pace-day-dist">~225 nm direct &middot; or via Montauk</div></div>
   </div>
   <div style="margin-top:10px;font-size:11px;color:var(--text-muted);">Pamlico Sound is worth a glance but rarely a real issue on a 55-footer. The offshore window out of Cape May is the key decision. <strong style="color:var(--text);">~400 nm range means fuel is never a limiter on any single leg.</strong></div>
 </div>
@@ -491,12 +521,58 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
   <div class="seg-header"><div class="seg-dot dot-teal">&#x2461;</div><div class="seg-info"><div class="seg-name">Palm Beach &rarr; St. Augustine &mdash; City Marina</div><div class="seg-route">Day 1 &middot; all outside &middot; ~6 hrs at cruise &middot; City Docks downtown</div></div><span class="seg-dist">~185 nm</span></div>
   <span class="seg-toggle" onclick="toggleSeg('nb-sb1',this)">show notes + resources &#9662;</span>
   <div class="seg-body" id="nb-sb1">
-    <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div><strong>St. Augustine City Docks &middot; (904) 825-1026</strong><br>About an 8-hour run from Ft. Lauderdale at cruise speed &mdash; call ahead for your slip. Downtown location, easy walking to everything.</div>
+    <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div><strong>St. Augustine Municipal Marina &middot; <a class="tel-link" href="tel:+19048251026">(904) 825-1026</a></strong><a class="dockwa-btn" href="https://dockwa.com/explore/destination/7ec7q5-st-augustine-municipal-marina" target="_blank">&#x1F4C5; Book on Dockwa</a><br>About an 8-hour run from Ft. Lauderdale at cruise speed &mdash; call ahead for your slip. Downtown location right by the Bridge of Lions, easy walking to everything.</div>
     <div class="note"><strong>Gulf Stream runs close to shore between Palm Beach and Cape Canaveral.</strong> With any NE wind it stacks up fast. Ft. Pierce (~110 nm) is a natural mid-leg contingency. <strong>St. Augustine bar: cross at or near high tide &mdash; work backwards from tide tables when planning departure.</strong></div>
     <div class="cards">
       <a class="card" href="https://captaingeorgia.com/fl-port-weather" target="_blank"><div class="card-icon">&#x2693;</div><div class="card-title">FL Port Weather</div><div class="card-sub">Live buoy data for the Palm Beach departure zone</div><span class="card-badge badge-cg">Departure check</span></a>
       <a class="card" href="https://www.ndbc.noaa.gov/station_page.php?station=41047" target="_blank"><div class="card-icon">&#x1F4E1;</div><div class="card-title">SE Florida Buoy (41047)</div><div class="card-sub">Offshore conditions &mdash; Gulf Stream watch</div></a>
       <a class="card" href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=8720218" target="_blank"><div class="card-icon">&#x1F30A;</div><div class="card-title">St. Augustine Inlet Tides</div><div class="card-sub">Cross the bar near high tide &mdash; plan departure around this</div><span class="card-badge badge-fuel">Timing matters</span></a>
+    </div>
+    <div class="sub-section">
+      <span class="sub-toggle" onclick="toggleSub('nb-cont-1',this)">Contingency stops along this leg</span>
+      <div class="sub-body" id="nb-cont-1">
+        <div class="cont-card">
+          <div class="cont-marina">Fort Pierce City Marina</div>
+          <div class="cont-meta">~110 nm from Palm Beach &middot; <strong>Natural mid-leg bailout</strong> if the Gulf Stream stacks up with NE wind. Often called the best all-weather inlet on the East Coast. Downtown, walking to restaurants, easy in/out. <a class="tel-link" href="tel:+17724641245">(772) 464-1245</a></div>
+          <div class="cont-actions"><a class="dockwa-btn" href="https://dockwa.com/explore/destination/qpcwql-fort-pierce-city-marina" target="_blank">&#x1F4C5; Book on Dockwa</a></div>
+          <div class="sub-section">
+            <span class="sub-toggle" onclick="toggleSub('ct-fp-nb',this)">Around Fort Pierce &mdash; things to do</span>
+            <div class="sub-body" id="ct-fp-nb">
+              <div class="town-block">
+                <div class="town-block-title">&#x1F37D; Restaurants &mdash; walking distance</div>
+                <div class="town-block-body">Cobb&rsquo;s Landing right at the marina &mdash; live music, ask the marina office for the boater discount coupon. 2nd Street Bistro on the waterfront. Sailfish Brewing Co. for craft beer. 12A Buoy for seafood. Manatee Cafe nearby for breakfast/lunch.</div>
+              </div>
+              <div class="town-block">
+                <div class="town-block-title">&#x1F327;&#xFE0F; Weather hold &mdash; what to do</div>
+                <div class="town-block-body">National Navy SEAL Museum on Hutchinson Island is the only one of its kind &mdash; half-day visit, short Uber. Saturday morning Downtown Farmers Market is one of the best in Florida. Manatee Observation Center if you&rsquo;re here in winter (free, manatees in the warm-water discharge). Walkable historic downtown.</div>
+              </div>
+              <div class="town-block">
+                <div class="town-block-title">&#x1F4CD; About this place</div>
+                <div class="town-block-body">Founded 1838. The &ldquo;Treasure Coast&rdquo; name comes from a 1715 Spanish fleet that sank off this stretch &mdash; gold and silver still wash ashore after storms. The Fort Pierce Inlet has been called the best all-weather inlet on the East Coast.</div>
+              </div>
+              <div class="town-source">Picks from Dockwa reviews + local knowledge.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sub-section">
+      <span class="sub-toggle" onclick="toggleSub('nb-town-1',this)">Around St. Augustine &mdash; things to do</span>
+      <div class="sub-body" id="nb-town-1">
+        <div class="town-block">
+          <div class="town-block-title">&#x1F37D; Restaurants &mdash; walking distance from City Docks</div>
+          <div class="town-block-body">O.C. White&rsquo;s right across the street (classic Florida seafood, has been there forever). Harry&rsquo;s a block north toward the fort (Creole/Cajun, courtyard seating). The Floridian for Southern. Columbia Restaurant on St. George St. for Spanish/Cuban &mdash; the oldest restaurant in Florida.</div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F327;&#xFE0F; Weather hold &mdash; what to do</div>
+          <div class="town-block-body">Castillo de San Marcos is a 5-minute walk &mdash; Spanish stone fort from 1672, oldest masonry fort in the U.S. Stroll pedestrian St. George Street (shops, restaurants, galleries). Flagler College tour (former Ponce de Leon Hotel, Tiffany glass). Lightner Museum just across the bridge. Ghost tours after dark are surprisingly good.</div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F4CD; About this place</div>
+          <div class="town-block-body">Founded by the Spanish in 1565 &mdash; the oldest continuously inhabited European settlement in the United States. 450+ years of seafaring history. The Bridge of Lions next to your slip opened in 1927.</div>
+        </div>
+        <div class="town-source">Picks from local knowledge + Dockwa reviews. Add Rick&rsquo;s specific recommendations here when you have them.</div>
+      </div>
     </div>
   </div>
 </div>
@@ -505,12 +581,81 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
   <div class="seg-header"><div class="seg-dot dot-teal">&#x2462;</div><div class="seg-info"><div class="seg-name">St. Augustine &rarr; Charleston &mdash; Harborage at Ashley Marina</div><div class="seg-route">Day 2 &middot; outside &middot; Brunswick/St. Simons GA is your mid-leg backup</div></div><span class="seg-dist">~165 nm</span></div>
   <span class="seg-toggle" onclick="toggleSeg('nb-sb2',this)">show notes + resources &#9662;</span>
   <div class="seg-body" id="nb-sb2">
-    <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div><strong>Harborage at Ashley Marina &middot; (843) 722-1996</strong><br>&ldquo;Running 30 knots with one foot in the sand&rdquo; &mdash; fast outside leg, close to shore. Call ahead.</div>
+    <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div><strong>Harborage at Ashley Marina &middot; <a class="tel-link" href="tel:+18437221996">(843) 722-1996</a></strong><a class="dockwa-btn" href="https://dockwa.com/explore/destination/mnc3m9-the-harborage-at-ashley-marina" target="_blank">&#x1F4C5; Book on Dockwa</a><br><span class="rick-quote">Running 30 knots with one foot in the sand</span> &mdash; fast outside leg, close to shore. Call ahead.</div>
     <div class="note-green">Brunswick/St. Simons GA (~130 nm) is an easy contingency. <strong>Charleston tidal range is 5+ ft &mdash; real current in the harbor on arrival. Check timing.</strong></div>
     <div class="cards">
       <a class="card" href="https://www.ndbc.noaa.gov/station_page.php?station=41004" target="_blank"><div class="card-icon">&#x1F4E1;</div><div class="card-title">SE Atlantic Buoy (41004)</div><div class="card-sub">Offshore between Savannah and Charleston</div><span class="card-badge badge-outside">Mid-leg check</span></a>
       <a class="card" href="https://captaingeorgia.com/south-east-port-weather" target="_blank"><div class="card-icon">&#x1F4E1;</div><div class="card-title">SE Port Weather</div><div class="card-sub">Charleston buoy and harbor conditions</div><span class="card-badge badge-cg">Captain Georgia</span></a>
       <a class="card" href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=8665530" target="_blank"><div class="card-icon">&#x1F30A;</div><div class="card-title">Charleston Tides</div><div class="card-sub">5+ ft mean range &mdash; plan entry around the current</div></a>
+    </div>
+    <div class="sub-section">
+      <span class="sub-toggle" onclick="toggleSub('nb-cont-2',this)">Contingency stops along this leg</span>
+      <div class="sub-body" id="nb-cont-2">
+        <div class="cont-card">
+          <div class="cont-marina">Brunswick Landing Marina &mdash; Brunswick, GA</div>
+          <div class="cont-meta">~130 nm from St. Augustine &middot; <strong>Easy mid-leg bailout.</strong> Called the &ldquo;Velcro Marina&rdquo; &mdash; once you arrive, you don&rsquo;t want to leave. Strong liveaboard community, free laundry, walking to downtown. <a class="tel-link" href="tel:+19122629264">(912) 262-9264</a></div>
+          <div class="cont-actions"><a class="dockwa-btn" href="https://dockwa.com/explore/destination/3gcxe6-brunswick-landing-marina" target="_blank">&#x1F4C5; Book on Dockwa</a></div>
+          <div class="sub-section">
+            <span class="sub-toggle" onclick="toggleSub('ct-br-nb',this)">Around Brunswick &mdash; things to do</span>
+            <div class="sub-body" id="ct-br-nb">
+              <div class="town-block">
+                <div class="town-block-title">&#x1F37D; Restaurants &mdash; walking distance</div>
+                <div class="town-block-body">Cooter Brown&rsquo;s is the Dockwa-cruiser favorite. Many downtown restaurants offer 10% off for marina guests. Indigo Coastal Shanty for fusion. Marshside Grill for Southern. Marina hosts complimentary happy hour Mon/Wed/Fri with the cruising community (free beer on tap, bacon nights).</div>
+              </div>
+              <div class="town-block">
+                <div class="town-block-title">&#x1F327;&#xFE0F; Weather hold &mdash; what to do</div>
+                <div class="town-block-body">First Friday street festival if it lines up with your stay (food trucks, art, vendors). Mary Ross Waterfront Park. Old Town Brunswick Historic District. Marina has free bikes &mdash; explore the town easily. Day trips: Jekyll Island (driveable, beaches and historic district), St. Simons Island, Cumberland Island National Seashore.</div>
+              </div>
+              <div class="town-block">
+                <div class="town-block-title">&#x1F4CD; About this place</div>
+                <div class="town-block-body">Founded 1771. Former U.S. Navy hurricane hole during WWII &mdash; that&rsquo;s why insurance companies love it (most won&rsquo;t insure boats south of here during hurricane season). Locally known as the &ldquo;Velcro Marina&rdquo; &mdash; once you arrive, you don&rsquo;t want to leave.</div>
+              </div>
+              <div class="town-source">Picks from Dockwa reviews.</div>
+            </div>
+          </div>
+        </div>
+        <div class="cont-card">
+          <div class="cont-marina">Harbour Town Yacht Basin &mdash; Hilton Head Island, SC <span class="rick-tag">&#x1F4CB; In Rick&rsquo;s notes</span></div>
+          <div class="cont-meta">~150 nm from St. Augustine &middot; <strong>Weather bailout or fuel stop.</strong> Sea Pines Resort marina, multiple restaurants, walking to Calibogue Sound. Harbourmaster Leslie. <a class="tel-link" href="tel:+18433638335">(843) 363-8335</a> &middot; <span class="rick-quote">Great food at the Country Club, walking distance</span> (Rick)</div>
+          <div class="cont-actions"><a class="dockwa-btn" href="https://dockwa.com/explore/destination/eyc8jr-harbour-town-yacht-basin" target="_blank">&#x1F4C5; Book on Dockwa</a></div>
+          <div class="sub-section">
+            <span class="sub-toggle" onclick="toggleSub('ct-hh-nb',this)">Around Hilton Head &mdash; things to do</span>
+            <div class="sub-body" id="ct-hh-nb">
+              <div class="town-block">
+                <div class="town-block-title">&#x1F37D; Restaurants</div>
+                <div class="town-block-body"><span class="rick-quote">Great food at the Country Club, walking distance</span> &mdash; Rick means the Sea Pines Country Club. <strong>On-site at Harbour Town:</strong> Links (American grill overlooking the golf course), Coast (waterfront seafood), Fraser&rsquo;s Tavern (casual), The Quarterdeck (on the harbor).</div>
+              </div>
+              <div class="town-block">
+                <div class="town-block-title">&#x1F327;&#xFE0F; Weather hold &mdash; what to do</div>
+                <div class="town-block-body">Walk up the iconic red-and-white Harbour Town Lighthouse for the view (90 ft, small museum inside). Sea Pines Forest Preserve has trails. Beaches via shuttle or bike. Excellent bike paths throughout Sea Pines &mdash; rentals at the marina. The Harbour Town Golf Links is home of the RBC Heritage PGA Tour event.</div>
+              </div>
+              <div class="town-block">
+                <div class="town-block-title">&#x1F4CD; About this place</div>
+                <div class="town-block-body">Sea Pines was the original master-planned resort community on the East Coast (1956). Harbour Town&rsquo;s design was inspired by Portofino, Italy. The lighthouse isn&rsquo;t a working navigational aid &mdash; it was built as a marketing feature in 1969 and became one of the most photographed lighthouses in the world.</div>
+              </div>
+              <div class="town-source">Country Club from Rick&rsquo;s notes. Other restaurants from Dockwa marina listing.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sub-section">
+      <span class="sub-toggle" onclick="toggleSub('nb-town-2',this)">Around Charleston &mdash; things to do</span>
+      <div class="sub-body" id="nb-town-2">
+        <div class="town-block">
+          <div class="town-block-title">&#x1F37D; Restaurants &mdash; walking, or short Uber</div>
+          <div class="town-block-body">Walking from the marina to Market St. takes about 2 miles (~$10 Uber). Husk for elevated Southern, Halls Chophouse for steaks, FIG for the Charleston food-scene experience. Publix is a ½ mile walk for provisioning.</div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F327;&#xFE0F; Weather hold &mdash; what to do</div>
+          <div class="town-block-body">Walk the Battery and look at the antebellum mansions. Rainbow Row. Charleston City Market. Patriots Point with the USS Yorktown across the bridge in Mount Pleasant (Uber). Fort Sumter ferry from Liberty Square.</div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F4CD; About this place</div>
+          <div class="town-block-body">Founded 1670. The Civil War started here when Confederate batteries fired on Fort Sumter in 1861. The historic district is largely intact &mdash; many buildings predate the Revolution.</div>
+        </div>
+        <div class="town-source">Picks from local knowledge + marina reviews. Add Rick&rsquo;s specific recommendations here.</div>
+      </div>
     </div>
   </div>
 </div>
@@ -519,33 +664,100 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
   <div class="seg-header"><div class="seg-dot dot-amber">&#x2463;</div><div class="seg-info"><div class="seg-name">Charleston &rarr; Southport &mdash; South Harbour Village Marina</div><div class="seg-route">Day 3 &middot; outside &middot; easy day, in by early afternoon &middot; Cape Fear River approach</div></div><span class="seg-dist">~145 nm</span></div>
   <span class="seg-toggle" onclick="toggleSeg('nb-sb3',this)">show notes + resources &#9662;</span>
   <div class="seg-body" id="nb-sb3">
-    <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div><strong>South Harbour Village Marina &middot; (910) 454-7486</strong><br>Ask for <strong>Bill Gregory</strong>, Manager &middot; Cell: <strong>(910) 352-8469</strong><br><strong>Dinner:</strong> Great Italian at the marina &middot; Local favorite: <strong>Home Run Place</strong>, north of the bridge.</div>
+    <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div><strong>Safe Harbor South Harbour Village &middot; <a class="tel-link" href="tel:+19104547486">(910) 454-7486</a></strong><a class="dockwa-btn" href="https://dockwa.com/explore/destination/d9c1jvw-safe-harbor-south-harbour-village" target="_blank">&#x1F4C5; Book on Dockwa</a><br>Ask for <strong>Bill Gregory</strong>, Manager &middot; Cell: <strong><a class="tel-link" href="tel:+19103528469">(910) 352-8469</a></strong><br><strong>Dinner:</strong> <span class="rick-quote">Great Italian place at the marina</span> &mdash; that&rsquo;s <strong>Joseph&rsquo;s Italian Bistro</strong>, right at the top of the dock. Local favorite: <strong>Home Run Place</strong>, north of the bridge (Rick&rsquo;s pick). <strong>Rusty Hooks</strong> is the other on-site restaurant for American/seafood with live music.</div>
     <div class="cards">
       <a class="card" href="https://captaingeorgia.com/south-east-port-weather" target="_blank"><div class="card-icon">&#x1F4E1;</div><div class="card-title">SE Port Weather &mdash; SC/NC</div><div class="card-sub">Charleston through Wilmington buoy data</div><span class="card-badge badge-cg">Captain Georgia</span></a>
       <a class="card" href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=8658163" target="_blank"><div class="card-icon">&#x1F30A;</div><div class="card-title">Cape Fear River Tides</div><div class="card-sub">Strong tidal current on arrival</div></a>
+    </div>
+    <div class="sub-section">
+      <span class="sub-toggle" onclick="toggleSub('nb-town-3',this)">Around Southport &mdash; things to do</span>
+      <div class="sub-body" id="nb-town-3">
+        <div class="town-block">
+          <div class="town-block-title">&#x1F37D; Restaurants</div>
+          <div class="town-block-body"><strong>On site at the marina:</strong> Joseph&rsquo;s Italian Bistro (Rick&rsquo;s &ldquo;great Italian place&rdquo;) and Rusty Hooks (American/seafood, live music most nights). <strong>Walking distance / short drive:</strong> Home Run Place north of the bridge per Rick. Downtown Southport historic waterfront has more options.</div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F327;&#xFE0F; Weather hold &mdash; what to do</div>
+          <div class="town-block-body">Walk the historic downtown Riverwalk along the Cape Fear River. Oak Island beaches are a 10-min drive (Uber). North Carolina Maritime Museum at Southport is small but worth the stop. Film buffs: this town was the setting for &ldquo;Safe Haven&rdquo; and other movies &mdash; you&rsquo;ll see the locations.</div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F4CD; About this place</div>
+          <div class="town-block-body">Town founded 1792 at the mouth of the Cape Fear River. Has an active commercial fishing fleet and the highest concentration of historic homes in coastal NC. Marina is one mile from town.</div>
+        </div>
+        <div class="town-source">Joseph&rsquo;s and Rusty Hooks confirmed from Dockwa marina listings. Home Run Place from Rick&rsquo;s notes.</div>
+      </div>
     </div>
   </div>
 </div>
 
 <div class="segment" id="nb-seg4">
-  <div class="seg-header"><div class="seg-dot dot-amber">&#x2464;</div><div class="seg-info"><div class="seg-name">Southport &rarr; Morehead City &rarr; Coinjock &mdash; overnight &#x1F969;</div><div class="seg-route">Day 4 &middot; Masonboro Inlet outside to Morehead &middot; inside via Neuse River &rarr; Pamlico &rarr; Coinjock</div></div><span class="seg-dist">~110 nm</span></div>
+  <div class="seg-header"><div class="seg-dot dot-amber">&#x2464;</div><div class="seg-info"><div class="seg-name">Southport &rarr; Morehead City &mdash; Morehead City Yacht Basin</div><div class="seg-route">Day 4 &middot; Outside via Masonboro Inlet (preferred) &middot; or inside ICW &ldquo;drag a foot in the sand&rdquo; if W wind offshore</div></div><span class="seg-dist">~75 nm</span></div>
   <span class="seg-toggle" onclick="toggleSeg('nb-sb4',this)">show notes + resources &#9662;</span>
   <div class="seg-body" id="nb-sb4">
-    <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div>ICW north to Wrightsville Beach, exit Masonboro Inlet, outside to Morehead City. Then inside via Neuse River to the outer banks, through the bridges, Currituck Sound to Coinjock.</div>
-    <div class="note-green"><strong>Pamlico Sound is a non-event on a 55-footer in normal conditions.</strong> Depart Morehead City early and cross before noon. <strong>Coinjock is tonight&rsquo;s destination &mdash; call ahead and order the prime rib before you arrive.</strong></div>
-    <div class="note-rick" style="margin-top:0"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes &mdash; Coinjock overnight</div><strong>Coinjock Marina &middot; (252) 453-3271</strong> &mdash; dock on the <strong>east side</strong> of the channel, restaurant right there. 16 oz or 32 oz prime rib &mdash; <strong>call ahead or it won&rsquo;t be ready.</strong><br>&#x26A0;&#xFE0F; <strong>Tip dock hands in cash &mdash; do not tip on the credit card machine.</strong></div>
+    <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div><strong>Morehead City Yacht Basin &middot; Dockmaster <a class="tel-link" href="tel:+12527266862">(252) 726-6862</a></strong><a class="dockwa-btn" href="https://dockwa.com/explore/destination/16cwdr-morehead-city-yacht-basin" target="_blank">&#x1F4C5; Book on Dockwa</a><br>Outside is the preferred route. <strong>If offshore is rough</strong>, the ICW route up to Morehead City is a nice full-day ride. <strong>If you have a westerly wind</strong> (calm near-shore), Rick&rsquo;s hybrid is the sweet spot: ICW from Southport past Cape Fear to Wrightsville Beach, exit Masonboro Inlet, then &ldquo;drag a foot in the sand&rdquo; close to the beach up to Morehead.</div>
+    <div class="note"><strong>Tomorrow is the long Pamlico day to Coinjock</strong> &mdash; rest up tonight. Top off fuel at Morehead so you depart in the morning ready to cross before the sea breeze builds.</div>
     <div class="cards">
-      <a class="card" href="https://www.ndbc.noaa.gov/station_page.php?station=41036" target="_blank"><div class="card-icon">&#x1F4E1;</div><div class="card-title">Pamlico Sound Buoy (41036)</div><div class="card-sub">Monitor conditions during the crossing</div></a>
-      <a class="card" href="https://www.navcen.uscg.gov/?pageName=lnmDistrict&region=05" target="_blank"><div class="card-icon">&#x26A0;&#xFE0F;</div><div class="card-title">USCG D5 &mdash; LNMs</div><div class="card-sub">Shoaling and buoy changes &mdash; check morning of</div><span class="card-badge badge-key">Check morning of</span></a>
-      <a class="card" href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=8651370" target="_blank"><div class="card-icon">&#x1F30A;</div><div class="card-title">Duck / Currituck Tides</div><div class="card-sub">Albemarle/Currituck Sound approach to Coinjock</div></a>
+      <a class="card" href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=8656483" target="_blank"><div class="card-icon">&#x1F30A;</div><div class="card-title">Wrightsville / Masonboro Tides</div><div class="card-sub">Time your Masonboro Inlet exit</div></a>
+      <a class="card" href="https://captaingeorgia.com/south-east-port-weather" target="_blank"><div class="card-icon">&#x1F4E1;</div><div class="card-title">SE Port Weather &mdash; NC</div><div class="card-sub">Wilmington and Beaufort buoy data</div><span class="card-badge badge-cg">Captain Georgia</span></a>
+      <a class="card" href="https://www.navcen.uscg.gov/?pageName=lnmDistrict&region=05" target="_blank"><div class="card-icon">&#x26A0;&#xFE0F;</div><div class="card-title">USCG D5 &mdash; LNMs</div><div class="card-sub">ICW advisories if going inside</div><span class="card-badge badge-key">Check morning of</span></a>
+    </div>
+    <div class="sub-section">
+      <span class="sub-toggle" onclick="toggleSub('nb-town-4',this)">Around Morehead City &mdash; things to do</span>
+      <div class="sub-body" id="nb-town-4">
+        <div class="town-block">
+          <div class="town-block-title">&#x1F37D; Restaurants &mdash; walking distance</div>
+          <div class="town-block-body">Marina is in historic downtown &mdash; over 20 restaurants within walking distance. The Ruddy Duck is the popular pick from cruisers. Sanitary Restaurant (yes, that&rsquo;s really the name) is the local institution &mdash; been there since 1938, classic NC seafood on the waterfront.</div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F327;&#xFE0F; Weather hold &mdash; what to do</div>
+          <div class="town-block-body">Walk across the bridge to Beaufort (about 1 mile) &mdash; it&rsquo;s the older, more interesting town. NC Maritime Museum on Front St. is excellent (Blackbeard&rsquo;s anchor and cannon from Queen Anne&rsquo;s Revenge are on display). Atlantic Beach is a short Uber for sand and surf. Bring quarters &mdash; the marina rents a $20/2-hr courtesy car for provisioning runs.</div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F4CD; About this place</div>
+          <div class="town-block-body">Working waterfront, founded 1857. Hemingway used to stay here. Original home of the Big Rock Blue Marlin Tournament (still runs every June). The yacht basin sits on the prime locale picked nearly a century ago &mdash; first marina on the Crystal Coast.</div>
+        </div>
+        <div class="town-source">Picks from marina reviews + local knowledge. Add Rick&rsquo;s specific picks here.</div>
+      </div>
     </div>
   </div>
 </div>
 
 <div class="segment" id="nb-seg5">
-  <div class="seg-header"><div class="seg-dot dot-purple">&#x2465;</div><div class="seg-info"><div class="seg-name">Coinjock &rarr; Norfolk &mdash; Waterside Marina</div><div class="seg-route">Day 5 morning &middot; Virginia Cut &rarr; Great Bridge Lock (opens on the hour, NB) &rarr; Elizabeth River &rarr; Hampton Roads</div></div><span class="seg-dist">~40 nm</span></div>
-  <span class="seg-toggle" onclick="toggleSeg('nb-sb5',this)">show bridge timing planner &#9662;</span>
+  <div class="seg-header"><div class="seg-dot dot-amber">&#x2465;</div><div class="seg-info"><div class="seg-name">Morehead City &rarr; Coinjock &mdash; overnight &#x1F969;</div><div class="seg-route">Day 5 &middot; Inside via Neuse River &rarr; Pamlico Sound &rarr; Alligator River &rarr; Albemarle &rarr; Coinjock &middot; ~6&ndash;7 hrs ICW</div></div><span class="seg-dist">~110 nm</span></div>
+  <span class="seg-toggle" onclick="toggleSeg('nb-sb5',this)">show notes + resources &#9662;</span>
   <div class="seg-body" id="nb-sb5">
+    <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div>Inside the whole way. From Morehead City, go ICW to the Neuse River, then toward the Outer Banks, after the bridges. Continue through Currituck Sound to the ICW northbound. <strong>Sticking with the ICW &mdash; beware of slow sailboats.</strong></div>
+    <div class="note-green"><strong>Pamlico Sound is a non-event on a 55-footer in normal conditions.</strong> Depart Morehead City early and cross before noon. <strong>Coinjock is tonight&rsquo;s destination &mdash; call ahead and order the prime rib before you arrive.</strong></div>
+    <div class="note-rick" style="margin-top:0"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes &mdash; Coinjock overnight</div><strong>Coinjock Marina &middot; <a class="tel-link" href="tel:+12524533271">(252) 453-3271</a></strong><a class="dockwa-btn" href="https://dockwa.com/explore/destination/pwc4xj-coinjock-marina" target="_blank">&#x1F4C5; Book on Dockwa</a><br>Dock on the <strong>east side</strong> of the channel, restaurant right there. <strong>Do not stay on the west docks</strong> &mdash; you can&rsquo;t get to the restaurant without a tender. 16 oz or 32 oz prime rib &mdash; <strong>call ahead or it won&rsquo;t be ready.</strong><br>&#x26A0;&#xFE0F; <strong>Tip dock hands in cash &mdash; do not tip on the credit card machine</strong> (it adds 20% to the whole bill).</div>
+    <div class="cards">
+      <a class="card" href="https://www.ndbc.noaa.gov/station_page.php?station=41036" target="_blank"><div class="card-icon">&#x1F4E1;</div><div class="card-title">Pamlico Sound Buoy (41036)</div><div class="card-sub">Monitor conditions during the crossing</div></a>
+      <a class="card" href="https://www.navcen.uscg.gov/?pageName=lnmDistrict&region=05" target="_blank"><div class="card-icon">&#x26A0;&#xFE0F;</div><div class="card-title">USCG D5 &mdash; LNMs</div><div class="card-sub">Shoaling and buoy changes &mdash; check morning of</div><span class="card-badge badge-key">Check morning of</span></a>
+      <a class="card" href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=8651370" target="_blank"><div class="card-icon">&#x1F30A;</div><div class="card-title">Duck / Currituck Tides</div><div class="card-sub">Albemarle/Currituck Sound approach to Coinjock</div></a>
+    </div>
+    <div class="sub-section">
+      <span class="sub-toggle" onclick="toggleSub('nb-town-5',this)">Around Coinjock &mdash; things to do</span>
+      <div class="sub-body" id="nb-town-5">
+        <div class="town-block">
+          <div class="town-block-title">&#x1F37D; Restaurants</div>
+          <div class="town-block-body">The Coinjock Marina Restaurant is essentially the only game in town &mdash; and that&rsquo;s a feature, not a bug. Home of the famous 32oz prime rib since 1978. Local seafood too. <strong>Call ahead or you won&rsquo;t get the prime rib.</strong></div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F327;&#xFE0F; Weather hold &mdash; what to do</div>
+          <div class="town-block-body">Honestly &mdash; there isn&rsquo;t much. Coinjock is the marina, plus a hardware store, barbershop, and post office. If you&rsquo;re stuck more than a night, rent a car (Norfolk is an hour north). On the upside: the new marina store is well-stocked, bathrooms are clean, and there&rsquo;s live music Fridays in season.</div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F4CD; About this place</div>
+          <div class="town-block-body">ICW Mile Marker 50. The name comes from the local indigenous word for the berries that still grow here. The marina has been a transient yachtsman favorite for decades &mdash; if you&rsquo;re going north or south on the ICW and not taking the Dismal Swamp route, you&rsquo;re breaking your run here.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="segment" id="nb-seg6">
+  <div class="seg-header"><div class="seg-dot dot-purple">&#x2466;</div><div class="seg-info"><div class="seg-name">Coinjock &rarr; Norfolk &mdash; Waterside Marina</div><div class="seg-route">Day 6 morning &middot; Virginia Cut &rarr; Great Bridge Lock (opens on the hour, NB) &rarr; Elizabeth River &rarr; Hampton Roads</div></div><span class="seg-dist">~40 nm</span></div>
+  <span class="seg-toggle" onclick="toggleSeg('nb-sb6',this)">show bridge timing planner &#9662;</span>
+  <div class="seg-body" id="nb-sb6">
     <div class="note"><strong>Plan this leg the evening before at Coinjock.</strong> Great Bridge Lock opens northbound on the hour. Work backwards from the lock hour you want. Elizabeth River is 6 kts no-wake all the way to Waterside. <strong>Confirm bridge schedules with Coinjock Marina staff over dinner.</strong></div>
     <div class="bridge-planner">
       <div class="bp-legend">
@@ -588,14 +800,33 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
       <a class="card" href="https://www.navcen.uscg.gov/?pageName=lnmDistrict&region=05" target="_blank"><div class="card-icon">&#x26A0;&#xFE0F;</div><div class="card-title">USCG D5 LNMs</div><div class="card-sub">Check for ICW advisories morning of departure</div><span class="card-badge badge-key">Morning check</span></a>
       <a class="card" href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=8638901" target="_blank"><div class="card-icon">&#x1F30A;</div><div class="card-title">Hampton Roads Tides</div><div class="card-sub">Tidal current in the Norfolk/Waterside approach</div></a>
     </div>
+    <div class="note-rick" style="margin-top:14px"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes &mdash; Norfolk overnight</div><strong>Waterside Marina &middot; <a class="tel-link" href="tel:+17576253625">(757) 625-3625</a></strong><a class="dockwa-btn" href="https://dockwa.com/explore/destination/x1cw3-waterside-marina" target="_blank">&#x1F4C5; Book on Dockwa</a><br><span class="rick-quote">Down town and close to all restaurants.</span> New floating docks (2020), 20 ft depth, complimentary grocery shuttle. Right at ICW Mile Marker 0 on the Elizabeth River.</div>
+    <div class="sub-section">
+      <span class="sub-toggle" onclick="toggleSub('nb-town-6',this)">Around Norfolk &mdash; things to do</span>
+      <div class="sub-body" id="nb-town-6">
+        <div class="town-block">
+          <div class="town-block-title">&#x1F37D; Restaurants &mdash; walking distance</div>
+          <div class="town-block-body">~60 restaurants in the Waterside District steps from the slip. Try The Monastery (authentic Eastern European, a short walk worth making) per Dockwa cruiser tips. The Waterside District building itself has casual options &mdash; can get loud with live music on summer weekends.</div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F327;&#xFE0F; Weather hold &mdash; what to do</div>
+          <div class="town-block-body"><strong>Nauticus &amp; the Battleship Wisconsin are two blocks from the marina</strong> &mdash; the USS Wisconsin is a WWII-era battleship you can walk the decks of. Chrysler Museum of Art is a 10-min walk (free, with a working glass-blowing studio). MacArthur Memorial. Slover Library. NEON arts district. Ferry across to Portsmouth is short.</div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F4CD; About this place</div>
+          <div class="town-block-body">Home of the world&rsquo;s largest naval base. Hampton Roads is one of the deepest natural harbors on the East Coast. Heavy Navy and commercial traffic in the channel &mdash; they always have right of way. Monitor VHF 16.</div>
+        </div>
+        <div class="town-source">Picks from Dockwa reviews + Waterside listing. Add Rick&rsquo;s specific recommendations here.</div>
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="segment" id="nb-seg6">
-  <div class="seg-header"><div class="seg-dot dot-sky">&#x2466;</div><div class="seg-info"><div class="seg-name">Norfolk &rarr; Cape May &mdash; South Jersey Marina</div><div class="seg-route">Outside preferred &middot; exit Cape Henry &middot; run NE up Delmarva coast &middot; enter Cape May Inlet from the ocean (east side)</div></div><span class="seg-dist">~185 nm</span></div>
-  <span class="seg-toggle" onclick="toggleSeg('nb-sb6',this)">show notes + resources &#9662;</span>
-  <div class="seg-body" id="nb-sb6">
-    <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div>Outside is the preferred route on a 55-footer with a good window.<br><br><strong>South Jersey Marina, Cape May &middot; (609) 884-2400</strong><br>&ldquo;Outside is good&rdquo; &mdash; excellent staging marina. Enter from the ocean side. <strong>Top off completely here before deciding on the final leg.</strong></div>
+<div class="segment" id="nb-seg7">
+  <div class="seg-header"><div class="seg-dot dot-sky">&#x2467;</div><div class="seg-info"><div class="seg-name">Norfolk &rarr; Cape May &mdash; South Jersey Marina</div><div class="seg-route">Day 6 afternoon &middot; Outside preferred &middot; exit Cape Henry &middot; run NE up Delmarva coast &middot; enter Cape May Inlet from the ocean (east side)</div></div><span class="seg-dist">~185 nm</span></div>
+  <span class="seg-toggle" onclick="toggleSeg('nb-sb7',this)">show notes + resources &#9662;</span>
+  <div class="seg-body" id="nb-sb7">
+    <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div>Outside is the preferred route on a 55-footer with a good window.<br><br><strong>South Jersey Marina, Cape May &middot; <a class="tel-link" href="tel:+16098842400">(609) 884-2400</a></strong><a class="dockwa-btn" href="https://dockwa.com/explore/destination/wgce4d-south-jersey-marina" target="_blank">&#x1F4C5; Book on Dockwa</a><br><span class="rick-quote">Outside is good</span> &mdash; excellent staging marina. Enter from the ocean side. <strong>Top off completely here before deciding on the final leg.</strong></div>
     <div class="decision">
       <div class="decision-title">&#x2696;&#xFE0F; Outside via Cape Henry (preferred) or inside via Chesapeake City / C&amp;D Canal</div>
       <div class="decision-grid">
@@ -610,13 +841,31 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
       <a class="card" href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=8536110" target="_blank"><div class="card-icon">&#x1F30A;</div><div class="card-title">Cape May Inlet Tides</div><div class="card-sub">Enter from the ocean on the east side running up the coast</div></a>
       <a class="card" href="https://windy.com/?waves,37.5,-74.5,7" target="_blank"><div class="card-icon">&#x1F4F1;</div><div class="card-title">Windy &mdash; Delmarva / Cape May</div><div class="card-sub">Wave layer for the outside run up the coast</div></a>
     </div>
+    <div class="sub-section">
+      <span class="sub-toggle" onclick="toggleSub('nb-town-7',this)">Around Cape May &mdash; things to do</span>
+      <div class="sub-body" id="nb-town-7">
+        <div class="town-block">
+          <div class="town-block-title">&#x1F37D; Restaurants &mdash; walking distance from the marina</div>
+          <div class="town-block-body"><span class="rick-quote">Great seafood and lobster place next to marina</span> &mdash; that&rsquo;s the <strong>Lobster House</strong>, right next door. The institution. Raw bar, restaurant, takeout, schooner cocktails. Walking distance to several other restaurants and a well-stocked food market. Free shuttle to downtown Cape May (Victorian district).</div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F327;&#xFE0F; Weather hold &mdash; what to do</div>
+          <div class="town-block-body">The Victorian historic district is the draw &mdash; walk Washington Street Mall, see the Painted Ladies (Cape May has more Victorian buildings than anywhere else in the U.S.). Cape May Lighthouse (climbable, great view). Sunset Beach for Cape May diamonds. Cape May winery for a tasting if you have a car.</div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F4CD; About this place</div>
+          <div class="town-block-body">The oldest seaside resort in the United States &mdash; people have been vacationing here since the mid-1700s. The entire town is a designated National Historic Landmark District. Great protection from NE blows &mdash; you&rsquo;ll find boats stacking up here when the offshore window slams shut.</div>
+        </div>
+        <div class="town-source">Lobster House identification from local consensus &mdash; matches Rick&rsquo;s &ldquo;great seafood and lobster place next to marina.&rdquo;</div>
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="segment" id="nb-seg7">
-  <div class="seg-header"><div class="seg-dot dot-sky">&#x2467;</div><div class="seg-info"><div class="seg-name">Cape May &rarr; Nantucket &mdash; Direct or via Montauk &#x1F3C1;</div><div class="seg-route">~225 nm direct at 30 kts &mdash; ~8 hrs &middot; or Cape May &rarr; Montauk (~130 nm) then Montauk &rarr; Nantucket (~105 nm)</div></div><span class="seg-dist">~225 nm direct</span></div>
-  <span class="seg-toggle" onclick="toggleSeg('nb-sb7',this)">show notes + resources &#9662;</span>
-  <div class="seg-body" id="nb-sb7">
+<div class="segment" id="nb-seg8">
+  <div class="seg-header"><div class="seg-dot dot-sky">&#x2468;</div><div class="seg-info"><div class="seg-name">Cape May &rarr; Nantucket &mdash; Direct or via Montauk &#x1F3C1;</div><div class="seg-route">Day 7 &middot; ~225 nm direct at 30 kts &mdash; ~8 hrs &middot; or Cape May &rarr; Montauk (~130 nm) then Montauk &rarr; Nantucket (~105 nm)</div></div><span class="seg-dist">~225 nm direct</span></div>
+  <span class="seg-toggle" onclick="toggleSeg('nb-sb8',this)">show notes + resources &#9662;</span>
+  <div class="seg-body" id="nb-sb8">
     <div class="note-blue"><strong>Fuel is not the question &mdash; weather is.</strong> ~225 nm at 30 kts is roughly 8 hrs. Depart at a normal hour and arrive Nantucket by mid-afternoon. Montauk is a completely legitimate option &mdash; 130 nm there, overnight, then a relaxed 105 nm finish the next morning.</div>
     <div class="decision">
       <div class="decision-title">&#x2696;&#xFE0F; Direct to Nantucket or stage at Montauk</div>
@@ -632,6 +881,99 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
       <a class="card" href="https://www.ndbc.noaa.gov/station_page.php?station=44020" target="_blank"><div class="card-icon">&#x1F4E1;</div><div class="card-title">Nantucket Sound Buoy (44020)</div><div class="card-sub">Final approach conditions</div><span class="card-badge badge-key">Final leg check</span></a>
       <a class="card" href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=8449130" target="_blank"><div class="card-icon">&#x1F30A;</div><div class="card-title">Nantucket Sound Tides</div><div class="card-sub">Arrive before early afternoon &mdash; Sound gets sporty with SW against ebb</div></a>
       <a class="card" href="https://windy.com/?waves,41.0,-71.0,8" target="_blank"><div class="card-icon">&#x1F4F1;</div><div class="card-title">Windy &mdash; Block Island / Nantucket</div><div class="card-sub">Wave layer for the final approach</div></a>
+    </div>
+    <div class="note-rick" style="margin-top:14px"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes &mdash; Nantucket arrival</div><strong>Nantucket Boat Basin &middot; <a class="tel-link" href="tel:+15083251350">(508) 325-1350</a></strong><a class="dockwa-btn" href="https://dockwa.com/explore/destination/55cgw8-nantucket-boat-basin" target="_blank">&#x1F4C5; Book on Dockwa</a><br>240 slips in the heart of Nantucket Harbor. <strong>2-night minimum booking.</strong> Concierge service &mdash; call ahead and they&rsquo;ll arrange dinner reservations, bikes, anything else. Walking to cobblestone downtown.</div>
+    <div class="sub-section">
+      <span class="sub-toggle" onclick="toggleSub('nb-cont-8',this)">Contingency stops along this leg</span>
+      <div class="sub-body" id="nb-cont-8">
+        <div class="cont-card">
+          <div class="cont-marina">Golden Nugget &mdash; Farley State Marina, Atlantic City <span class="rick-tag">&#x1F4CB; In Rick&rsquo;s notes</span></div>
+          <div class="cont-meta">~30 nm from Cape May &middot; <strong>Quick bailout in a building NE.</strong> 630 slips, well-protected basin, casino &amp; restaurants right there (Chart House, Vic &amp; Anthony&rsquo;s). Marina&rsquo;s a bit worn but functional. <a class="tel-link" href="tel:+16094418482">(609) 441-8482</a></div>
+          <div class="cont-actions"><a class="dockwa-btn" href="https://dockwa.com/explore/destination/55cgy4-golden-nugget-farley-state-marina" target="_blank">&#x1F4C5; Book on Dockwa</a></div>
+          <div class="sub-section">
+            <span class="sub-toggle" onclick="toggleSub('ct-ac-nb',this)">Around Atlantic City &mdash; things to do</span>
+            <div class="sub-body" id="ct-ac-nb">
+              <div class="town-block">
+                <div class="town-block-title">&#x1F37D; Restaurants &mdash; in the Golden Nugget complex</div>
+                <div class="town-block-body">Chart House and Vic &amp; Anthony&rsquo;s Steakhouse right at the marina (both highly rated, harbor views). Red Sushi in the casino. Off-property: Knife &amp; Fork Inn is the local steakhouse institution (short Uber).</div>
+              </div>
+              <div class="town-block">
+                <div class="town-block-title">&#x1F327;&#xFE0F; Weather hold &mdash; what to do</div>
+                <div class="town-block-body">Golden Nugget casino is right there if that&rsquo;s your thing. H2O Rooftop Pool. The Atlantic City Boardwalk is 5 miles long &mdash; Boardwalk Hall (former Miss America) and Steel Pier amusement area are at the far end (about 3 miles from the marina, take the Jitney shuttle). Absecon Lighthouse is climbable (228 steps).</div>
+              </div>
+              <div class="town-block">
+                <div class="town-block-title">&#x1F4CD; About this place &middot; &#x26A0; safety note</div>
+                <div class="town-block-body">One of America&rsquo;s oldest seaside resorts. Inspiration for the original Monopoly board (street names included). Prohibition-era rum-running history &mdash; this marina basin was where the rumrunners offloaded. <strong>Local advice from cruisers:</strong> stay near the marina, casino, and boardwalk after dark; avoid wandering side streets.</div>
+              </div>
+              <div class="town-source">Picks from Dockwa reviews.</div>
+            </div>
+          </div>
+        </div>
+        <div class="cont-card">
+          <div class="cont-marina">Liberty Landing Marina &mdash; Jersey City (NYC) <span class="rick-tag">&#x1F4CB; In Rick&rsquo;s notes</span></div>
+          <div class="cont-meta">~120 nm from Cape May &middot; <strong>NYC overnight, or weather bailout.</strong> 520 slips in Liberty State Park, calm basin protected from Hudson currents, two on-site restaurants (Maritime Parc, Liberty House), ferry to Manhattan. Dockmaster Janer. <a class="tel-link" href="tel:+12019858000">(201) 985-8000</a></div>
+          <div class="cont-actions"><a class="dockwa-btn" href="https://dockwa.com/explore/destination/63c24-liberty-landing-marina" target="_blank">&#x1F4C5; Book on Dockwa</a></div>
+          <div class="sub-section">
+            <span class="sub-toggle" onclick="toggleSub('ct-ll-nb',this)">Around Liberty Landing &mdash; things to do</span>
+            <div class="sub-body" id="ct-ll-nb">
+              <div class="town-block">
+                <div class="town-block-title">&#x1F37D; Restaurants</div>
+                <div class="town-block-body">Two excellent on-site at the marina &mdash; <strong>Maritime Parc</strong> (upscale modern American, waterfront) and <strong>Liberty House</strong> (classic, harbor view). Short Uber to Jersey City for varied options. Ferry to lower Manhattan (15 min) opens up the entire NYC dining scene.</div>
+              </div>
+              <div class="town-block">
+                <div class="town-block-title">&#x1F327;&#xFE0F; Weather hold &mdash; what to do</div>
+                <div class="town-block-body">Ferry to Manhattan from the marina (15-min ride). Statue of Liberty / Ellis Island ferries depart from the same dock &mdash; full day if you go. Liberty Science Center next door (great for adults too &mdash; IMAX, exhibits). Empty Sky 9/11 Memorial in Liberty State Park is a moving short walk. Walking/bike the Liberty State Park promenade has the best view of the Manhattan skyline anywhere.</div>
+              </div>
+              <div class="town-block">
+                <div class="town-block-title">&#x1F4CD; About this place</div>
+                <div class="town-block-body">Marina sits in Liberty State Park on the Morris Canal. Was a major industrial port through the early 1900s. The Central Railroad of New Jersey Terminal next door processed immigrants from Ellis Island onward to the rest of the country. The Colgate Clock across the water (50 ft diameter) is a Jersey City landmark.</div>
+              </div>
+              <div class="town-source">Picks from Dockwa reviews + Liberty Landing listing.</div>
+            </div>
+          </div>
+        </div>
+        <div class="cont-card">
+          <div class="cont-marina">Hyannis Marina &mdash; Cape Cod (alternate finish) <span class="rick-tag">&#x1F4CB; In Rick&rsquo;s notes</span></div>
+          <div class="cont-meta"><strong>If Nantucket Sound is too sporty</strong> or you&rsquo;d rather end on the mainland. 180+ slips, accommodates deep draft, two on-site restaurants (Tugboats). Walking to downtown Hyannis. <a class="tel-link" href="tel:+15087904000">(508) 790-4000</a></div>
+          <div class="cont-actions"><a class="dockwa-btn" href="https://dockwa.com/explore/destination/8qc4ee-hyannis-marina" target="_blank">&#x1F4C5; Book on Dockwa</a></div>
+          <div class="sub-section">
+            <span class="sub-toggle" onclick="toggleSub('ct-hy-nb',this)">Around Hyannis &mdash; things to do</span>
+            <div class="sub-body" id="ct-hy-nb">
+              <div class="town-block">
+                <div class="town-block-title">&#x1F37D; Restaurants</div>
+                <div class="town-block-body">Tugboats on-site at the marina (waterfront, casual, popular). Main Street Hyannis (10-min walk or short Uber) has dozens of options &mdash; Naked Oyster for seafood, Brazilian Grill for churrasco, Spanky&rsquo;s Clam Shack. Cape Cod beach-town casual scene.</div>
+              </div>
+              <div class="town-block">
+                <div class="town-block-title">&#x1F327;&#xFE0F; Weather hold &mdash; what to do</div>
+                <div class="town-block-body">JFK Hyannis Museum downtown (Kennedy family history with Hyannis Port). Cape Cod Maritime Museum on Veterans Beach. The Kennedy Compound is in Hyannis Port (no public tours, but boat-based tours give a view). Veterans Beach is closest. Ferries to Nantucket and Martha&rsquo;s Vineyard depart from Hyannis if you want a side trip.</div>
+              </div>
+              <div class="town-block">
+                <div class="town-block-title">&#x1F4CD; About this place</div>
+                <div class="town-block-body">The Kennedy family summer compound is here &mdash; JFK, RFK, Ted Kennedy all spent summers and there are memorial sites throughout. Year-round Cape Cod town (most of the rest is seasonal). Hyannis Marina is on the Lewis Bay side, one of the largest on the Cape.</div>
+              </div>
+              <div class="town-source">Picks from local knowledge.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sub-section">
+      <span class="sub-toggle" onclick="toggleSub('nb-town-8',this)">Around Nantucket &mdash; things to do</span>
+      <div class="sub-body" id="nb-town-8">
+        <div class="town-block">
+          <div class="town-block-title">&#x1F37D; Restaurants &mdash; walking from Boat Basin</div>
+          <div class="town-block-body">Brant Point Grill at sister property White Elephant for harbor views. TOPPER&rsquo;S at the Wauwinet (need a car) is top-tier. Something Natural for the famous sandwiches at lunch. The Nautilus for coastal seafood with Asian flavors. Cisco Brewers if you want a tasting day out.</div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F327;&#xFE0F; Weather hold &mdash; what to do</div>
+          <div class="town-block-body">Whaling Museum is right downtown, 5-min walk &mdash; tells the island&rsquo;s 1700s&ndash;1800s story with a 46-ft sperm whale skeleton. Walk cobblestone Main Street. Bike to Sconset (paved path, ~7 mi, do-able in any weather with rain gear). Beaches if it&rsquo;s nice &mdash; Jetties is easy walking distance. Three lighthouses on the island perimeter.</div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F4CD; About this place</div>
+          <div class="town-block-body">Island 30 miles off Cape Cod. Was the whaling capital of the world in the mid-1700s. No chain stores in town &mdash; everything is local. Cobblestone streets are real (not decorative). The harbor freezes some winters. You made it.</div>
+        </div>
+        <div class="town-source">Picks from Dockwa &amp; island guides. Add Rick&rsquo;s specific recommendations here.</div>
+      </div>
     </div>
   </div>
 </div>
@@ -663,6 +1005,76 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
       <a class="card" href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=8536110" target="_blank"><div class="card-icon">&#x1F30A;</div><div class="card-title">Cape May Inlet Tides</div><div class="card-sub">Enter Cape May from the ocean on the east side</div></a>
       <a class="card" href="https://windy.com/?waves,41.0,-71.0,8" target="_blank"><div class="card-icon">&#x1F4F1;</div><div class="card-title">Windy &mdash; Nantucket / Block Island</div><div class="card-sub">Wave layer for departure conditions</div></a>
     </div>
+    <div class="note-rick" style="margin-top:14px"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes &mdash; Cape May arrival</div><strong>South Jersey Marina &middot; <a class="tel-link" href="tel:+16098842400">(609) 884-2400</a></strong><a class="dockwa-btn" href="https://dockwa.com/explore/destination/wgce4d-south-jersey-marina" target="_blank">&#x1F4C5; Book on Dockwa</a><br>Enter from the ocean side. Excellent staging marina &mdash; rest up and check the morning forecast before pushing south to Norfolk.</div>
+    <div class="sub-section">
+      <span class="sub-toggle" onclick="toggleSub('sb-cont-0',this)">Contingency stops along this leg</span>
+      <div class="sub-body" id="sb-cont-0">
+        <div class="cont-card">
+          <div class="cont-marina">Liberty Landing Marina &mdash; Jersey City (NYC) <span class="rick-tag">&#x1F4CB; In Rick&rsquo;s notes</span></div>
+          <div class="cont-meta">~105 nm from Nantucket via Montauk &middot; <strong>NYC overnight, or weather bailout in the NY Bight.</strong> 520 slips in Liberty State Park, calm basin protected from Hudson currents, ferry to Manhattan. Dockmaster Janer. <a class="tel-link" href="tel:+12019858000">(201) 985-8000</a></div>
+          <div class="cont-actions"><a class="dockwa-btn" href="https://dockwa.com/explore/destination/63c24-liberty-landing-marina" target="_blank">&#x1F4C5; Book on Dockwa</a></div>
+          <div class="sub-section">
+            <span class="sub-toggle" onclick="toggleSub('ct-ll-sb',this)">Around Liberty Landing &mdash; things to do</span>
+            <div class="sub-body" id="ct-ll-sb">
+              <div class="town-block">
+                <div class="town-block-title">&#x1F37D; Restaurants</div>
+                <div class="town-block-body">Two excellent on-site at the marina &mdash; <strong>Maritime Parc</strong> (upscale modern American, waterfront) and <strong>Liberty House</strong> (classic, harbor view). Short Uber to Jersey City for varied options. Ferry to lower Manhattan (15 min) opens up the entire NYC dining scene.</div>
+              </div>
+              <div class="town-block">
+                <div class="town-block-title">&#x1F327;&#xFE0F; Weather hold &mdash; what to do</div>
+                <div class="town-block-body">Ferry to Manhattan from the marina (15-min ride). Statue of Liberty / Ellis Island ferries depart from the same dock &mdash; full day if you go. Liberty Science Center next door (great for adults too &mdash; IMAX, exhibits). Empty Sky 9/11 Memorial in Liberty State Park is a moving short walk. Walking/bike the Liberty State Park promenade has the best view of the Manhattan skyline anywhere.</div>
+              </div>
+              <div class="town-block">
+                <div class="town-block-title">&#x1F4CD; About this place</div>
+                <div class="town-block-body">Marina sits in Liberty State Park on the Morris Canal. Was a major industrial port through the early 1900s. The Central Railroad of New Jersey Terminal next door processed immigrants from Ellis Island onward to the rest of the country. The Colgate Clock across the water (50 ft diameter) is a Jersey City landmark.</div>
+              </div>
+              <div class="town-source">Picks from Dockwa reviews + Liberty Landing listing.</div>
+            </div>
+          </div>
+        </div>
+        <div class="cont-card">
+          <div class="cont-marina">Golden Nugget &mdash; Farley State Marina, Atlantic City <span class="rick-tag">&#x1F4CB; In Rick&rsquo;s notes</span></div>
+          <div class="cont-meta">~30 nm from Cape May &middot; <strong>Last bailout before Cape May if conditions deteriorate.</strong> 630 slips, well-protected basin, casino &amp; restaurants right there. <a class="tel-link" href="tel:+16094418482">(609) 441-8482</a></div>
+          <div class="cont-actions"><a class="dockwa-btn" href="https://dockwa.com/explore/destination/55cgy4-golden-nugget-farley-state-marina" target="_blank">&#x1F4C5; Book on Dockwa</a></div>
+          <div class="sub-section">
+            <span class="sub-toggle" onclick="toggleSub('ct-ac-sb',this)">Around Atlantic City &mdash; things to do</span>
+            <div class="sub-body" id="ct-ac-sb">
+              <div class="town-block">
+                <div class="town-block-title">&#x1F37D; Restaurants &mdash; in the Golden Nugget complex</div>
+                <div class="town-block-body">Chart House and Vic &amp; Anthony&rsquo;s Steakhouse right at the marina (both highly rated, harbor views). Red Sushi in the casino. Off-property: Knife &amp; Fork Inn is the local steakhouse institution (short Uber).</div>
+              </div>
+              <div class="town-block">
+                <div class="town-block-title">&#x1F327;&#xFE0F; Weather hold &mdash; what to do</div>
+                <div class="town-block-body">Golden Nugget casino is right there if that&rsquo;s your thing. H2O Rooftop Pool. The Atlantic City Boardwalk is 5 miles long &mdash; Boardwalk Hall (former Miss America) and Steel Pier amusement area are at the far end (about 3 miles from the marina, take the Jitney shuttle). Absecon Lighthouse is climbable (228 steps).</div>
+              </div>
+              <div class="town-block">
+                <div class="town-block-title">&#x1F4CD; About this place &middot; &#x26A0; safety note</div>
+                <div class="town-block-body">One of America&rsquo;s oldest seaside resorts. Inspiration for the original Monopoly board (street names included). Prohibition-era rum-running history &mdash; this marina basin was where the rumrunners offloaded. <strong>Local advice from cruisers:</strong> stay near the marina, casino, and boardwalk after dark; avoid wandering side streets.</div>
+              </div>
+              <div class="town-source">Picks from Dockwa reviews.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sub-section">
+      <span class="sub-toggle" onclick="toggleSub('sb-town-0',this)">Around Cape May &mdash; things to do</span>
+      <div class="sub-body" id="sb-town-0">
+        <div class="town-block">
+          <div class="town-block-title">&#x1F37D; Restaurants &mdash; walking distance from the marina</div>
+          <div class="town-block-body"><span class="rick-quote">Great seafood and lobster place next to marina</span> &mdash; that&rsquo;s the <strong>Lobster House</strong>, right next door. The institution. Raw bar, restaurant, takeout, schooner cocktails. Walking distance to several other restaurants and a well-stocked food market. Free shuttle to downtown Cape May (Victorian district).</div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F327;&#xFE0F; Weather hold &mdash; what to do</div>
+          <div class="town-block-body">The Victorian historic district is the draw &mdash; walk Washington Street Mall, see the Painted Ladies. Cape May Lighthouse (climbable, great view). Sunset Beach for Cape May diamonds. Cape May winery for a tasting if you have a car.</div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F4CD; About this place</div>
+          <div class="town-block-body">The oldest seaside resort in the U.S. &mdash; people have vacationed here since the mid-1700s. Whole town is a National Historic Landmark District. Strong protection from NE blows &mdash; boats stack up here when the offshore window slams shut.</div>
+        </div>
+        <div class="town-source">Lobster House from Rick&rsquo;s notes.</div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -670,13 +1082,31 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
   <div class="seg-header"><div class="seg-dot dot-sky">&#x2461;</div><div class="seg-info"><div class="seg-name">Cape May &rarr; Norfolk &mdash; Waterside Marina</div><div class="seg-route">Outside preferred &middot; exit Cape May ocean side &middot; run SW down Delmarva coast &middot; enter Cape Henry / Hampton Roads</div></div><span class="seg-dist">~185 nm</span></div>
   <span class="seg-toggle" onclick="toggleSeg('sb-sb1',this)">show notes + resources &#9662;</span>
   <div class="seg-body" id="sb-sb1">
-    <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div>Outside is the preferred route southbound &mdash; same as northbound in reverse.<br><br><strong>Norfolk Waterside Marina &middot; (757) 625-3625</strong><br>Right on the downtown waterfront. Good overnight. <strong>Hampton Roads ship traffic is heavy &mdash; big vessels have right of way. Monitor VHF 16.</strong></div>
+    <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div>Outside is the preferred route southbound &mdash; same as northbound in reverse.<br><br><strong>Norfolk Waterside Marina &middot; <a class="tel-link" href="tel:+17576253625">(757) 625-3625</a></strong><a class="dockwa-btn" href="https://dockwa.com/explore/destination/x1cw3-waterside-marina" target="_blank">&#x1F4C5; Book on Dockwa</a><br>Right on the downtown waterfront. Good overnight. <strong>Hampton Roads ship traffic is heavy &mdash; big vessels have right of way. Monitor VHF 16.</strong></div>
     <div class="cards">
       <a class="card" href="https://www.ndbc.noaa.gov/station_page.php?station=44009" target="_blank"><div class="card-icon">&#x1F4E1;</div><div class="card-title">Delaware Bay Buoy (44009)</div><div class="card-sub">Offshore Delmarva southbound &mdash; departure check from Cape May</div><span class="card-badge badge-outside">Departure buoy</span></a>
       <a class="card" href="https://www.ndbc.noaa.gov/station_page.php?station=44100" target="_blank"><div class="card-icon">&#x1F4E1;</div><div class="card-title">Chesapeake Light (44100)</div><div class="card-sub">Cape Henry approach &mdash; entrance to Hampton Roads</div></a>
       <a class="card" href="https://captaingeorgia.com/south-east-port-weather" target="_blank"><div class="card-icon">&#x1F4E1;</div><div class="card-title">SE Port Weather &mdash; Mid-Atlantic</div><div class="card-sub">Delmarva coast conditions southbound</div><span class="card-badge badge-cg">Captain Georgia</span></a>
       <a class="card" href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=8638901" target="_blank"><div class="card-icon">&#x1F30A;</div><div class="card-title">Hampton Roads Tides</div><div class="card-sub">Norfolk/Waterside approach current</div></a>
       <a class="card" href="https://windy.com/?waves,37.5,-74.5,7" target="_blank"><div class="card-icon">&#x1F4F1;</div><div class="card-title">Windy &mdash; Delmarva offshore</div><div class="card-sub">Wave layer for the southbound run</div></a>
+    </div>
+    <div class="sub-section">
+      <span class="sub-toggle" onclick="toggleSub('sb-town-1',this)">Around Norfolk &mdash; things to do</span>
+      <div class="sub-body" id="sb-town-1">
+        <div class="town-block">
+          <div class="town-block-title">&#x1F37D; Restaurants &mdash; walking distance</div>
+          <div class="town-block-body">~60 restaurants in the Waterside District steps from the slip. Try The Monastery (authentic Eastern European, a short walk worth making) per Dockwa cruiser tips. The Waterside District building itself has casual options &mdash; can get loud with live music on summer weekends.</div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F327;&#xFE0F; Weather hold &mdash; what to do</div>
+          <div class="town-block-body"><strong>Nauticus &amp; the Battleship Wisconsin are two blocks from the marina</strong> &mdash; the USS Wisconsin is a WWII-era battleship you can walk the decks of. Chrysler Museum of Art is a 10-min walk (free, with a working glass-blowing studio). MacArthur Memorial. Slover Library. NEON arts district. Ferry across to Portsmouth is short.</div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F4CD; About this place</div>
+          <div class="town-block-body">Home of the world&rsquo;s largest naval base. Hampton Roads is one of the deepest natural harbors on the East Coast. Heavy Navy and commercial traffic in the channel &mdash; they always have right of way. Monitor VHF 16.</div>
+        </div>
+        <div class="town-source">Picks from Dockwa reviews + Waterside listing.</div>
+      </div>
     </div>
   </div>
 </div>
@@ -686,7 +1116,7 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
   <span class="seg-toggle" onclick="toggleSeg('sb-sb2',this)">show bridge timing planner &#9662;</span>
   <div class="seg-body" id="sb-sb2">
     <div class="note"><strong>Plan this leg the evening before at Waterside.</strong> Southbound Great Bridge Lock opens at :30 past the hour. Work backwards from the lock time you want. Elizabeth River is 6 kts no-wake from MM 0 to the lock. <strong>Confirm bridge schedules with Waterside dock staff the night before.</strong></div>
-    <div class="note-rick" style="margin-top:0"><div class="rick-header">&#x1F4CB; Coinjock arrival &mdash; prime rib awaits</div><strong>Coinjock Marina &middot; (252) 453-3271</strong> &mdash; dock on the <strong>east side</strong> of the channel, restaurant right there.<br><strong>Call ahead and order the prime rib before you arrive.</strong> Tip dock hands in cash.</div>
+    <div class="note-rick" style="margin-top:0"><div class="rick-header">&#x1F4CB; Coinjock arrival &mdash; prime rib awaits</div><strong>Coinjock Marina &middot; <a class="tel-link" href="tel:+12524533271">(252) 453-3271</a></strong><a class="dockwa-btn" href="https://dockwa.com/explore/destination/pwc4xj-coinjock-marina" target="_blank">&#x1F4C5; Book on Dockwa</a><br>Dock on the <strong>east side</strong> of the channel, restaurant right there. <strong>Do not stay on the west docks</strong> &mdash; no tender access to the restaurant. <strong>Call ahead and order the prime rib before you arrive.</strong> Tip dock hands in cash &mdash; not on the CC machine (adds 20% to the bill).</div>
     <div class="bridge-planner">
       <div class="bp-legend">
         <div class="bp-leg"><div class="bp-dot bp-dot-go"></div> On plane</div>
@@ -724,6 +1154,23 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
       <a class="card" href="https://coinjockmarina.com/coinjock-nc-icw-dockage/" target="_blank"><div class="card-icon">&#x26A0;&#xFE0F;</div><div class="card-title">Coinjock Bridge Schedule</div><div class="card-sub">Confirm before departing</div><span class="card-badge badge-key">Verify night before</span></a>
       <a class="card" href="https://www.navcen.uscg.gov/?pageName=lnmDistrict&region=05" target="_blank"><div class="card-icon">&#x26A0;&#xFE0F;</div><div class="card-title">USCG D5 LNMs</div><div class="card-sub">ICW advisories morning of departure</div><span class="card-badge badge-key">Morning check</span></a>
     </div>
+    <div class="sub-section">
+      <span class="sub-toggle" onclick="toggleSub('sb-town-2',this)">Around Coinjock &mdash; things to do</span>
+      <div class="sub-body" id="sb-town-2">
+        <div class="town-block">
+          <div class="town-block-title">&#x1F37D; Restaurants</div>
+          <div class="town-block-body">The Coinjock Marina Restaurant is essentially the only game in town &mdash; and that&rsquo;s a feature, not a bug. Home of the famous 32oz prime rib since 1978. Local seafood too. <strong>Call ahead or you won&rsquo;t get the prime rib.</strong></div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F327;&#xFE0F; Weather hold &mdash; what to do</div>
+          <div class="town-block-body">Honestly &mdash; there isn&rsquo;t much. Coinjock is the marina, plus a hardware store, barbershop, and post office. If you&rsquo;re stuck more than a night, rent a car (Norfolk is an hour north). New marina store is well-stocked, bathrooms are clean, live music Fridays in season.</div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F4CD; About this place</div>
+          <div class="town-block-body">ICW Mile Marker 50. The name comes from the local indigenous word for the berries that still grow here. A favorite transient stop for decades &mdash; if you&rsquo;re running the ICW north or south and not taking the Dismal Swamp route, you&rsquo;re breaking your run here.</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -731,11 +1178,29 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
   <div class="seg-header"><div class="seg-dot dot-amber">&#x2463;</div><div class="seg-info"><div class="seg-name">Coinjock &rarr; Morehead City (via Pamlico Sound)</div><div class="seg-route">Albemarle Sound &rarr; Alligator River &rarr; Pamlico Sound &rarr; Neuse River &rarr; Morehead City</div></div><span class="seg-dist">~110 nm</span></div>
   <span class="seg-toggle" onclick="toggleSeg('sb-sb3',this)">show notes + resources &#9662;</span>
   <div class="seg-body" id="sb-sb3">
-    <div class="note-green"><strong>Pamlico Sound is rarely a real issue on a 55-footer.</strong> Depart early and cross before noon. The only scenario worth pausing for is a strong NE 20+ kts. Same rules as northbound &mdash; westerly wind, early departure, Coinjock is comfortable if you need another night.</div>
+    <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes &mdash; Morehead City arrival</div><strong>Morehead City Yacht Basin &middot; Dockmaster <a class="tel-link" href="tel:+12527266862">(252) 726-6862</a></strong><a class="dockwa-btn" href="https://dockwa.com/explore/destination/16cwdr-morehead-city-yacht-basin" target="_blank">&#x1F4C5; Book on Dockwa</a><br>Sheltered basin off Calico Creek, walking to downtown. Top off fuel here &mdash; tomorrow you can decide outside vs. ICW for Southport.</div>
+    <div class="note-green"><strong>Pamlico Sound is rarely a real issue on a 55-footer.</strong> Depart early and cross before noon. The only scenario worth pausing for is a strong NE 20+ kts. Same rules as northbound &mdash; westerly wind = calm near-shore, early departure, Coinjock is comfortable if you need another night.</div>
     <div class="cards">
       <a class="card" href="https://www.ndbc.noaa.gov/station_page.php?station=41036" target="_blank"><div class="card-icon">&#x1F4E1;</div><div class="card-title">Pamlico Sound Buoy (41036)</div><div class="card-sub">Monitor conditions during the crossing</div></a>
       <a class="card" href="https://windy.com/?waves,34.7,-76.7,8" target="_blank"><div class="card-icon">&#x1F4F1;</div><div class="card-title">Windy &mdash; Pamlico Sound</div><div class="card-sub">Wave layer shows conditions clearly</div></a>
       <a class="card" href="https://captaingeorgia.com/noaa-surface-analysis" target="_blank"><div class="card-icon">&#x1F5FA;&#xFE0F;</div><div class="card-title">NOAA Surface Analysis</div><div class="card-sub">3-day synoptic picture &mdash; find your window</div><span class="card-badge badge-cg">Captain Georgia</span></a>
+    </div>
+    <div class="sub-section">
+      <span class="sub-toggle" onclick="toggleSub('sb-town-3',this)">Around Morehead City &mdash; things to do</span>
+      <div class="sub-body" id="sb-town-3">
+        <div class="town-block">
+          <div class="town-block-title">&#x1F37D; Restaurants &mdash; walking distance</div>
+          <div class="town-block-body">Marina is in historic downtown &mdash; over 20 restaurants within walking distance. The Ruddy Duck is the popular pick from cruisers. Sanitary Restaurant (yes, that&rsquo;s really the name) is the local institution &mdash; been there since 1938, classic NC seafood on the waterfront.</div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F327;&#xFE0F; Weather hold &mdash; what to do</div>
+          <div class="town-block-body">Walk across the bridge to Beaufort (about 1 mile) &mdash; older, more interesting town. NC Maritime Museum on Front St. is excellent (Blackbeard&rsquo;s anchor and cannon from Queen Anne&rsquo;s Revenge are on display). Atlantic Beach is a short Uber. Marina rents a $20/2-hr courtesy car for provisioning runs.</div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F4CD; About this place</div>
+          <div class="town-block-body">Working waterfront, founded 1857. Hemingway used to stay here. Original home of the Big Rock Blue Marlin Tournament. The yacht basin&rsquo;s prime locale was picked nearly a century ago &mdash; first marina on the Crystal Coast.</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -745,11 +1210,29 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
   <span class="seg-toggle" onclick="toggleSeg('sb-sb4',this)">show notes + resources &#9662;</span>
   <div class="seg-body" id="sb-sb4">
     <div class="note"><strong>ICW routing southbound:</strong> Masonboro Inlet &rarr; Myrtle Grove Sound &rarr; Snow&rsquo;s Cut (MM 295) &rarr; Cape Fear River &rarr; Southport. <strong>Transit Myrtle Grove at mid-to-high tide.</strong> Check Aqua Map for shoaling at MM 293.7. ICW southbound: red to starboard.</div>
-    <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div><strong>South Harbour Village Marina &middot; (910) 454-7486</strong><br>Ask for <strong>Bill Gregory</strong> &middot; Cell: <strong>(910) 352-8469</strong><br>Italian restaurant at the marina &middot; Home Run Place north of the bridge.</div>
+    <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div><strong>Safe Harbor South Harbour Village &middot; <a class="tel-link" href="tel:+19104547486">(910) 454-7486</a></strong><a class="dockwa-btn" href="https://dockwa.com/explore/destination/d9c1jvw-safe-harbor-south-harbour-village" target="_blank">&#x1F4C5; Book on Dockwa</a><br>Ask for <strong>Bill Gregory</strong>, Manager &middot; Cell: <strong><a class="tel-link" href="tel:+19103528469">(910) 352-8469</a></strong><br><span class="rick-quote">Great Italian place at the marina</span> &mdash; <strong>Joseph&rsquo;s Italian Bistro</strong>, top of the dock. Local favorite: <strong>Home Run Place</strong>, north of the bridge (Rick&rsquo;s pick). <strong>Rusty Hooks</strong> is the other on-site option (American/seafood, live music).</div>
     <div class="cards">
       <a class="card" href="https://www.navcen.uscg.gov/?pageName=lnmDistrict&region=05" target="_blank"><div class="card-icon">&#x26A0;&#xFE0F;</div><div class="card-title">USCG D5 LNMs</div><div class="card-sub">Check for shoaling &mdash; morning of departure</div><span class="card-badge badge-key">Check morning of</span></a>
       <a class="card" href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=8656483" target="_blank"><div class="card-icon">&#x1F30A;</div><div class="card-title">Wrightsville / Masonboro Tides</div><div class="card-sub">Time your Masonboro Inlet entry</div></a>
       <a class="card" href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=8658163" target="_blank"><div class="card-icon">&#x1F30A;</div><div class="card-title">Cape Fear River Tides</div><div class="card-sub">Strong tidal current approaching Southport</div></a>
+    </div>
+    <div class="sub-section">
+      <span class="sub-toggle" onclick="toggleSub('sb-town-4',this)">Around Southport &mdash; things to do</span>
+      <div class="sub-body" id="sb-town-4">
+        <div class="town-block">
+          <div class="town-block-title">&#x1F37D; Restaurants</div>
+          <div class="town-block-body"><strong>On site at the marina:</strong> Joseph&rsquo;s Italian Bistro (Rick&rsquo;s &ldquo;great Italian place&rdquo;) and Rusty Hooks (American/seafood, live music most nights). <strong>Walking distance / short drive:</strong> Home Run Place north of the bridge per Rick. Downtown Southport historic waterfront has more options.</div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F327;&#xFE0F; Weather hold &mdash; what to do</div>
+          <div class="town-block-body">Walk the historic downtown Riverwalk along the Cape Fear River. Oak Island beaches are a 10-min drive (Uber). North Carolina Maritime Museum at Southport is small but worth the stop. Film buffs: this town was the setting for &ldquo;Safe Haven&rdquo; and other movies.</div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F4CD; About this place</div>
+          <div class="town-block-body">Town founded 1792 at the mouth of the Cape Fear River. Active commercial fishing fleet and the highest concentration of historic homes in coastal NC. Marina is one mile from town.</div>
+        </div>
+        <div class="town-source">Joseph&rsquo;s and Rusty Hooks from Dockwa marina listings. Home Run Place from Rick&rsquo;s notes.</div>
+      </div>
     </div>
   </div>
 </div>
@@ -758,10 +1241,28 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
   <div class="seg-header"><div class="seg-dot dot-teal">&#x2465;</div><div class="seg-info"><div class="seg-name">Southport &rarr; Charleston</div><div class="seg-route">Outside &middot; Cape Fear River exit &rarr; offshore &rarr; Charleston Harborage at Ashley Marina</div></div><span class="seg-dist">~145 nm</span></div>
   <span class="seg-toggle" onclick="toggleSeg('sb-sb5',this)">show resources &#9662;</span>
   <div class="seg-body" id="sb-sb5">
-    <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div><strong>Harborage at Ashley Marina &middot; (843) 722-1996</strong><br>Easy outside run southbound. <strong>Charleston tidal range is 5+ ft &mdash; strong current on arrival.</strong></div>
+    <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div><strong>Harborage at Ashley Marina &middot; <a class="tel-link" href="tel:+18437221996">(843) 722-1996</a></strong><a class="dockwa-btn" href="https://dockwa.com/explore/destination/mnc3m9-the-harborage-at-ashley-marina" target="_blank">&#x1F4C5; Book on Dockwa</a><br>Easy outside run southbound. <strong>Charleston tidal range is 5+ ft &mdash; strong current on arrival.</strong></div>
     <div class="cards">
       <a class="card" href="https://captaingeorgia.com/south-east-port-weather" target="_blank"><div class="card-icon">&#x1F4E1;</div><div class="card-title">SE Port Weather &mdash; SC/NC</div><div class="card-sub">Wilmington through Charleston buoy data</div><span class="card-badge badge-cg">Captain Georgia</span></a>
       <a class="card" href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=8665530" target="_blank"><div class="card-icon">&#x1F30A;</div><div class="card-title">Charleston Tides</div><div class="card-sub">5+ ft range &mdash; plan harbor entry around the current</div></a>
+    </div>
+    <div class="sub-section">
+      <span class="sub-toggle" onclick="toggleSub('sb-town-5',this)">Around Charleston &mdash; things to do</span>
+      <div class="sub-body" id="sb-town-5">
+        <div class="town-block">
+          <div class="town-block-title">&#x1F37D; Restaurants &mdash; walking, or short Uber</div>
+          <div class="town-block-body">Walking from the marina to Market St. takes about 2 miles (~$10 Uber). Husk for elevated Southern, Halls Chophouse for steaks, FIG for the Charleston food-scene experience. Publix is a &frac12; mile walk for provisioning.</div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F327;&#xFE0F; Weather hold &mdash; what to do</div>
+          <div class="town-block-body">Walk the Battery and look at the antebellum mansions. Rainbow Row. Charleston City Market. Patriots Point with the USS Yorktown across the bridge in Mount Pleasant (Uber). Fort Sumter ferry from Liberty Square.</div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F4CD; About this place</div>
+          <div class="town-block-body">Founded 1670. The Civil War started here when Confederate batteries fired on Fort Sumter in 1861. The historic district is largely intact &mdash; many buildings predate the Revolution.</div>
+        </div>
+        <div class="town-source">Picks from local knowledge + marina reviews.</div>
+      </div>
     </div>
   </div>
 </div>
@@ -770,7 +1271,7 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
   <div class="seg-header"><div class="seg-dot dot-teal">&#x2466;</div><div class="seg-info"><div class="seg-name">Charleston &rarr; St. Augustine &rarr; Palm Beach &#x1F3C1;</div><div class="seg-route">Charleston &rarr; St. Augustine (~165 nm) &middot; then St. Augustine &rarr; Palm Beach (~185 nm) &middot; split over 2 days or push on conditions</div></div><span class="seg-dist">~350 nm total</span></div>
   <span class="seg-toggle" onclick="toggleSeg('sb-sb6',this)">show notes + resources &#9662;</span>
   <div class="seg-body" id="sb-sb6">
-    <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div><strong>St. Augustine City Docks &middot; (904) 825-1026</strong> &mdash; easy stop if splitting this into two days. Call ahead. Downtown location.</div>
+    <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div><strong>St. Augustine Municipal Marina &middot; <a class="tel-link" href="tel:+19048251026">(904) 825-1026</a></strong><a class="dockwa-btn" href="https://dockwa.com/explore/destination/7ec7q5-st-augustine-municipal-marina" target="_blank">&#x1F4C5; Book on Dockwa</a> &mdash; easy stop if splitting this into two days. Call ahead. Downtown by the Bridge of Lions.</div>
     <div class="note"><strong>St. Augustine bar: cross at or near high tide</strong> &mdash; this applies southbound too, whether entering or exiting. <strong>Gulf Stream runs close to shore south of Cape Canaveral &mdash; following seas in SW/W winds can make for a fast, comfortable southbound run.</strong></div>
     <div class="cards">
       <a class="card" href="https://captaingeorgia.com/fl-port-weather" target="_blank"><div class="card-icon">&#x2693;</div><div class="card-title">FL Port Weather</div><div class="card-sub">Palm Beach / Ft. Pierce arrival zone buoy data</div><span class="card-badge badge-cg">Arrival check</span></a>
@@ -778,6 +1279,98 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
       <a class="card" href="https://tidesandcurrents.noaa.gov/noaatidepredictions.html?id=8720218" target="_blank"><div class="card-icon">&#x1F30A;</div><div class="card-title">St. Augustine Inlet Tides</div><div class="card-sub">Cross the bar near high tide &mdash; southbound same rule</div></a>
       <a class="card" href="https://www.ndbc.noaa.gov/station_page.php?station=41004" target="_blank"><div class="card-icon">&#x1F4E1;</div><div class="card-title">SE Atlantic Buoy (41004)</div><div class="card-sub">Offshore between Charleston and Savannah</div></a>
       <a class="card" href="https://windy.com/?waves,30.0,-80.5,6" target="_blank"><div class="card-icon">&#x1F4F1;</div><div class="card-title">Windy &mdash; FL / GA offshore</div><div class="card-sub">Final offshore leg conditions</div></a>
+    </div>
+    <div class="sub-section">
+      <span class="sub-toggle" onclick="toggleSub('sb-cont-6',this)">Contingency stops along this leg</span>
+      <div class="sub-body" id="sb-cont-6">
+        <div class="cont-card">
+          <div class="cont-marina">Harbour Town Yacht Basin &mdash; Hilton Head Island, SC <span class="rick-tag">&#x1F4CB; In Rick&rsquo;s notes</span></div>
+          <div class="cont-meta">~70 nm from Charleston &middot; <strong>Weather bailout or fuel stop between Charleston and St. Augustine.</strong> Sea Pines Resort marina, multiple restaurants, walking to Calibogue Sound. Harbourmaster Leslie. <a class="tel-link" href="tel:+18433638335">(843) 363-8335</a> &middot; <span class="rick-quote">Great food at the Country Club, walking distance</span> (Rick)</div>
+          <div class="cont-actions"><a class="dockwa-btn" href="https://dockwa.com/explore/destination/eyc8jr-harbour-town-yacht-basin" target="_blank">&#x1F4C5; Book on Dockwa</a></div>
+          <div class="sub-section">
+            <span class="sub-toggle" onclick="toggleSub('ct-hh-sb',this)">Around Hilton Head &mdash; things to do</span>
+            <div class="sub-body" id="ct-hh-sb">
+              <div class="town-block">
+                <div class="town-block-title">&#x1F37D; Restaurants</div>
+                <div class="town-block-body"><span class="rick-quote">Great food at the Country Club, walking distance</span> &mdash; Rick means the Sea Pines Country Club. <strong>On-site at Harbour Town:</strong> Links (American grill overlooking the golf course), Coast (waterfront seafood), Fraser&rsquo;s Tavern (casual), The Quarterdeck (on the harbor).</div>
+              </div>
+              <div class="town-block">
+                <div class="town-block-title">&#x1F327;&#xFE0F; Weather hold &mdash; what to do</div>
+                <div class="town-block-body">Walk up the iconic red-and-white Harbour Town Lighthouse for the view (90 ft, small museum inside). Sea Pines Forest Preserve has trails. Beaches via shuttle or bike. Excellent bike paths throughout Sea Pines &mdash; rentals at the marina. The Harbour Town Golf Links is home of the RBC Heritage PGA Tour event.</div>
+              </div>
+              <div class="town-block">
+                <div class="town-block-title">&#x1F4CD; About this place</div>
+                <div class="town-block-body">Sea Pines was the original master-planned resort community on the East Coast (1956). Harbour Town&rsquo;s design was inspired by Portofino, Italy. The lighthouse isn&rsquo;t a working navigational aid &mdash; it was built as a marketing feature in 1969 and became one of the most photographed lighthouses in the world.</div>
+              </div>
+              <div class="town-source">Country Club from Rick&rsquo;s notes. Other restaurants from Dockwa marina listing.</div>
+            </div>
+          </div>
+        </div>
+        <div class="cont-card">
+          <div class="cont-marina">Brunswick Landing Marina &mdash; Brunswick, GA</div>
+          <div class="cont-meta">~120 nm from Charleston &middot; <strong>Mid-leg bailout</strong> if you want to break up the Charleston-to-St. Augustine run. Called the &ldquo;Velcro Marina&rdquo; &mdash; once you arrive, you don&rsquo;t want to leave. Free laundry, walking to downtown. <a class="tel-link" href="tel:+19122629264">(912) 262-9264</a></div>
+          <div class="cont-actions"><a class="dockwa-btn" href="https://dockwa.com/explore/destination/3gcxe6-brunswick-landing-marina" target="_blank">&#x1F4C5; Book on Dockwa</a></div>
+          <div class="sub-section">
+            <span class="sub-toggle" onclick="toggleSub('ct-br-sb',this)">Around Brunswick &mdash; things to do</span>
+            <div class="sub-body" id="ct-br-sb">
+              <div class="town-block">
+                <div class="town-block-title">&#x1F37D; Restaurants &mdash; walking distance</div>
+                <div class="town-block-body">Cooter Brown&rsquo;s is the Dockwa-cruiser favorite. Many downtown restaurants offer 10% off for marina guests. Indigo Coastal Shanty for fusion. Marshside Grill for Southern. Marina hosts complimentary happy hour Mon/Wed/Fri with the cruising community (free beer on tap, bacon nights).</div>
+              </div>
+              <div class="town-block">
+                <div class="town-block-title">&#x1F327;&#xFE0F; Weather hold &mdash; what to do</div>
+                <div class="town-block-body">First Friday street festival if it lines up with your stay (food trucks, art, vendors). Mary Ross Waterfront Park. Old Town Brunswick Historic District. Marina has free bikes &mdash; explore the town easily. Day trips: Jekyll Island (driveable, beaches and historic district), St. Simons Island, Cumberland Island National Seashore.</div>
+              </div>
+              <div class="town-block">
+                <div class="town-block-title">&#x1F4CD; About this place</div>
+                <div class="town-block-body">Founded 1771. Former U.S. Navy hurricane hole during WWII &mdash; that&rsquo;s why insurance companies love it (most won&rsquo;t insure boats south of here during hurricane season). Locally known as the &ldquo;Velcro Marina&rdquo; &mdash; once you arrive, you don&rsquo;t want to leave.</div>
+              </div>
+              <div class="town-source">Picks from Dockwa reviews.</div>
+            </div>
+          </div>
+        </div>
+        <div class="cont-card">
+          <div class="cont-marina">Fort Pierce City Marina &mdash; Fort Pierce, FL</div>
+          <div class="cont-meta">~110 nm from Palm Beach (~75 nm south of St. Augustine) &middot; <strong>Last bailout before the Gulf Stream / Palm Beach approach.</strong> Often called the best all-weather inlet on the East Coast. Downtown, walking to restaurants. <a class="tel-link" href="tel:+17724641245">(772) 464-1245</a></div>
+          <div class="cont-actions"><a class="dockwa-btn" href="https://dockwa.com/explore/destination/qpcwql-fort-pierce-city-marina" target="_blank">&#x1F4C5; Book on Dockwa</a></div>
+          <div class="sub-section">
+            <span class="sub-toggle" onclick="toggleSub('ct-fp-sb',this)">Around Fort Pierce &mdash; things to do</span>
+            <div class="sub-body" id="ct-fp-sb">
+              <div class="town-block">
+                <div class="town-block-title">&#x1F37D; Restaurants &mdash; walking distance</div>
+                <div class="town-block-body">Cobb&rsquo;s Landing right at the marina &mdash; live music, ask the marina office for the boater discount coupon. 2nd Street Bistro on the waterfront. Sailfish Brewing Co. for craft beer. 12A Buoy for seafood. Manatee Cafe nearby for breakfast/lunch.</div>
+              </div>
+              <div class="town-block">
+                <div class="town-block-title">&#x1F327;&#xFE0F; Weather hold &mdash; what to do</div>
+                <div class="town-block-body">National Navy SEAL Museum on Hutchinson Island is the only one of its kind &mdash; half-day visit, short Uber. Saturday morning Downtown Farmers Market is one of the best in Florida. Manatee Observation Center if you&rsquo;re here in winter (free, manatees in the warm-water discharge). Walkable historic downtown.</div>
+              </div>
+              <div class="town-block">
+                <div class="town-block-title">&#x1F4CD; About this place</div>
+                <div class="town-block-body">Founded 1838. The &ldquo;Treasure Coast&rdquo; name comes from a 1715 Spanish fleet that sank off this stretch &mdash; gold and silver still wash ashore after storms. The Fort Pierce Inlet has been called the best all-weather inlet on the East Coast.</div>
+              </div>
+              <div class="town-source">Picks from Dockwa reviews + local knowledge.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sub-section">
+      <span class="sub-toggle" onclick="toggleSub('sb-town-6',this)">Around St. Augustine &mdash; things to do</span>
+      <div class="sub-body" id="sb-town-6">
+        <div class="town-block">
+          <div class="town-block-title">&#x1F37D; Restaurants &mdash; walking distance from City Docks</div>
+          <div class="town-block-body">O.C. White&rsquo;s right across the street (classic Florida seafood). Harry&rsquo;s a block north toward the fort (Creole/Cajun, courtyard seating). The Floridian for Southern. Columbia Restaurant on St. George St. for Spanish/Cuban &mdash; the oldest restaurant in Florida.</div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F327;&#xFE0F; Weather hold &mdash; what to do</div>
+          <div class="town-block-body">Castillo de San Marcos is a 5-minute walk &mdash; Spanish stone fort from 1672, oldest masonry fort in the U.S. Pedestrian St. George Street (shops, restaurants, galleries). Flagler College tour (former Ponce de Leon Hotel, Tiffany glass). Lightner Museum just across the bridge. Ghost tours after dark are surprisingly good.</div>
+        </div>
+        <div class="town-block">
+          <div class="town-block-title">&#x1F4CD; About this place</div>
+          <div class="town-block-body">Founded by the Spanish in 1565 &mdash; the oldest continuously inhabited European settlement in the United States. 450+ years of seafaring history. The Bridge of Lions next to the slip opened in 1927.</div>
+        </div>
+        <div class="town-source">Picks from local knowledge + Dockwa reviews.</div>
+      </div>
     </div>
   </div>
 </div>
@@ -837,12 +1430,12 @@ var NB_STOPS=[
   {name:'Palm Beach',next:'St. Augustine City Docks (~185 nm) \u2014 long Day 1, all outside, ~6 hrs at 30 kts',seg:'nb-seg1',dotIdx:0},
   {name:'St. Augustine',next:'Charleston \u2014 Harborage at Ashley Marina (~165 nm)',seg:'nb-seg2',dotIdx:1},
   {name:'Charleston',next:'Southport \u2014 South Harbour Village Marina (~145 nm) \u2014 easy day',seg:'nb-seg3',dotIdx:2},
-  {name:'Southport',next:'Coinjock overnight (~110 nm) \u00b7 call ahead for the prime rib',seg:'nb-seg4',dotIdx:3},
-  {name:'Morehead City',next:'Coinjock Marina overnight (~75 nm) \u00b7 call ahead and order the prime rib',seg:'nb-seg4',dotIdx:4},
-  {name:'Coinjock',next:'Norfolk Waterside Marina (~40 nm) \u00b7 bridge timing \u2014 use the planner above',seg:'nb-seg5',dotIdx:5},
-  {name:'Norfolk',next:'Cape May South Jersey Marina (~185 nm) \u00b7 outside via Cape Henry',seg:'nb-seg6',dotIdx:6},
-  {name:'Cape May NJ',next:'Nantucket direct (~225 nm, ~8 hrs at 30 kts) \u00b7 or Montauk then Nantucket',seg:'nb-seg7',dotIdx:7},
-  {name:'Montauk NY',next:'Nantucket MA (~105 nm) \u2014 easy finishing leg',seg:'nb-seg7',dotIdx:8}
+  {name:'Southport',next:'Morehead City \u2014 Morehead City Yacht Basin (~75 nm) \u00b7 outside via Masonboro, or inside ICW',seg:'nb-seg4',dotIdx:3},
+  {name:'Morehead City',next:'Coinjock Marina overnight (~110 nm) \u00b7 inside via Pamlico Sound \u00b7 call ahead and order the prime rib',seg:'nb-seg5',dotIdx:4},
+  {name:'Coinjock',next:'Norfolk Waterside Marina (~40 nm) \u00b7 bridge timing \u2014 use the planner above',seg:'nb-seg6',dotIdx:5},
+  {name:'Norfolk',next:'Cape May South Jersey Marina (~185 nm) \u00b7 outside via Cape Henry',seg:'nb-seg7',dotIdx:6},
+  {name:'Cape May NJ',next:'Nantucket direct (~225 nm, ~8 hrs at 30 kts) \u00b7 or Montauk then Nantucket',seg:'nb-seg8',dotIdx:7},
+  {name:'Montauk NY',next:'Nantucket MA (~105 nm) \u2014 easy finishing leg',seg:'nb-seg8',dotIdx:8}
 ];
 var SB_STOPS=[
   {name:'Nantucket MA',next:'Cape May direct (~225 nm) or Nantucket \u2192 Montauk (~105 nm) then Montauk \u2192 Cape May (~130 nm)',seg:'sb-seg0',dotIdx:0},
@@ -909,8 +1502,8 @@ var NB_LEGS=[
   {nm:185,notes:'Heading to <strong>St. Augustine City Docks (~185 nm)</strong>. Gulf Stream close to shore between Palm Beach and Cape Canaveral &mdash; check offshore buoy 41047. St. Augustine bar: plan arrival near high tide.'},
   {nm:165,notes:'Heading to <strong>Charleston Harborage at Ashley Marina (~165 nm)</strong>. Brunswick/St. Simons GA (~130 nm) is your mid-leg backup. Check buoy 41004. Charleston tides: 5+ ft range, strong harbor current.'},
   {nm:145,notes:'Heading to <strong>Southport South Harbour Village Marina (~145 nm)</strong>. Easy day &mdash; call Bill Gregory at (910) 454-7486. Italian at the marina, Home Run Place north of the bridge.'},
-  {nm:110,notes:'Heading to <strong>Coinjock overnight (~110 nm)</strong>. Depart early &mdash; cross Pamlico before noon. <strong>Call Coinjock Marina (252) 453-3271 and order the prime rib before you arrive. East side of channel. Tip dock hands in cash.</strong>'},
-  {nm:75,notes:'Heading to <strong>Coinjock overnight (~75 nm)</strong>. Depart Morehead City early &mdash; cross Pamlico before noon. <strong>Call Coinjock Marina (252) 453-3271 and order the prime rib. East side. Tip dock hands in cash.</strong>'},
+  {nm:75,notes:'Heading to <strong>Morehead City Yacht Basin (~75 nm)</strong>. Outside via Masonboro Inlet preferred. If W offshore wind, go inside ICW via Wrightsville Beach &mdash; nice ride, full day. <strong>Dockmaster: (252) 726-6862.</strong>'},
+  {nm:110,notes:'Heading to <strong>Coinjock overnight (~110 nm)</strong>. Depart Morehead City early &mdash; inside via Neuse River, Pamlico Sound, Alligator River, Albemarle to Coinjock. Cross Pamlico before noon. <strong>Call Coinjock Marina (252) 453-3271 and order the prime rib. East side of channel. Tip dock hands in cash.</strong>'},
   {nm:40,notes:'Heading to <strong>Norfolk Waterside Marina (~40 nm)</strong>. Bridge timing &mdash; use the planner in this leg&rsquo;s section. Great Bridge Lock opens northbound on the hour. Elizabeth River: 6 kts from MM 8 to Waterside. Waterside: (757) 625-3625.'},
   {nm:185,notes:'Heading to <strong>Cape May South Jersey Marina (~185 nm)</strong>. Exit Cape Henry, run NE up the Delmarva coast, enter Cape May from the ocean on the east side. Check Chesapeake Light buoy 44100 and Delaware Bay buoy 44009. Top off fuel at South Jersey Marina (609) 884-2400.'},
   {nm:225,notes:'Heading to <strong>Nantucket (~225 nm, ~{hrs} hrs at {spd} kts)</strong>. Check NY Bight buoy 44025, Montauk buoy 44017, and Nantucket Sound buoy 44020. Depart at a normal hour &mdash; arrive mid-afternoon. If the window looks soft, <strong>Montauk (~130 nm) is your staging stop &mdash; overnight there, then 105 nm to Nantucket fresh.</strong>'},
@@ -991,6 +1584,12 @@ window.toggleSeg=function(id,lbl){
   var open=el.classList.contains('open');
   el.classList.toggle('open',!open);
   lbl.textContent=open?lbl.textContent.replace('hide','show').replace('\u25b2','\u25be'):lbl.textContent.replace('show','hide').replace('\u25be','\u25b2');
+};
+window.toggleSub=function(id,lbl){
+  var el=document.getElementById(id);
+  if(!el)return;
+  el.classList.toggle('open');
+  lbl.classList.toggle('open');
 };
 
 // ── BRIDGE PLANNER HELPERS ───────────────────────────────────
