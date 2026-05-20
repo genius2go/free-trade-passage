@@ -258,7 +258,21 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
 .quick-links{display:flex;flex-wrap:wrap;gap:8px;}
 .quick-link{background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius-sm);padding:7px 12px;font-size:12px;color:var(--text-muted);text-decoration:none;transition:background 0.15s,color 0.15s;white-space:nowrap;}
 .quick-link:hover{background:var(--card-hover);color:var(--text);}
+/* LEAFLET MAP CONTAINERS */
+.leg-map{height:340px;width:100%;border-radius:var(--radius-sm);background:#0a1419;border:1px solid var(--border);}
+.leg-map .leaflet-control-attribution{font-size:9px;background:rgba(10,20,25,0.85);color:var(--text-dim);}
+.leg-map .leaflet-control-attribution a{color:var(--teal-light);}
+.leg-map .leaflet-popup-content-wrapper{background:#1a2a30;color:var(--text);font-family:inherit;border-radius:var(--radius-sm);}
+.leg-map .leaflet-popup-tip{background:#1a2a30;}
+.leg-map .leaflet-popup-content{font-size:12px;margin:8px 12px;}
+.map-caption{font-size:11px;color:var(--text-dim);font-style:italic;margin-top:6px;line-height:1.5;}
+.map-caption strong{color:var(--text-muted);font-style:normal;}
+.map-toggle{margin-left:14px;}
+.map-toggle.open{color:var(--teal-light);}
+.map-body-wrap{display:none;margin-top:10px;}
+.map-body-wrap.open{display:block;}
 </style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 </head>
 <body>
 
@@ -520,6 +534,7 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
 <div class="segment" id="nb-seg1">
   <div class="seg-header"><div class="seg-dot dot-teal">&#x2461;</div><div class="seg-info"><div class="seg-name">Palm Beach &rarr; St. Augustine &mdash; City Marina</div><div class="seg-route">Day 1 &middot; all outside &middot; ~6 hrs at cruise &middot; City Docks downtown</div></div><span class="seg-dist">~185 nm</span></div>
   <span class="seg-toggle" onclick="toggleSeg('nb-sb1',this)">show notes + resources &#9662;</span>
+  <span class="seg-toggle map-toggle" onclick="toggleMap('nb-seg1',this)">&#x1F5FA;&#xFE0F; route map &#9662;</span>
   <div class="seg-body" id="nb-sb1">
     <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div><strong>St. Augustine Municipal Marina &middot; <a class="tel-link" href="tel:+19048251026">(904) 825-1026</a></strong><a class="dockwa-btn" href="https://dockwa.com/explore/destination/7ec7q5-st-augustine-municipal-marina" target="_blank">&#x1F4C5; Book on Dockwa</a><br>About an 8-hour run from Ft. Lauderdale at cruise speed &mdash; call ahead for your slip. Downtown location right by the Bridge of Lions, easy walking to everything.</div>
     <div class="note"><strong>Gulf Stream runs close to shore between Palm Beach and Cape Canaveral.</strong> With any NE wind it stacks up fast. Ft. Pierce (~110 nm) is a natural mid-leg contingency. <strong>St. Augustine bar: cross at or near high tide &mdash; work backwards from tide tables when planning departure.</strong></div>
@@ -575,11 +590,16 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
       </div>
     </div>
   </div>
+  <div class="map-body-wrap" id="nb-seg1-map-body">
+    <div id="nb-seg1-map-canvas" class="leg-map"></div>
+    <div class="map-caption" id="nb-seg1-map-cap"></div>
+  </div>
 </div>
 
 <div class="segment" id="nb-seg2">
   <div class="seg-header"><div class="seg-dot dot-teal">&#x2462;</div><div class="seg-info"><div class="seg-name">St. Augustine &rarr; Charleston &mdash; Harborage at Ashley Marina</div><div class="seg-route">Day 2 &middot; outside &middot; Brunswick/St. Simons GA is your mid-leg backup</div></div><span class="seg-dist">~165 nm</span></div>
   <span class="seg-toggle" onclick="toggleSeg('nb-sb2',this)">show notes + resources &#9662;</span>
+  <span class="seg-toggle map-toggle" onclick="toggleMap('nb-seg2',this)">&#x1F5FA;&#xFE0F; route map &#9662;</span>
   <div class="seg-body" id="nb-sb2">
     <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div><strong>Harborage at Ashley Marina &middot; <a class="tel-link" href="tel:+18437221996">(843) 722-1996</a></strong><a class="dockwa-btn" href="https://dockwa.com/explore/destination/mnc3m9-the-harborage-at-ashley-marina" target="_blank">&#x1F4C5; Book on Dockwa</a><br><span class="rick-quote">Running 30 knots with one foot in the sand</span> &mdash; fast outside leg, close to shore. Call ahead.</div>
     <div class="note-green">Brunswick/St. Simons GA (~130 nm) is an easy contingency. <strong>Charleston tidal range is 5+ ft &mdash; real current in the harbor on arrival. Check timing.</strong></div>
@@ -658,11 +678,16 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
       </div>
     </div>
   </div>
+  <div class="map-body-wrap" id="nb-seg2-map-body">
+    <div id="nb-seg2-map-canvas" class="leg-map"></div>
+    <div class="map-caption" id="nb-seg2-map-cap"></div>
+  </div>
 </div>
 
 <div class="segment" id="nb-seg3">
   <div class="seg-header"><div class="seg-dot dot-amber">&#x2463;</div><div class="seg-info"><div class="seg-name">Charleston &rarr; Southport &mdash; South Harbour Village Marina</div><div class="seg-route">Day 3 &middot; outside &middot; easy day, in by early afternoon &middot; Cape Fear River approach</div></div><span class="seg-dist">~145 nm</span></div>
   <span class="seg-toggle" onclick="toggleSeg('nb-sb3',this)">show notes + resources &#9662;</span>
+  <span class="seg-toggle map-toggle" onclick="toggleMap('nb-seg3',this)">&#x1F5FA;&#xFE0F; route map &#9662;</span>
   <div class="seg-body" id="nb-sb3">
     <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div><strong>Safe Harbor South Harbour Village &middot; <a class="tel-link" href="tel:+19104547486">(910) 454-7486</a></strong><a class="dockwa-btn" href="https://dockwa.com/explore/destination/d9c1jvw-safe-harbor-south-harbour-village" target="_blank">&#x1F4C5; Book on Dockwa</a><br>Ask for <strong>Bill Gregory</strong>, Manager &middot; Cell: <strong><a class="tel-link" href="tel:+19103528469">(910) 352-8469</a></strong><br><strong>Dinner:</strong> <span class="rick-quote">Great Italian place at the marina</span> &mdash; that&rsquo;s <strong>Joseph&rsquo;s Italian Bistro</strong>, right at the top of the dock. Local favorite: <strong>Home Run Place</strong>, north of the bridge (Rick&rsquo;s pick). <strong>Rusty Hooks</strong> is the other on-site restaurant for American/seafood with live music.</div>
     <div class="cards">
@@ -688,11 +713,16 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
       </div>
     </div>
   </div>
+  <div class="map-body-wrap" id="nb-seg3-map-body">
+    <div id="nb-seg3-map-canvas" class="leg-map"></div>
+    <div class="map-caption" id="nb-seg3-map-cap"></div>
+  </div>
 </div>
 
 <div class="segment" id="nb-seg4">
   <div class="seg-header"><div class="seg-dot dot-amber">&#x2464;</div><div class="seg-info"><div class="seg-name">Southport &rarr; Morehead City &mdash; Morehead City Yacht Basin</div><div class="seg-route">Day 4 &middot; Outside via Masonboro Inlet (preferred) &middot; or inside ICW &ldquo;drag a foot in the sand&rdquo; if W wind offshore</div></div><span class="seg-dist">~75 nm</span></div>
   <span class="seg-toggle" onclick="toggleSeg('nb-sb4',this)">show notes + resources &#9662;</span>
+  <span class="seg-toggle map-toggle" onclick="toggleMap('nb-seg4',this)">&#x1F5FA;&#xFE0F; route map &#9662;</span>
   <div class="seg-body" id="nb-sb4">
     <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div><strong>Morehead City Yacht Basin &middot; Dockmaster <a class="tel-link" href="tel:+12527266862">(252) 726-6862</a></strong><a class="dockwa-btn" href="https://dockwa.com/explore/destination/16cwdr-morehead-city-yacht-basin" target="_blank">&#x1F4C5; Book on Dockwa</a><br>Outside is the preferred route. <strong>If offshore is rough</strong>, the ICW route up to Morehead City is a nice full-day ride. <strong>If you have a westerly wind</strong> (calm near-shore), Rick&rsquo;s hybrid is the sweet spot: ICW from Southport past Cape Fear to Wrightsville Beach, exit Masonboro Inlet, then &ldquo;drag a foot in the sand&rdquo; close to the beach up to Morehead.</div>
     <div class="note"><strong>Tomorrow is the long Pamlico day to Coinjock</strong> &mdash; rest up tonight. Top off fuel at Morehead so you depart in the morning ready to cross before the sea breeze builds.</div>
@@ -720,11 +750,16 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
       </div>
     </div>
   </div>
+  <div class="map-body-wrap" id="nb-seg4-map-body">
+    <div id="nb-seg4-map-canvas" class="leg-map"></div>
+    <div class="map-caption" id="nb-seg4-map-cap"></div>
+  </div>
 </div>
 
 <div class="segment" id="nb-seg5">
   <div class="seg-header"><div class="seg-dot dot-amber">&#x2465;</div><div class="seg-info"><div class="seg-name">Morehead City &rarr; Coinjock &mdash; overnight &#x1F969;</div><div class="seg-route">Day 5 &middot; Inside via Neuse River &rarr; Pamlico Sound &rarr; Alligator River &rarr; Albemarle &rarr; Coinjock &middot; ~6&ndash;7 hrs ICW</div></div><span class="seg-dist">~110 nm</span></div>
   <span class="seg-toggle" onclick="toggleSeg('nb-sb5',this)">show notes + resources &#9662;</span>
+  <span class="seg-toggle map-toggle" onclick="toggleMap('nb-seg5',this)">&#x1F5FA;&#xFE0F; route map &#9662;</span>
   <div class="seg-body" id="nb-sb5">
     <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div>Inside the whole way. From Morehead City, go ICW to the Neuse River, then toward the Outer Banks, after the bridges. Continue through Currituck Sound to the ICW northbound. <strong>Sticking with the ICW &mdash; beware of slow sailboats.</strong></div>
     <div class="note-green"><strong>Pamlico Sound is a non-event on a 55-footer in normal conditions.</strong> Depart Morehead City early and cross before noon. <strong>Coinjock is tonight&rsquo;s destination &mdash; call ahead and order the prime rib before you arrive.</strong></div>
@@ -752,11 +787,16 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
       </div>
     </div>
   </div>
+  <div class="map-body-wrap" id="nb-seg5-map-body">
+    <div id="nb-seg5-map-canvas" class="leg-map"></div>
+    <div class="map-caption" id="nb-seg5-map-cap"></div>
+  </div>
 </div>
 
 <div class="segment" id="nb-seg6">
   <div class="seg-header"><div class="seg-dot dot-purple">&#x2466;</div><div class="seg-info"><div class="seg-name">Coinjock &rarr; Norfolk &mdash; Waterside Marina</div><div class="seg-route">Day 6 morning &middot; Virginia Cut &rarr; Great Bridge Lock (opens on the hour, NB) &rarr; Elizabeth River &rarr; Hampton Roads</div></div><span class="seg-dist">~40 nm</span></div>
   <span class="seg-toggle" onclick="toggleSeg('nb-sb6',this)">show bridge timing planner &#9662;</span>
+  <span class="seg-toggle map-toggle" onclick="toggleMap('nb-seg6',this)">&#x1F5FA;&#xFE0F; route map &#9662;</span>
   <div class="seg-body" id="nb-sb6">
     <div class="note"><strong>Plan this leg the evening before at Coinjock.</strong> Great Bridge Lock opens northbound on the hour. Work backwards from the lock hour you want. Elizabeth River is 6 kts no-wake all the way to Waterside. <strong>Confirm bridge schedules with Coinjock Marina staff over dinner.</strong></div>
     <div class="bridge-planner">
@@ -820,11 +860,16 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
       </div>
     </div>
   </div>
+  <div class="map-body-wrap" id="nb-seg6-map-body">
+    <div id="nb-seg6-map-canvas" class="leg-map"></div>
+    <div class="map-caption" id="nb-seg6-map-cap"></div>
+  </div>
 </div>
 
 <div class="segment" id="nb-seg7">
   <div class="seg-header"><div class="seg-dot dot-sky">&#x2467;</div><div class="seg-info"><div class="seg-name">Norfolk &rarr; Cape May (or Atlantic City) &mdash; South Jersey Marina</div><div class="seg-route">Day 6 afternoon &middot; Outside preferred &middot; exit Cape Henry &middot; run NE up Delmarva coast &middot; Cape May primary, AC if full or extending</div></div><span class="seg-dist">~185 nm</span></div>
   <span class="seg-toggle" onclick="toggleSeg('nb-sb7',this)">show notes + resources &#9662;</span>
+  <span class="seg-toggle map-toggle" onclick="toggleMap('nb-seg7',this)">&#x1F5FA;&#xFE0F; route map &#9662;</span>
   <div class="seg-body" id="nb-sb7">
     <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div>Outside is the preferred route on a 55-footer with a good window.<br><br><strong>South Jersey Marina, Cape May &middot; <a class="tel-link" href="tel:+16098842400">(609) 884-2400</a></strong><a class="dockwa-btn" href="https://dockwa.com/explore/destination/wgce4d-south-jersey-marina" target="_blank">&#x1F4C5; Book on Dockwa</a><br><span class="rick-quote">Outside is good</span> &mdash; excellent staging marina. <strong>Cape May fills up &mdash; book ahead.</strong> Enter from the ocean side. <strong>Top off completely here before deciding on the final leg.</strong></div>
     <div class="decision">
@@ -918,11 +963,16 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
       </div>
     </div>
   </div>
+  <div class="map-body-wrap" id="nb-seg7-map-body">
+    <div id="nb-seg7-map-canvas" class="leg-map"></div>
+    <div class="map-caption" id="nb-seg7-map-cap"></div>
+  </div>
 </div>
 
 <div class="segment" id="nb-seg8">
   <div class="seg-header"><div class="seg-dot dot-sky">&#x2468;</div><div class="seg-info"><div class="seg-name">Cape May &rarr; Nantucket &mdash; Direct or via Montauk &#x1F3C1;</div><div class="seg-route">Day 7 &middot; ~225 nm direct at 30 kts &mdash; ~8 hrs &middot; or Cape May &rarr; Montauk (~130 nm) then Montauk &rarr; Nantucket (~105 nm)</div></div><span class="seg-dist">~225 nm direct</span></div>
   <span class="seg-toggle" onclick="toggleSeg('nb-sb8',this)">show notes + resources &#9662;</span>
+  <span class="seg-toggle map-toggle" onclick="toggleMap('nb-seg8',this)">&#x1F5FA;&#xFE0F; route map &#9662;</span>
   <div class="seg-body" id="nb-sb8">
     <div class="note-blue"><strong>Fuel is not the question &mdash; weather is.</strong> ~225 nm at 30 kts is roughly 8 hrs. Depart at a normal hour and arrive Nantucket by mid-afternoon. Montauk is a completely legitimate option &mdash; 130 nm there, overnight, then a relaxed 105 nm finish the next morning.</div>
     <div class="decision">
@@ -1011,6 +1061,10 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
       </div>
     </div>
   </div>
+  <div class="map-body-wrap" id="nb-seg8-map-body">
+    <div id="nb-seg8-map-canvas" class="leg-map"></div>
+    <div class="map-caption" id="nb-seg8-map-cap"></div>
+  </div>
 </div>
 </div><!-- end nb-only -->
 
@@ -1023,6 +1077,7 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
 <div class="segment" id="sb-seg0">
   <div class="seg-header"><div class="seg-dot dot-sky">&#x2460;</div><div class="seg-info"><div class="seg-name">Nantucket &rarr; Cape May (or Atlantic City) &mdash; Direct or via Montauk</div><div class="seg-route">~225 nm direct at 30 kts &mdash; ~8 hrs &middot; or Nantucket &rarr; Montauk (~105 nm) then Montauk &rarr; Cape May (~130 nm) &middot; AC if Cape May is full</div></div><span class="seg-dist">~225 nm direct</span></div>
   <span class="seg-toggle" onclick="toggleSeg('sb-sb0',this)">show notes + resources &#9662;</span>
+  <span class="seg-toggle map-toggle" onclick="toggleMap('sb-seg0',this)">&#x1F5FA;&#xFE0F; route map &#9662;</span>
   <div class="seg-body" id="sb-sb0">
     <div class="note-blue"><strong>Same offshore decision southbound.</strong> Depart Nantucket early &mdash; Nantucket Sound in the morning is calm; it builds with SW afternoon winds against ebb. ~225 nm direct to Cape May at 30 kts is ~8 hrs. Montauk is a natural split at 105 nm.</div>
     <div class="decision">
@@ -1146,11 +1201,16 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
       </div>
     </div>
   </div>
+  <div class="map-body-wrap" id="sb-seg0-map-body">
+    <div id="sb-seg0-map-canvas" class="leg-map"></div>
+    <div class="map-caption" id="sb-seg0-map-cap"></div>
+  </div>
 </div>
 
 <div class="segment" id="sb-seg1">
   <div class="seg-header"><div class="seg-dot dot-sky">&#x2461;</div><div class="seg-info"><div class="seg-name">Cape May &rarr; Norfolk &mdash; Waterside Marina</div><div class="seg-route">Outside preferred &middot; exit Cape May ocean side &middot; run SW down Delmarva coast &middot; enter Cape Henry / Hampton Roads</div></div><span class="seg-dist">~185 nm</span></div>
   <span class="seg-toggle" onclick="toggleSeg('sb-sb1',this)">show notes + resources &#9662;</span>
+  <span class="seg-toggle map-toggle" onclick="toggleMap('sb-seg1',this)">&#x1F5FA;&#xFE0F; route map &#9662;</span>
   <div class="seg-body" id="sb-sb1">
     <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div>Outside is the preferred route southbound &mdash; same as northbound in reverse.<br><br><strong>Norfolk Waterside Marina &middot; <a class="tel-link" href="tel:+17576253625">(757) 625-3625</a></strong><a class="dockwa-btn" href="https://dockwa.com/explore/destination/x1cw3-waterside-marina" target="_blank">&#x1F4C5; Book on Dockwa</a><br>Right on the downtown waterfront. Good overnight. <strong>Hampton Roads ship traffic is heavy &mdash; big vessels have right of way. Monitor VHF 16.</strong></div>
     <div class="cards">
@@ -1179,11 +1239,16 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
       </div>
     </div>
   </div>
+  <div class="map-body-wrap" id="sb-seg1-map-body">
+    <div id="sb-seg1-map-canvas" class="leg-map"></div>
+    <div class="map-caption" id="sb-seg1-map-cap"></div>
+  </div>
 </div>
 
 <div class="segment" id="sb-seg2">
   <div class="seg-header"><div class="seg-dot dot-purple">&#x2462;</div><div class="seg-info"><div class="seg-name">Norfolk &rarr; Coinjock &mdash; overnight &#x1F969;</div><div class="seg-route">Day 3 &middot; Elizabeth River &rarr; Great Bridge Lock (opens at :30, SB) &rarr; North Landing River &rarr; Coinjock</div></div><span class="seg-dist">~40 nm</span></div>
   <span class="seg-toggle" onclick="toggleSeg('sb-sb2',this)">show bridge timing planner &#9662;</span>
+  <span class="seg-toggle map-toggle" onclick="toggleMap('sb-seg2',this)">&#x1F5FA;&#xFE0F; route map &#9662;</span>
   <div class="seg-body" id="sb-sb2">
     <div class="note"><strong>Plan this leg the evening before at Waterside.</strong> Southbound Great Bridge Lock opens at :30 past the hour. Work backwards from the lock time you want. Elizabeth River is 6 kts no-wake from MM 0 to the lock. <strong>Confirm bridge schedules with Waterside dock staff the night before.</strong></div>
     <div class="note-rick" style="margin-top:0"><div class="rick-header">&#x1F4CB; Coinjock arrival &mdash; prime rib awaits</div><strong>Coinjock Marina &middot; <a class="tel-link" href="tel:+12524533271">(252) 453-3271</a></strong><a class="dockwa-btn" href="https://dockwa.com/explore/destination/pwc4xj-coinjock-marina" target="_blank">&#x1F4C5; Book on Dockwa</a><br>Dock on the <strong>east side</strong> of the channel, restaurant right there. <strong>Do not stay on the west docks</strong> &mdash; no tender access to the restaurant. <strong>Call ahead and order the prime rib before you arrive.</strong> Tip dock hands in cash &mdash; not on the CC machine (adds 20% to the bill).</div>
@@ -1242,11 +1307,16 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
       </div>
     </div>
   </div>
+  <div class="map-body-wrap" id="sb-seg2-map-body">
+    <div id="sb-seg2-map-canvas" class="leg-map"></div>
+    <div class="map-caption" id="sb-seg2-map-cap"></div>
+  </div>
 </div>
 
 <div class="segment" id="sb-seg3">
   <div class="seg-header"><div class="seg-dot dot-amber">&#x2463;</div><div class="seg-info"><div class="seg-name">Coinjock &rarr; Morehead City (via Pamlico Sound)</div><div class="seg-route">Albemarle Sound &rarr; Alligator River &rarr; Pamlico Sound &rarr; Neuse River &rarr; Morehead City</div></div><span class="seg-dist">~110 nm</span></div>
   <span class="seg-toggle" onclick="toggleSeg('sb-sb3',this)">show notes + resources &#9662;</span>
+  <span class="seg-toggle map-toggle" onclick="toggleMap('sb-seg3',this)">&#x1F5FA;&#xFE0F; route map &#9662;</span>
   <div class="seg-body" id="sb-sb3">
     <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes &mdash; Morehead City arrival</div><strong>Morehead City Yacht Basin &middot; Dockmaster <a class="tel-link" href="tel:+12527266862">(252) 726-6862</a></strong><a class="dockwa-btn" href="https://dockwa.com/explore/destination/16cwdr-morehead-city-yacht-basin" target="_blank">&#x1F4C5; Book on Dockwa</a><br>Sheltered basin off Calico Creek, walking to downtown. Top off fuel here &mdash; tomorrow you can decide outside vs. ICW for Southport.</div>
     <div class="note-green"><strong>Pamlico Sound is rarely a real issue on a 55-footer.</strong> Depart early and cross before noon. The only scenario worth pausing for is a strong NE 20+ kts. Same rules as northbound &mdash; westerly wind = calm near-shore, early departure, Coinjock is comfortable if you need another night.</div>
@@ -1273,11 +1343,16 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
       </div>
     </div>
   </div>
+  <div class="map-body-wrap" id="sb-seg3-map-body">
+    <div id="sb-seg3-map-canvas" class="leg-map"></div>
+    <div class="map-caption" id="sb-seg3-map-cap"></div>
+  </div>
 </div>
 
 <div class="segment" id="sb-seg4">
   <div class="seg-header"><div class="seg-dot dot-amber">&#x2464;</div><div class="seg-info"><div class="seg-name">Morehead City &rarr; Southport</div><div class="seg-route">Outside to Masonboro Inlet &rarr; ICW via Myrtle Grove Sound &rarr; Snow&rsquo;s Cut &rarr; Cape Fear River &rarr; Southport</div></div><span class="seg-dist">~75 nm</span></div>
   <span class="seg-toggle" onclick="toggleSeg('sb-sb4',this)">show notes + resources &#9662;</span>
+  <span class="seg-toggle map-toggle" onclick="toggleMap('sb-seg4',this)">&#x1F5FA;&#xFE0F; route map &#9662;</span>
   <div class="seg-body" id="sb-sb4">
     <div class="note"><strong>ICW routing southbound:</strong> Masonboro Inlet &rarr; Myrtle Grove Sound &rarr; Snow&rsquo;s Cut (MM 295) &rarr; Cape Fear River &rarr; Southport. <strong>Transit Myrtle Grove at mid-to-high tide.</strong> Check Aqua Map for shoaling at MM 293.7. ICW southbound: red to starboard.</div>
     <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div><strong>Safe Harbor South Harbour Village &middot; <a class="tel-link" href="tel:+19104547486">(910) 454-7486</a></strong><a class="dockwa-btn" href="https://dockwa.com/explore/destination/d9c1jvw-safe-harbor-south-harbour-village" target="_blank">&#x1F4C5; Book on Dockwa</a><br>Ask for <strong>Bill Gregory</strong>, Manager &middot; Cell: <strong><a class="tel-link" href="tel:+19103528469">(910) 352-8469</a></strong><br><span class="rick-quote">Great Italian place at the marina</span> &mdash; <strong>Joseph&rsquo;s Italian Bistro</strong>, top of the dock. Local favorite: <strong>Home Run Place</strong>, north of the bridge (Rick&rsquo;s pick). <strong>Rusty Hooks</strong> is the other on-site option (American/seafood, live music).</div>
@@ -1305,11 +1380,16 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
       </div>
     </div>
   </div>
+  <div class="map-body-wrap" id="sb-seg4-map-body">
+    <div id="sb-seg4-map-canvas" class="leg-map"></div>
+    <div class="map-caption" id="sb-seg4-map-cap"></div>
+  </div>
 </div>
 
 <div class="segment" id="sb-seg5">
   <div class="seg-header"><div class="seg-dot dot-teal">&#x2465;</div><div class="seg-info"><div class="seg-name">Southport &rarr; Charleston</div><div class="seg-route">Outside &middot; Cape Fear River exit &rarr; offshore &rarr; Charleston Harborage at Ashley Marina</div></div><span class="seg-dist">~145 nm</span></div>
   <span class="seg-toggle" onclick="toggleSeg('sb-sb5',this)">show resources &#9662;</span>
+  <span class="seg-toggle map-toggle" onclick="toggleMap('sb-seg5',this)">&#x1F5FA;&#xFE0F; route map &#9662;</span>
   <div class="seg-body" id="sb-sb5">
     <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div><strong>Harborage at Ashley Marina &middot; <a class="tel-link" href="tel:+18437221996">(843) 722-1996</a></strong><a class="dockwa-btn" href="https://dockwa.com/explore/destination/mnc3m9-the-harborage-at-ashley-marina" target="_blank">&#x1F4C5; Book on Dockwa</a><br>Easy outside run southbound. <strong>Charleston tidal range is 5+ ft &mdash; strong current on arrival.</strong></div>
     <div class="cards">
@@ -1335,11 +1415,16 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
       </div>
     </div>
   </div>
+  <div class="map-body-wrap" id="sb-seg5-map-body">
+    <div id="sb-seg5-map-canvas" class="leg-map"></div>
+    <div class="map-caption" id="sb-seg5-map-cap"></div>
+  </div>
 </div>
 
 <div class="segment" id="sb-seg6">
   <div class="seg-header"><div class="seg-dot dot-teal">&#x2466;</div><div class="seg-info"><div class="seg-name">Charleston &rarr; St. Augustine &rarr; Palm Beach &#x1F3C1;</div><div class="seg-route">Charleston &rarr; St. Augustine (~165 nm) &middot; then St. Augustine &rarr; Palm Beach (~185 nm) &middot; split over 2 days or push on conditions</div></div><span class="seg-dist">~350 nm total</span></div>
   <span class="seg-toggle" onclick="toggleSeg('sb-sb6',this)">show notes + resources &#9662;</span>
+  <span class="seg-toggle map-toggle" onclick="toggleMap('sb-seg6',this)">&#x1F5FA;&#xFE0F; route map &#9662;</span>
   <div class="seg-body" id="sb-sb6">
     <div class="note-rick"><div class="rick-header">&#x1F4CB; Capt. Rick&rsquo;s Notes</div><strong>St. Augustine Municipal Marina &middot; <a class="tel-link" href="tel:+19048251026">(904) 825-1026</a></strong><a class="dockwa-btn" href="https://dockwa.com/explore/destination/7ec7q5-st-augustine-municipal-marina" target="_blank">&#x1F4C5; Book on Dockwa</a> &mdash; easy stop if splitting this into two days. Call ahead. Downtown by the Bridge of Lions.</div>
     <div class="note"><strong>St. Augustine bar: cross at or near high tide</strong> &mdash; this applies southbound too, whether entering or exiting. <strong>Gulf Stream runs close to shore south of Cape Canaveral &mdash; following seas in SW/W winds can make for a fast, comfortable southbound run.</strong></div>
@@ -1442,6 +1527,10 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
         <div class="town-source">Picks from local knowledge + Dockwa reviews.</div>
       </div>
     </div>
+  </div>
+  <div class="map-body-wrap" id="sb-seg6-map-body">
+    <div id="sb-seg6-map-canvas" class="leg-map"></div>
+    <div class="map-caption" id="sb-seg6-map-cap"></div>
   </div>
 </div>
 </div><!-- end sb-only -->
@@ -1662,6 +1751,70 @@ window.toggleSub=function(id,lbl){
   lbl.classList.toggle('open');
 };
 
+// ── LEG MAPS ─────────────────────────────────────────────────
+// Rick's actual GPS tracks from his Oct 2025 SB passage, simplified (Douglas-Peucker).
+// Stored north→south. Same physical water applies both directions; markers swap by leg direction.
+window._legTracks = {
+  "pb-staug":[[29.94976,-80.59760],[29.36134,-80.50366],[29.22130,-80.50682],[29.18053,-80.50540],[29.16214,-80.50258],[28.93778,-80.48147],[28.93105,-80.47920],[28.91815,-80.47776],[28.63350,-80.42107],[28.61186,-80.42028],[28.59961,-80.41812],[28.54941,-80.40533],[28.52166,-80.39418],[28.49295,-80.38583],[28.30385,-80.34805],[28.18641,-80.32608],[28.15140,-80.32519],[28.00905,-80.32524],[27.97616,-80.32357],[27.93550,-80.31790],[27.79039,-80.28860],[27.76501,-80.28502],[27.69045,-80.28831],[27.67427,-80.28803],[27.57570,-80.27374],[27.50489,-80.26064],[27.48374,-80.26006],[27.47970,-80.26230],[27.47527,-80.26845],[27.46965,-80.30034],[27.46187,-80.31700],[27.46036,-80.31864],[27.45707,-80.31857],[27.45406,-80.32197],[27.45138,-80.32065],[27.45043,-80.32247],[27.45125,-80.32072],[27.45387,-80.32197],[27.45718,-80.31826],[27.45963,-80.31852],[27.46153,-80.31772],[27.46851,-80.30307],[27.47074,-80.29529],[27.47303,-80.27990],[27.47281,-80.27777],[27.47079,-80.27565],[27.45916,-80.27028],[27.45665,-80.26663],[27.35372,-80.20935],[27.34812,-80.20301],[27.07475,-80.07669],[26.88324,-80.02060],[26.81519,-80.02095],[26.78484,-80.01705],[26.77746,-80.01692],[26.77509,-80.01805],[26.77303,-80.02124],[26.77192,-80.04030],[26.77067,-80.04286],[26.76791,-80.04428],[26.76520,-80.04947],[26.74461,-80.04766],[26.72351,-80.04687],[26.71754,-80.04722],[26.71756,-80.04978]],
+  "staug-chas":[[32.84968,-79.32096],[32.58158,-79.71944],[32.34002,-80.07473],[32.17526,-80.37016],[31.98578,-80.74142],[31.98414,-80.75114],[31.98545,-80.76248],[31.98736,-80.76931],[31.99134,-80.77786],[31.99613,-80.78529],[32.00612,-80.79587],[32.02220,-80.80956],[32.02835,-80.81687],[32.06278,-80.83109],[32.06707,-80.83085],[32.08315,-80.82646],[32.10267,-80.82881],[32.11198,-80.83075],[32.11723,-80.82958],[32.12740,-80.82556],[32.13691,-80.82028],[32.13874,-80.81738],[32.13843,-80.81211],[32.13876,-80.81695],[32.13682,-80.82044],[32.12415,-80.82789],[32.11863,-80.83005],[32.11153,-80.83079],[32.10209,-80.83004],[32.09243,-80.82780],[32.08366,-80.82737],[32.06615,-80.83116],[32.06012,-80.82988],[32.03432,-80.82051],[32.01287,-80.80012],[32.00382,-80.79342],[31.99840,-80.78718],[31.99383,-80.78464],[31.99135,-80.78494],[31.98773,-80.78747],[31.98284,-80.78443],[31.97654,-80.78444],[30.95525,-80.69827],[30.17098,-80.63348],[29.85048,-80.58165]],
+  "chas-sport":[[33.94949,-77.96287],[33.92209,-78.00164],[33.91514,-78.01484],[33.91538,-78.02376],[33.92083,-78.06150],[33.91494,-78.01952],[33.90496,-78.01893],[33.89961,-78.02004],[33.89560,-78.01362],[33.88886,-78.00710],[33.88244,-78.00688],[33.87468,-78.00898],[33.87214,-78.01061],[33.86316,-78.01977],[33.85359,-78.02445],[33.84908,-78.02508],[33.84507,-78.02672],[33.84314,-78.02824],[33.81166,-78.09287],[33.79489,-78.11776],[33.66212,-78.33371],[33.57795,-78.47277],[33.45731,-78.65070],[33.38059,-78.76185],[33.33953,-78.79789],[33.26971,-78.87364],[33.25226,-78.89030],[32.99707,-79.09991],[32.83532,-79.34243],[32.65933,-79.60430],[32.34002,-80.07473],[32.17526,-80.37016],[32.10065,-80.51678],[32.10135,-80.82888],[32.11198,-80.83075],[32.11723,-80.82958],[32.12825,-80.82517],[32.13691,-80.82028],[32.13874,-80.81738],[32.13835,-80.81215],[32.13883,-80.81654],[32.13557,-80.82156],[32.11936,-80.82984],[32.11044,-80.83079],[32.10108,-80.82976]],
+  "sport-more":[[34.74998,-76.67681],[34.73953,-76.68106],[34.73168,-76.69027],[34.72422,-76.69422],[34.72324,-76.69599],[34.72285,-76.70276],[34.72195,-76.70425],[34.72273,-76.70293],[34.72265,-76.69422],[34.71361,-76.69202],[34.70896,-76.68915],[34.69677,-76.67118],[34.69126,-76.66827],[34.68767,-76.66772],[34.66923,-76.67009],[34.66811,-76.67109],[34.66920,-76.67772],[34.66686,-76.68079],[34.66456,-76.68672],[34.66510,-76.69266],[34.68354,-76.76376],[34.68707,-76.78257],[34.68928,-76.80741],[34.64390,-76.99881],[34.63007,-77.06039],[34.60548,-77.15345],[34.59503,-77.17935],[34.54774,-77.27998],[34.54039,-77.29522],[34.53205,-77.30857],[34.52776,-77.31483],[34.51058,-77.33481],[34.35790,-77.52151],[34.31408,-77.57607],[34.30353,-77.59170],[34.26140,-77.67373],[34.22561,-77.73138],[34.18069,-77.78820],[34.17468,-77.79437],[34.17497,-77.79792],[34.18393,-77.81463],[34.18870,-77.81809],[34.19089,-77.82155],[34.19100,-77.82591],[34.18849,-77.82916],[34.15086,-77.85712],[34.12016,-77.87023],[34.05990,-77.88963],[34.05783,-77.89249],[34.05234,-77.91105],[34.05121,-77.92052],[34.04860,-77.92602],[34.04011,-77.93045],[34.03168,-77.93625],[34.02305,-77.93956],[34.00770,-77.94075],[33.98347,-77.94812],[33.97003,-77.94908],[33.96154,-77.95341],[33.95284,-77.95945],[33.94602,-77.96717],[33.92554,-77.99644],[33.91808,-78.00830],[33.91514,-78.01484],[33.91538,-78.02376],[33.92083,-78.06150],[33.91494,-78.01952],[33.90496,-78.01893],[33.90021,-78.02029],[33.89560,-78.01362],[33.88886,-78.00710],[33.88073,-78.00720]],
+  "more-coin":[[36.39973,-75.95338],[36.39682,-75.95345],[36.35709,-75.94606],[36.35437,-75.94618],[36.34836,-75.94907],[36.31434,-75.97226],[36.29049,-75.96732],[36.28896,-75.96542],[36.28846,-75.96301],[36.28921,-75.95465],[36.28756,-75.95056],[36.28527,-75.94775],[36.27353,-75.94954],[36.27194,-75.95079],[36.26665,-75.96112],[36.26314,-75.96255],[36.25933,-75.96210],[36.25685,-75.96048],[36.24893,-75.95008],[36.23160,-75.93357],[36.22864,-75.93151],[36.20841,-75.92353],[36.17831,-75.89386],[36.17388,-75.89054],[36.16057,-75.89123],[36.14413,-75.89341],[36.13571,-75.89211],[36.07624,-75.86714],[36.06334,-75.85820],[36.04799,-75.85043],[36.03073,-75.84644],[36.02246,-75.84304],[36.01740,-75.84002],[35.98852,-75.81656],[35.95614,-75.78742],[35.94505,-75.77879],[35.93509,-75.76787],[35.92433,-75.75264],[35.91603,-75.74630],[35.88585,-75.71774],[35.87234,-75.71350],[35.84979,-75.70976],[35.70324,-75.65932],[35.59871,-75.64173],[35.57754,-75.64065],[35.56044,-75.64160],[35.54960,-75.64402],[35.54766,-75.64872],[35.54365,-75.65436],[35.47981,-75.73426],[35.36866,-75.88114],[35.29799,-75.97939],[35.24020,-76.08421],[35.13878,-76.27507],[35.13613,-76.28144],[35.13422,-76.29813],[35.12911,-76.36612],[35.12850,-76.38867],[35.12413,-76.44387],[35.11993,-76.46632],[35.10572,-76.49206],[35.07749,-76.53440],[35.05223,-76.57606],[35.04010,-76.59914],[35.01129,-76.65931],[35.00564,-76.66802],[34.99301,-76.68443],[34.98794,-76.68993],[34.97963,-76.69462],[34.97364,-76.69566],[34.96882,-76.69438],[34.96645,-76.69174],[34.96416,-76.68181],[34.95614,-76.67894],[34.94361,-76.66092],[34.93673,-76.65524],[34.93350,-76.65387],[34.92901,-76.65463],[34.90776,-76.66717],[34.90414,-76.67165],[34.89765,-76.68483],[34.89491,-76.68605],[34.89001,-76.68643],[34.88276,-76.69071],[34.87937,-76.69148],[34.86873,-76.69150],[34.84164,-76.68921],[34.82586,-76.69128],[34.81951,-76.69036],[34.80825,-76.68632],[34.79993,-76.68672],[34.77445,-76.68552],[34.77157,-76.68436],[34.76075,-76.67480],[34.75758,-76.67364],[34.73953,-76.68106],[34.73168,-76.69027],[34.72378,-76.69476],[34.72285,-76.70276],[34.72195,-76.70425],[34.72273,-76.70293],[34.72265,-76.69422],[34.71434,-76.69229],[34.70975,-76.68986],[34.70036,-76.67581]],
+  "coin-nflk":[[36.84391,-76.29264],[36.84335,-76.29152],[36.83646,-76.29510],[36.83098,-76.29427],[36.82278,-76.29091],[36.80847,-76.29024],[36.79919,-76.29205],[36.79522,-76.29418],[36.79008,-76.30265],[36.78549,-76.30376],[36.78028,-76.30828],[36.77883,-76.30771],[36.77796,-76.30617],[36.77702,-76.29717],[36.77513,-76.29497],[36.76487,-76.29877],[36.75371,-76.29499],[36.74487,-76.29752],[36.74111,-76.29773],[36.73881,-76.29686],[36.73571,-76.29379],[36.73457,-76.28799],[36.73202,-76.28365],[36.73015,-76.27602],[36.73092,-76.26705],[36.72045,-76.23749],[36.72374,-76.18574],[36.72336,-76.11227],[36.72227,-76.10858],[36.71494,-76.09473],[36.71324,-76.08427],[36.71183,-76.08135],[36.70963,-76.08003],[36.70447,-76.07882],[36.69954,-76.07588],[36.69495,-76.06942],[36.68631,-76.06544],[36.68394,-76.06582],[36.67883,-76.06873],[36.67630,-76.06895],[36.67434,-76.06778],[36.66980,-76.06247],[36.66167,-76.06212],[36.65506,-76.05957],[36.65076,-76.06042],[36.64435,-76.05953],[36.64187,-76.05797],[36.63701,-76.05250],[36.63455,-76.05200],[36.62970,-76.05355],[36.61803,-76.04901],[36.61509,-76.04901],[36.60231,-76.05973],[36.59571,-76.05970],[36.59234,-76.05198],[36.59036,-76.04944],[36.55635,-76.02959],[36.51392,-76.01359],[36.47914,-76.00172],[36.45010,-75.96485],[36.43977,-75.96011],[36.41736,-75.95245],[36.40700,-75.95346],[36.39682,-75.95345],[36.35497,-75.94607],[36.34836,-75.94907],[36.31504,-75.97211],[36.30060,-75.96954]],
+  "nflk-cm":[[39.04967,-74.56221],[38.59267,-74.83366],[36.84391,-76.29265],[36.84335,-76.29152],[36.83646,-76.29510],[36.83098,-76.29427],[36.82278,-76.29091],[36.80847,-76.29024],[36.80017,-76.29186]],
+  "cm-nant":[[41.28327,-70.09380],[41.28437,-70.09196],[41.29027,-70.08872],[41.29506,-70.09429],[41.31114,-70.10177],[41.32030,-70.10726],[41.38948,-70.14293],[41.43712,-70.18167],[41.49178,-70.22018],[41.51533,-70.23128],[41.52845,-70.23932],[41.54399,-70.25075],[41.56319,-70.26152],[41.56756,-70.26300],[41.58045,-70.27116],[41.58680,-70.27249],[41.59087,-70.27251],[41.59475,-70.27183],[41.59895,-70.26972],[41.60309,-70.27032],[41.61204,-70.28665],[41.61620,-70.29077],[41.61813,-70.29135],[41.61994,-70.28998],[41.62742,-70.27432],[41.63071,-70.27154],[41.64205,-70.26900],[41.64757,-70.27498],[41.65011,-70.27505],[41.64754,-70.27512],[41.64194,-70.26883],[41.63824,-70.26902],[41.63240,-70.27073],[41.62850,-70.27279],[41.62670,-70.27485],[41.62014,-70.28896],[41.61837,-70.29112],[41.61570,-70.29275],[41.60717,-70.29241],[41.60087,-70.29501],[41.59979,-70.29889],[41.58782,-70.32015],[41.53960,-70.38897],[41.52928,-70.44116],[41.52685,-70.45864],[41.52620,-70.46944],[41.52947,-70.52456],[41.52893,-70.54258],[41.52761,-70.55871],[41.51896,-70.59197],[41.50147,-70.64330],[41.48269,-70.68970],[41.47882,-70.69747],[41.46502,-70.72007],[41.45732,-70.73489],[41.45229,-70.74683],[41.43087,-70.80473],[41.41790,-70.84244],[41.40216,-70.88895],[41.39541,-70.91264],[41.38853,-70.95252],[41.38329,-71.00780],[41.38316,-71.03399],[41.38403,-71.04439],[41.40780,-71.17358],[41.41457,-71.23024],[41.41895,-71.28475],[41.41662,-71.30038],[41.39845,-71.36964],[41.37833,-71.42017],[41.36329,-71.45153],[41.36090,-71.46066],[41.35772,-71.46900],[41.34882,-71.48669],[41.33923,-71.51952],[41.31932,-71.62149],[41.30571,-71.70477],[41.28670,-71.79964],[41.26778,-71.88896],[41.23361,-72.00389],[41.24040,-72.12735],[41.24622,-72.15426],[41.25698,-72.19725],[41.25736,-72.21342],[41.25483,-72.30160],[41.24672,-72.31206],[41.24340,-72.31777],[41.24199,-72.32697],[41.24145,-72.35175],[41.24297,-72.40799],[41.24125,-72.43489],[41.23417,-72.50216],[41.21931,-72.56752],[41.20993,-72.59428],[41.20191,-72.61401],[41.12524,-72.92026],[41.01523,-73.35194],[40.99910,-73.40832],[40.99421,-73.41982],[40.95653,-73.52744],[40.93452,-73.62279],[40.92580,-73.65138],[40.92544,-73.65565],[40.91793,-73.68561],[40.91530,-73.69200],[40.90762,-73.70464],[40.90540,-73.71080],[40.87198,-73.73692],[40.86256,-73.74711],[40.84126,-73.76115],[40.83020,-73.77244],[40.82583,-73.77589],[40.82170,-73.77831],[40.80882,-73.78180],[40.80445,-73.78437],[40.80259,-73.78659],[40.80103,-73.79371],[40.80314,-73.80179],[40.80384,-73.81796],[40.80222,-73.83082],[40.80163,-73.85627],[40.79895,-73.87252],[40.80010,-73.88166],[40.80401,-73.89557],[40.80320,-73.90019],[40.79526,-73.90773],[40.78284,-73.92200],[40.78043,-73.92711],[40.77961,-73.93386],[40.77715,-73.93851],[40.77221,-73.94407],[40.74982,-73.96477],[40.74572,-73.96727],[40.74148,-73.96836],[40.73569,-73.96851],[40.73091,-73.96713],[40.72546,-73.96811],[40.71377,-73.97242],[40.71113,-73.97472],[40.70943,-73.97878],[40.70638,-73.99281],[40.69959,-74.00529],[40.69878,-74.01357],[40.70035,-74.01895],[40.70548,-74.02747],[40.70974,-74.03228],[40.71079,-74.04277],[40.71024,-74.04295],[40.71090,-74.04222],[40.70938,-74.03126],[40.69840,-74.03208],[40.69224,-74.03344],[40.67883,-74.03830],[40.66799,-74.04538],[40.66130,-74.04784],[40.65402,-74.05173],[40.64498,-74.05423],[40.62635,-74.05075],[40.58154,-74.03500],[40.54673,-74.02656],[40.53962,-74.02386],[40.53277,-74.01796],[40.52693,-74.01007],[40.52093,-73.99690],[40.51635,-73.98038],[40.51192,-73.97208],[40.50833,-73.96966],[40.38972,-73.94081],[40.38362,-73.93982],[40.36481,-73.93912],[40.34663,-73.94156],[40.32146,-73.94292],[40.29636,-73.94639],[40.26950,-73.95264],[40.19704,-73.97105],[40.14504,-73.99173],[40.05545,-74.01435],[39.98730,-74.02688],[39.91507,-74.04175],[39.78097,-74.05352],[39.77010,-74.05652],[39.74947,-74.06422],[39.73336,-74.07301],[39.46561,-74.25966],[39.33980,-74.38798],[38.91084,-74.64511],[38.59267,-74.83366]],
+  "chas-pb":[[32.84968,-79.32096],[32.58158,-79.71944],[32.34002,-80.07473],[32.17526,-80.37016],[31.98662,-80.73969],[31.98440,-80.74737],[31.98489,-80.75864],[31.98616,-80.76599],[31.99134,-80.77786],[31.99613,-80.78529],[32.00612,-80.79587],[32.02220,-80.80956],[32.02835,-80.81687],[32.06278,-80.83109],[32.06707,-80.83085],[32.08315,-80.82646],[32.10267,-80.82881],[32.11198,-80.83075],[32.11723,-80.82958],[32.12740,-80.82556],[32.13691,-80.82028],[32.13874,-80.81738],[32.13864,-80.81214],[32.13876,-80.81695],[32.13634,-80.82097],[32.12415,-80.82789],[32.11586,-80.83054],[32.10596,-80.83050],[32.09243,-80.82780],[32.08366,-80.82737],[32.06508,-80.83126],[32.03516,-80.82103],[32.01287,-80.80012],[32.00382,-80.79342],[31.99840,-80.78718],[31.99383,-80.78464],[31.99135,-80.78494],[31.98773,-80.78747],[31.98284,-80.78443],[31.97654,-80.78444],[30.95525,-80.69827],[30.17098,-80.63348],[29.36134,-80.50366],[29.22130,-80.50682],[29.18053,-80.50540],[29.16214,-80.50258],[28.93778,-80.48147],[28.93105,-80.47920],[28.91815,-80.47776],[28.63350,-80.42107],[28.61186,-80.42028],[28.59961,-80.41812],[28.54941,-80.40533],[28.52166,-80.39418],[28.49295,-80.38583],[28.30385,-80.34805],[28.18641,-80.32608],[28.15140,-80.32519],[28.00905,-80.32524],[27.97616,-80.32357],[27.93550,-80.31790],[27.79039,-80.28860],[27.76501,-80.28502],[27.69045,-80.28831],[27.67427,-80.28803],[27.57570,-80.27374],[27.50489,-80.26064],[27.48374,-80.26006],[27.47970,-80.26230],[27.47527,-80.26845],[27.46965,-80.30034],[27.46187,-80.31700],[27.46036,-80.31864],[27.45707,-80.31857],[27.45406,-80.32197],[27.45138,-80.32065],[27.45043,-80.32247],[27.45125,-80.32072],[27.45387,-80.32197],[27.45718,-80.31826],[27.45963,-80.31852],[27.46153,-80.31772],[27.46851,-80.30307],[27.47074,-80.29529],[27.47303,-80.27990],[27.47281,-80.27777],[27.47079,-80.27565],[27.45916,-80.27028],[27.45665,-80.26663],[27.35372,-80.20935],[27.34812,-80.20301],[27.07475,-80.07669],[26.88324,-80.02060],[26.81519,-80.02095],[26.78484,-80.01705],[26.77746,-80.01692],[26.77509,-80.01805],[26.77303,-80.02124],[26.77192,-80.04030],[26.77067,-80.04286],[26.76791,-80.04428],[26.76520,-80.04947],[26.74461,-80.04766],[26.72351,-80.04687],[26.71754,-80.04722],[26.71756,-80.04978]]
+};
+// Per-segment map config. startEnd: which end of the (N→S) track is the departure point.
+window._legMaps = {
+  'nb-seg1': {track:'pb-staug',   startEnd:'south', s:'Palm Beach', e:'St. Augustine City Marina', note:"Rick's Oct 2025 track for this water. He ran Palm Beach up to Fort Pierce inside, then offshore &mdash; St. Augustine was passed well offshore, not stopped. Mixed inside/outside."},
+  'nb-seg2': {track:'staug-chas', startEnd:'south', s:'St. Augustine', e:'Harborage at Ashley &mdash; Charleston', note:"Rick ran this stretch well offshore on his Oct 2025 passage &mdash; both St. Augustine and Charleston passed without stopping. This is what the outside route looks like."},
+  'nb-seg3': {track:'chas-sport', startEnd:'south', s:'Charleston', e:'Southport &mdash; South Harbour Village', note:"Offshore run. Rick passed Charleston offshore (the planner stops there) and came inside near the Cape Fear approach."},
+  'nb-seg4': {track:'sport-more', startEnd:'south', s:'Southport', e:'Morehead City Yacht Basin', note:"Inside route &mdash; Cape Fear, Wrightsville, then the run up to Beaufort Inlet. Rick's actual ICW track."},
+  'nb-seg5': {track:'more-coin',  startEnd:'south', s:'Morehead City', e:'Coinjock Marina', note:"Inside &mdash; Beaufort, Neuse River, Pamlico Sound, Alligator River. Rick ran Norfolk straight through to Morehead in one day, so this shows that track in reverse, passing Coinjock."},
+  'nb-seg6': {track:'coin-nflk',  startEnd:'south', s:'Coinjock', e:'Waterside Marina &mdash; Norfolk', note:"Inside &mdash; Virginia Cut, Great Bridge Lock, Elizabeth River into Hampton Roads."},
+  'nb-seg7': {track:'nflk-cm',    startEnd:'south', s:'Norfolk', e:'Cape May / Atlantic City', note:"Limited track &mdash; Rick's offshore Delmarva run wasn't fully recorded this night. Shows only the northern approach near Cape May. Treat as rough."},
+  'nb-seg8': {track:'cm-nant',    startEnd:'south', s:'Cape May area', e:'Nantucket', note:"Rick's actual route here went offshore past Cape May to Liberty Landing (NYC), then Hyannis, then Nantucket &mdash; <strong>not</strong> the direct Cape May&rarr;Nantucket the planner suggests. Shown for reference on the water."},
+  'sb-seg0': {track:'cm-nant',    startEnd:'north', s:'Nantucket', e:'Cape May area', note:"Rick's actual SB route went Nantucket &rarr; Hyannis &rarr; Liberty Landing (NYC) &rarr; offshore past Cape May &mdash; <strong>not</strong> the direct line the planner suggests. Shown for reference."},
+  'sb-seg1': {track:'nflk-cm',    startEnd:'north', s:'Cape May', e:'Norfolk', note:"Limited track &mdash; Rick's offshore Delmarva run wasn't fully recorded. Shows only the approach near Cape May. Treat as rough."},
+  'sb-seg2': {track:'coin-nflk',  startEnd:'north', s:'Norfolk', e:'Coinjock Marina', note:"Inside &mdash; Hampton Roads, Elizabeth River, Great Bridge Lock, Virginia Cut down to Coinjock."},
+  'sb-seg3': {track:'more-coin',  startEnd:'north', s:'Coinjock', e:'Morehead City', note:"Inside &mdash; Alligator River, Pamlico Sound, Neuse River, Beaufort. Rick actually ran this as one Norfolk&rarr;Morehead day, passing Coinjock."},
+  'sb-seg4': {track:'sport-more', startEnd:'north', s:'Morehead City', e:'Southport', note:"Inside route &mdash; Beaufort Inlet down past Wrightsville to the Cape Fear approach. Rick's actual ICW track."},
+  'sb-seg5': {track:'chas-sport', startEnd:'north', s:'Southport', e:'Charleston', note:"Offshore run. Rick came outside near Cape Fear and passed Charleston offshore (the planner stops there)."},
+  'sb-seg6': {track:'chas-pb',    startEnd:'north', s:'Charleston', e:'Palm Beach', note:"Rick's Oct 2025 finish: offshore from Charleston past St. Augustine, then inside from Fort Pierce home to Palm Beach. Both St. Augustine and Charleston passed offshore."}
+};
+window._mapsInit = {};
+window.toggleMap = function(segId, lbl) {
+  var body = document.getElementById(segId + '-map-body');
+  if (!body) return;
+  var isOpen = body.classList.toggle('open');
+  lbl.classList.toggle('open');
+  if (isOpen && !window._mapsInit[segId]) {
+    setTimeout(function(){ initLegMap(segId); window._mapsInit[segId] = true; }, 60);
+  }
+};
+function initLegMap(segId) {
+  var cfg = window._legMaps[segId];
+  if (!cfg || typeof L === 'undefined') return;
+  var track = window._legTracks[cfg.track];
+  if (!track || track.length < 2) return;
+  var mapEl = document.getElementById(segId + '-map-canvas');
+  if (!mapEl) return;
+  var map = L.map(mapEl, { scrollWheelZoom:false, attributionControl:true, maxZoom:12 });
+  map.fitBounds(L.latLngBounds(track), { padding:[30,30], maxZoom:9 });
+  var cap = document.getElementById(segId + '-map-cap');
+  if (cap) cap.innerHTML = cfg.note + ' <strong>Rough overview &mdash; not for navigation.</strong>';
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:18, attribution:'&copy; OpenStreetMap' }).addTo(map);
+  L.tileLayer('https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png', { maxZoom:18, attribution:'&copy; OpenSeaMap' }).addTo(map);
+  L.polyline(track, { color:'#0d9488', weight:3, opacity:0.85 }).addTo(map);
+  // track is N→S: track[0]=north, track[last]=south
+  var south = track[track.length-1], north = track[0];
+  var startPt = (cfg.startEnd === 'south') ? south : north;
+  var endPt   = (cfg.startEnd === 'south') ? north : south;
+  L.circleMarker(startPt, { radius:7, fillColor:'#22c55e', color:'#fff', weight:2, fillOpacity:0.95 }).addTo(map).bindPopup('<strong>Start:</strong> ' + cfg.s);
+  L.circleMarker(endPt,   { radius:7, fillColor:'#ef4444', color:'#fff', weight:2, fillOpacity:0.95 }).addTo(map).bindPopup('<strong>Arrival:</strong> ' + cfg.e);
+}
+
 // ── BRIDGE PLANNER HELPERS ───────────────────────────────────
 function bpFmt(h,m){var hh=((h%24)+24)%24;var mm=((m%60)+60)%60;if(m<0&&h>0)hh=h-1;if(m<0)mm=60+m;return('0'+hh).slice(-2)+':'+('0'+mm).slice(-2);}
 function bpAdd(h,m,mins){var t=h*60+m+mins;return[Math.floor(t/60)%24,t%60];}
@@ -1794,5 +1947,6 @@ if(document.readyState==='loading'){
 
 })();
 </script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </body>
 </html>
