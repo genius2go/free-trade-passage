@@ -292,6 +292,94 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
 </div>
 
 <!-- ═══════════════════════════════════════════════════
+     ROUTE ALERTS & NOTICES
+═══════════════════════════════════════════════════ -->
+<div class="planner" style="border-color:rgba(239,68,68,0.35);">
+  <div class="planner-header" onclick="toggleAlerts()">
+    <span class="planner-icon">&#x26A0;&#xFE0F;</span>
+    <span class="planner-title" style="color:#fca5a5;">Route Alerts &amp; Notices to Mariners</span>
+    <span class="planner-context" id="alerts-context">known events &middot; ICW conditions &middot; official sources</span>
+    <span class="planner-chev" id="alerts-chev">&#9660;</span>
+  </div>
+  <div class="planner-body" id="alerts-body">
+
+    <div class="planner-section-label" style="margin-top:8px;">&#x1F3A3; Known seasonal events &mdash; 2026</div>
+    <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px;">
+      <div class="bp-row s-warn" style="border-radius:6px;">
+        <div class="bp-body">
+          <div class="bp-name" style="color:#fca5a5;">Big Rock Blue Marlin Tournament &mdash; Beaufort / Morehead City NC</div>
+          <div class="bp-desc"><strong style="color:var(--text);">June 8&ndash;14, 2026</strong> &mdash; Fishing days coincide with Rick&rsquo;s northbound transit through this area (~Day 4). Transient docks in Beaufort and Morehead City severely limited. <strong>Use Safe Harbor Jarrett Bay or Oriental Harbor Village Marina as contingencies.</strong> See the Southport &rarr; Coinjock segment for details.</div>
+        </div>
+      </div>
+      <div class="bp-row s-warn" style="border-radius:6px;">
+        <div class="bp-body">
+          <div class="bp-name" style="color:#fcd34d;">US Open King Mackerel Tournament &mdash; Southport NC</div>
+          <div class="bp-desc"><strong style="color:var(--text);">October 1&ndash;3, 2026</strong> &mdash; Based at Safe Harbor South Harbour Village Marina (Rick&rsquo;s Southport stop southbound). Call Bill Gregory ahead of time: <strong>(910) 454-7486</strong>.</div>
+        </div>
+      </div>
+      <div class="bp-row s-warn" style="border-radius:6px;">
+        <div class="bp-body">
+          <div class="bp-name" style="color:#fcd34d;">Swansboro Five-O King Mackerel Tournament &mdash; Swansboro NC</div>
+          <div class="bp-desc"><strong style="color:var(--text);">October 13&ndash;17, 2026</strong> &mdash; Small event on the ICW between Morehead City and Southport. Minimal dock impact but worth knowing for mid-October southbound transit.</div>
+        </div>
+      </div>
+      <div class="bp-row s-warn" style="border-radius:6px;">
+        <div class="bp-body">
+          <div class="bp-name" style="color:#fca5a5;">NS#7 Railroad Bridge &mdash; Elizabeth River, Norfolk VA (MM 5.8)</div>
+          <div class="bp-desc"><strong style="color:var(--text);">June recurring:</strong> Norfolk Southern has a history of multi-week maintenance closures in June (8 am&ndash;6 pm weekdays, 1.5 hr midday opening only). Check USCG D5 LNMs the morning you depart Coinjock (NB) or Waterside (SB). See the bridge timing planner for details.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="planner-section-label">&#x1F4CB; Official notices &amp; resources &mdash; check these before departure</div>
+    <div class="cards" style="margin-bottom:14px;">
+      <a class="card" href="https://www.navcen.uscg.gov/?pageName=lnmDistrict&region=05" target="_blank">
+        <div class="card-icon">&#x1F6A8;</div>
+        <div class="card-title">USCG District 5 &mdash; LNMs</div>
+        <div class="card-sub">Official Notices to Mariners for the ICW from NC through NJ &mdash; buoy changes, shoaling, temporary closures. Check morning of every ICW departure.</div>
+        <span class="card-badge badge-key">Check every morning</span>
+      </a>
+      <a class="card" href="https://www.navcen.uscg.gov/?pageName=lnmDistrict&region=07" target="_blank">
+        <div class="card-icon">&#x1F6A8;</div>
+        <div class="card-title">USCG District 7 &mdash; LNMs</div>
+        <div class="card-sub">Official Notices to Mariners for FL, GA, SC waters &mdash; covers the southern legs of this route.</div>
+        <span class="card-badge badge-key">FL/GA/SC legs</span>
+      </a>
+      <a class="card" href="https://www.iwr.usace.army.mil/Missions/Civil-Works/Navigation/National-Channel-Framework/" target="_blank">
+        <div class="card-icon">&#x1F3D7;&#xFE0F;</div>
+        <div class="card-title">Army Corps &mdash; ICW Dredging</div>
+        <div class="card-sub">USACE dredging schedules and shoaling reports for ICW channels. Check for active dredge operations before transiting shallow sections.</div>
+        <span class="card-badge badge-fuel">Shoaling watch</span>
+      </a>
+      <a class="card" href="https://activecaptain.garmin.com/en-US/pointsOfInterest" target="_blank">
+        <div class="card-icon">&#x26F5;</div>
+        <div class="card-title">ActiveCaptain &mdash; Hazard Reports</div>
+        <div class="card-sub">Crowdsourced hazard reports, marina reviews, and current conditions from other cruisers on the same route. Available in Garmin apps and chartplotters.</div>
+        <span class="card-badge badge-outside">Crowdsourced</span>
+      </a>
+      <a class="card" href="https://www.waterwayguide.com/alerts" target="_blank">
+        <div class="card-icon">&#x1F4D6;</div>
+        <div class="card-title">Waterway Guide &mdash; ICW Alerts</div>
+        <div class="card-sub">Real-time ICW alerts covering shoaling, bridge closures, and hazard reports from editors and cruisers. Updated frequently during season.</div>
+        <span class="card-badge badge-inside">ICW-specific</span>
+      </a>
+      <a class="card" href="https://www.ditch.app" target="_blank">
+        <div class="card-icon">&#x1F4F1;</div>
+        <div class="card-title">Ditch.app &mdash; ICW Tracker</div>
+        <div class="card-sub">Live boat tracking and conditions shared by other ICW cruisers in real time. Good for seeing what&rsquo;s ahead on the route today.</div>
+        <span class="card-badge badge-cg">Live conditions</span>
+      </a>
+    </div>
+
+    <div class="planner-section-label">&#x1F4FB; VHF broadcast notices to mariners</div>
+    <div class="note" style="margin-bottom:0;font-size:11px;">
+      <strong>Listen daily at anchor or underway:</strong> USCG broadcasts Notices to Mariners on <strong>VHF Ch 16</strong> (then switch to working channel) and <strong>Ch 22A</strong>. Broadcast times vary by sector &mdash; check your area&rsquo;s scheduled times. <strong>Ch 13</strong> for bridge communications throughout the ICW. <strong>Ch 16</strong> monitored continuously. On the outside: <strong>WX channels</strong> (WX1&ndash;WX3) for NOAA marine weather every 4&ndash;6 hrs.
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
      STOP PICKERS
 ═══════════════════════════════════════════════════ -->
 <div class="stop-picker nb-only">
@@ -301,11 +389,10 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
     <button class="stop-btn" onclick="nbSetStop(1)">St. Augustine</button>
     <button class="stop-btn" onclick="nbSetStop(2)">Charleston</button>
     <button class="stop-btn" onclick="nbSetStop(3)">Southport</button>
-    <button class="stop-btn" onclick="nbSetStop(4)">Morehead City</button>
-    <button class="stop-btn" onclick="nbSetStop(5)">Coinjock</button>
-    <button class="stop-btn" onclick="nbSetStop(6)">Norfolk</button>
-    <button class="stop-btn" onclick="nbSetStop(7)">Cape May NJ</button>
-    <button class="stop-btn" onclick="nbSetStop(8)">Montauk (contingency)</button>
+    <button class="stop-btn" onclick="nbSetStop(4)">Coinjock</button>
+    <button class="stop-btn" onclick="nbSetStop(5)">Norfolk</button>
+    <button class="stop-btn" onclick="nbSetStop(6)">Cape May NJ</button>
+    <button class="stop-btn" onclick="nbSetStop(7)">Montauk (contingency)</button>
   </div>
   <div class="stop-next" id="nb-stop-next"></div>
 </div>
@@ -317,11 +404,10 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
     <button class="stop-btn" onclick="sbSetStop(2)">Cape May NJ</button>
     <button class="stop-btn" onclick="sbSetStop(3)">Norfolk</button>
     <button class="stop-btn" onclick="sbSetStop(4)">Coinjock</button>
-    <button class="stop-btn" onclick="sbSetStop(5)">Morehead City</button>
-    <button class="stop-btn" onclick="sbSetStop(6)">Southport</button>
-    <button class="stop-btn" onclick="sbSetStop(7)">Charleston</button>
-    <button class="stop-btn" onclick="sbSetStop(8)">St. Augustine</button>
-    <button class="stop-btn" onclick="sbSetStop(9)">Palm Beach</button>
+    <button class="stop-btn" onclick="sbSetStop(5)">Southport</button>
+    <button class="stop-btn" onclick="sbSetStop(6)">Charleston</button>
+    <button class="stop-btn" onclick="sbSetStop(7)">St. Augustine</button>
+    <button class="stop-btn" onclick="sbSetStop(8)">Palm Beach</button>
   </div>
   <div class="stop-next" id="sb-stop-next"></div>
 </div>
@@ -375,18 +461,16 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
     <div class="route-stop"><div class="route-dot" id="nrd2"></div><div class="route-lbl" id="nrl2">Charleston</div></div>
     <div class="route-conn"></div>
     <div class="route-stop"><div class="route-dot" id="nrd3"></div><div class="route-lbl" id="nrl3">Southport</div></div>
-    <div class="route-conn"></div>
-    <div class="route-stop"><div class="route-dot" id="nrd4"></div><div class="route-lbl" id="nrl4">Morehead City</div></div>
     <div class="route-conn conn-inside"></div>
-    <div class="route-stop"><div class="route-dot dot-green" id="nrd5"></div><div class="route-lbl" id="nrl5">Coinjock &#x1F969;</div></div>
+    <div class="route-stop"><div class="route-dot dot-green" id="nrd4"></div><div class="route-lbl" id="nrl4">Coinjock &#x1F969;</div></div>
     <div class="route-conn conn-inside"></div>
-    <div class="route-stop"><div class="route-dot dot-purple" id="nrd6"></div><div class="route-lbl" id="nrl6">Norfolk Waterside</div></div>
+    <div class="route-stop"><div class="route-dot dot-purple" id="nrd5"></div><div class="route-lbl" id="nrl5">Norfolk Waterside</div></div>
     <div class="route-conn"></div>
-    <div class="route-stop"><div class="route-dot" id="nrd7"></div><div class="route-lbl" id="nrl7">Cape May &#x1F6A6;</div></div>
+    <div class="route-stop"><div class="route-dot" id="nrd6"></div><div class="route-lbl" id="nrl6">Cape May &#x1F6A6;</div></div>
     <div class="route-conn conn-tight"></div>
-    <div class="route-stop"><div class="route-dot dot-amber" id="nrd8"></div><div class="route-lbl" id="nrl8">Montauk &#x2693; (opt)</div></div>
+    <div class="route-stop"><div class="route-dot dot-amber" id="nrd7"></div><div class="route-lbl" id="nrl7">Montauk &#x2693; (opt)</div></div>
     <div class="route-conn"></div>
-    <div class="route-stop"><div class="route-dot dot-green" id="nrd9"></div><div class="route-lbl" id="nrl9">Nantucket &#x1F3C1;</div></div>
+    <div class="route-stop"><div class="route-dot dot-green" id="nrd8"></div><div class="route-lbl" id="nrl8">Nantucket &#x1F3C1;</div></div>
   </div>
 </div>
 <div class="route-wrap sb-only">
@@ -401,16 +485,14 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
     <div class="route-stop"><div class="route-dot dot-purple" id="srd3"></div><div class="route-lbl" id="srl3">Norfolk Waterside</div></div>
     <div class="route-conn conn-inside"></div>
     <div class="route-stop"><div class="route-dot dot-green" id="srd4"></div><div class="route-lbl" id="srl4">Coinjock &#x1F969;</div></div>
-    <div class="route-conn conn-inside"></div>
-    <div class="route-stop"><div class="route-dot" id="srd5"></div><div class="route-lbl" id="srl5">Morehead City</div></div>
     <div class="route-conn"></div>
-    <div class="route-stop"><div class="route-dot" id="srd6"></div><div class="route-lbl" id="srl6">Southport</div></div>
+    <div class="route-stop"><div class="route-dot" id="srd5"></div><div class="route-lbl" id="srl5">Southport</div></div>
     <div class="route-conn"></div>
-    <div class="route-stop"><div class="route-dot" id="srd7"></div><div class="route-lbl" id="srl7">Charleston</div></div>
+    <div class="route-stop"><div class="route-dot" id="srd6"></div><div class="route-lbl" id="srl6">Charleston</div></div>
     <div class="route-conn"></div>
-    <div class="route-stop"><div class="route-dot" id="srd8"></div><div class="route-lbl" id="srl8">St. Augustine</div></div>
+    <div class="route-stop"><div class="route-dot" id="srd7"></div><div class="route-lbl" id="srl7">St. Augustine</div></div>
     <div class="route-conn"></div>
-    <div class="route-stop"><div class="route-dot dot-green" id="srd9"></div><div class="route-lbl" id="srl9">Palm Beach &#x1F3C1;</div></div>
+    <div class="route-stop"><div class="route-dot dot-green" id="srd8"></div><div class="route-lbl" id="srl8">Palm Beach &#x1F3C1;</div></div>
   </div>
 </div>
 
@@ -435,7 +517,7 @@ body.southbound .nb-flex{display:none;}body.southbound .sb-flex{display:flex;}
     <ul class="gonogo-list">
       <li>Strong NE 20+ kts &mdash; steep chop even for a big boat</li>
       <li>Active line of storms crossing the sound</li>
-      <li>Morehead City (NB) or Coinjock (SB) are comfortable holds</li>
+      <li>Beaufort area (NB) or Coinjock (SB) are comfortable holds</li>
     </ul>
   </div>
 </div>
@@ -861,27 +943,25 @@ var NB_STOPS=[
   {name:'St. Augustine',next:'Charleston \u2014 Harborage at Ashley Marina (~165 nm)',seg:'nb-seg2',dotIdx:1},
   {name:'Charleston',next:'Southport \u2014 South Harbour Village Marina (~145 nm) \u2014 easy day',seg:'nb-seg3',dotIdx:2},
   {name:'Southport',next:'Coinjock overnight (~110 nm) \u00b7 call ahead for the prime rib',seg:'nb-seg4',dotIdx:3},
-  {name:'Morehead City',next:'Coinjock Marina overnight (~75 nm) \u00b7 call ahead and order the prime rib',seg:'nb-seg4',dotIdx:4},
-  {name:'Coinjock',next:'Norfolk Waterside Marina (~40 nm) \u00b7 bridge timing \u2014 use the planner above',seg:'nb-seg5',dotIdx:5},
-  {name:'Norfolk',next:'Cape May South Jersey Marina (~185 nm) \u00b7 outside via Cape Henry',seg:'nb-seg6',dotIdx:6},
-  {name:'Cape May NJ',next:'Nantucket direct (~225 nm, ~8 hrs at 30 kts) \u00b7 or Montauk then Nantucket',seg:'nb-seg7',dotIdx:7},
-  {name:'Montauk NY',next:'Nantucket MA (~105 nm) \u2014 easy finishing leg',seg:'nb-seg7',dotIdx:8}
+  {name:'Coinjock',next:'Norfolk Waterside Marina (~40 nm) \u00b7 bridge timing \u2014 use the planner above',seg:'nb-seg5',dotIdx:4},
+  {name:'Norfolk',next:'Cape May South Jersey Marina (~185 nm) \u00b7 outside via Cape Henry',seg:'nb-seg6',dotIdx:5},
+  {name:'Cape May NJ',next:'Nantucket direct (~225 nm, ~8 hrs at 30 kts) \u00b7 or Montauk then Nantucket',seg:'nb-seg7',dotIdx:6},
+  {name:'Montauk NY',next:'Nantucket MA (~105 nm) \u2014 easy finishing leg',seg:'nb-seg7',dotIdx:7}
 ];
 var SB_STOPS=[
   {name:'Nantucket MA',next:'Cape May direct (~225 nm) or Nantucket \u2192 Montauk (~105 nm) then Montauk \u2192 Cape May (~130 nm)',seg:'sb-seg0',dotIdx:0},
   {name:'Montauk NY',next:'Cape May South Jersey Marina (~130 nm)',seg:'sb-seg0',dotIdx:1},
   {name:'Cape May NJ',next:'Norfolk Waterside Marina (~185 nm) \u00b7 outside, exit Cape May ocean side',seg:'sb-seg1',dotIdx:2},
   {name:'Norfolk',next:'Coinjock overnight (~40 nm) \u00b7 bridge timing \u2014 use the planner above \u00b7 call ahead for prime rib',seg:'sb-seg2',dotIdx:3},
-  {name:'Coinjock',next:'Morehead City (~110 nm) \u00b7 inside via Pamlico Sound \u00b7 depart early',seg:'sb-seg3',dotIdx:4},
-  {name:'Morehead City',next:'Southport \u2014 South Harbour Village Marina (~75 nm) \u00b7 Masonboro Inlet',seg:'sb-seg4',dotIdx:5},
-  {name:'Southport',next:'Charleston \u2014 Harborage at Ashley Marina (~145 nm)',seg:'sb-seg5',dotIdx:6},
-  {name:'Charleston',next:'St. Augustine City Docks (~165 nm) then Palm Beach (~185 nm)',seg:'sb-seg6',dotIdx:7},
-  {name:'St. Augustine',next:'Palm Beach (~185 nm) \u2014 final leg, Gulf Stream following southbound',seg:'sb-seg6',dotIdx:8},
-  {name:'Palm Beach',next:'You are home \u2014 Palm Beach FL \ud83c\udfc1',seg:'sb-seg6',dotIdx:9}
+  {name:'Coinjock',next:'Southport area via Pamlico Sound (~110 nm) \u00b7 inside route \u00b7 depart early',seg:'sb-seg3',dotIdx:4},
+  {name:'Southport',next:'Charleston \u2014 Harborage at Ashley Marina (~145 nm)',seg:'sb-seg5',dotIdx:5},
+  {name:'Charleston',next:'St. Augustine City Docks (~165 nm) then Palm Beach (~185 nm)',seg:'sb-seg6',dotIdx:6},
+  {name:'St. Augustine',next:'Palm Beach (~185 nm) \u2014 final leg, Gulf Stream following southbound',seg:'sb-seg6',dotIdx:7},
+  {name:'Palm Beach',next:'You are home \u2014 Palm Beach FL \ud83c\udfc1',seg:'sb-seg6',dotIdx:8}
 ];
 
-function clearNbRoute(){for(var i=0;i<10;i++){var d=document.getElementById('nrd'+i);var l=document.getElementById('nrl'+i);if(d)d.classList.remove('dot-current');if(l)l.classList.remove('lbl-current');}}
-function clearSbRoute(){for(var i=0;i<10;i++){var d=document.getElementById('srd'+i);var l=document.getElementById('srl'+i);if(d)d.classList.remove('dot-current');if(l)l.classList.remove('lbl-current');}}
+function clearNbRoute(){for(var i=0;i<9;i++){var d=document.getElementById('nrd'+i);var l=document.getElementById('nrl'+i);if(d)d.classList.remove('dot-current');if(l)l.classList.remove('lbl-current');}}
+function clearSbRoute(){for(var i=0;i<9;i++){var d=document.getElementById('srd'+i);var l=document.getElementById('srl'+i);if(d)d.classList.remove('dot-current');if(l)l.classList.remove('lbl-current');}}
 
 window.nbSetStop=function(idx){
   nbCurrentStop=idx;
@@ -913,6 +993,14 @@ window.sbSetStop=function(idx){
 };
 
 // ── PASSAGE PLANNER ──────────────────────────────────────────
+window.toggleAlerts=function(){
+  var body=document.getElementById('alerts-body');
+  var chev=document.getElementById('alerts-chev');
+  if(!body)return;
+  var open=body.classList.contains('open');
+  body.classList.toggle('open',!open);
+  chev.classList.toggle('open',!open);
+};
 window.togglePlanner=function(){
   var body=document.getElementById('planner-body');
   var chev=document.getElementById('planner-chev');
@@ -932,8 +1020,7 @@ var NB_LEGS=[
   {nm:185,notes:'Heading to <strong>St. Augustine City Docks (~185 nm)</strong>. Gulf Stream close to shore between Palm Beach and Cape Canaveral &mdash; check offshore buoy 41047. St. Augustine bar: plan arrival near high tide.'},
   {nm:165,notes:'Heading to <strong>Charleston Harborage at Ashley Marina (~165 nm)</strong>. Brunswick/St. Simons GA (~130 nm) is your mid-leg backup. Check buoy 41004. Charleston tides: 5+ ft range, strong harbor current.'},
   {nm:145,notes:'Heading to <strong>Southport South Harbour Village Marina (~145 nm)</strong>. Easy day &mdash; call Bill Gregory at (910) 454-7486. Italian at the marina, Home Run Place north of the bridge.'},
-  {nm:110,notes:'Heading to <strong>Coinjock overnight (~110 nm)</strong>. Depart early &mdash; cross Pamlico before noon. <strong>Call Coinjock Marina (252) 453-3271 and order the prime rib before you arrive. East side of channel. Tip dock hands in cash.</strong>'},
-  {nm:75,notes:'Heading to <strong>Coinjock overnight (~75 nm)</strong>. Depart Morehead City early &mdash; cross Pamlico before noon. <strong>Call Coinjock Marina (252) 453-3271 and order the prime rib. East side. Tip dock hands in cash.</strong>'},
+  {nm:110,notes:'Heading to <strong>Coinjock overnight (~110 nm)</strong>. Transit Morehead City area, cross Pamlico Sound before noon. <strong>Call Coinjock Marina (252) 453-3271 and order the prime rib before you arrive. East side of channel. Tip dock hands in cash.</strong>'},
   {nm:40,notes:'Heading to <strong>Norfolk Waterside Marina (~40 nm)</strong>. Bridge timing &mdash; use the planner in this leg&rsquo;s section. Great Bridge Lock opens northbound on the hour. Elizabeth River: 6 kts from MM 8 to Waterside. Waterside: (757) 625-3625.'},
   {nm:185,notes:'Heading to <strong>Cape May South Jersey Marina (~185 nm)</strong>. Exit Cape Henry, run NE up the Delmarva coast, enter Cape May from the ocean on the east side. Check Chesapeake Light buoy 44100 and Delaware Bay buoy 44009. Top off fuel at South Jersey Marina (609) 884-2400.'},
   {nm:225,notes:'Heading to <strong>Nantucket (~225 nm, ~{hrs} hrs at {spd} kts)</strong>. Check NY Bight buoy 44025, Montauk buoy 44017, and Nantucket Sound buoy 44020. Depart at a normal hour &mdash; arrive mid-afternoon. If the window looks soft, <strong>Montauk (~130 nm) is your staging stop &mdash; overnight there, then 105 nm to Nantucket fresh.</strong>'},
@@ -944,8 +1031,7 @@ var SB_LEGS=[
   {nm:130,notes:'Heading to <strong>Cape May (~130 nm from Montauk)</strong>. Comfortable day run. Top off fuel at South Jersey Marina (609) 884-2400. Check Delaware Bay buoy 44009.'},
   {nm:185,notes:'Heading to <strong>Norfolk Waterside Marina (~185 nm)</strong>. Exit Cape May ocean side, run SW down the Delmarva coast, enter Hampton Roads via Cape Henry. Check Chesapeake Light buoy 44100. Waterside: (757) 625-3625.'},
   {nm:40,notes:'Heading to <strong>Coinjock overnight (~40 nm)</strong>. Bridge timing &mdash; use the planner in this leg&rsquo;s section. Southbound Great Bridge Lock opens at :30. Elizabeth River: 6 kts from MM 0 to lock. <strong>Call Coinjock Marina (252) 453-3271 and order the prime rib before you arrive.</strong>'},
-  {nm:110,notes:'Heading to <strong>Morehead City (~110 nm)</strong>. Depart Coinjock early &mdash; cross Albemarle then Pamlico Sound before noon. Check Pamlico Sound buoy 41036.'},
-  {nm:75,notes:'Heading to <strong>Southport South Harbour Village Marina (~75 nm)</strong>. Masonboro Inlet entry at mid-to-high tide. Check USCG D5 LNMs for shoaling. Bill Gregory at South Harbour: (910) 454-7486.'},
+  {nm:110,notes:'Heading south via <strong>Pamlico Sound (~110 nm to Southport area)</strong>. Depart Coinjock early &mdash; cross Albemarle then Pamlico Sound before noon. Transit Morehead City area, exit Masonboro Inlet, on to Southport. Check Pamlico Sound buoy 41036.'},
   {nm:145,notes:'Heading to <strong>Charleston Harborage at Ashley Marina (~145 nm)</strong>. Easy outside run. Call ahead: (843) 722-1996. Strong harbor current on arrival &mdash; check Charleston tides.'},
   {nm:165,notes:'Heading to <strong>St. Augustine City Docks (~165 nm)</strong> then Palm Beach (~185 nm more). Call City Docks ahead: (904) 825-1026. St. Augustine bar: time arrival near high tide southbound too.'},
   {nm:185,notes:'Final leg to <strong>Palm Beach (~185 nm)</strong>. Gulf Stream following seas can make this a fast southbound run. Check offshore buoy 41047.'},
@@ -978,8 +1064,8 @@ function updatePlanner(){
 }
 
 // ── PASSAGE WEATHER BUTTON ───────────────────────────────────
-var NB_PW=['https://www.passageweather.com/maps/florida/m_region.htm','https://www.passageweather.com/maps/florida/m_region.htm','https://www.passageweather.com/maps/chesdel/m_region.htm','https://www.passageweather.com/maps/chesdel/m_region.htm','https://www.passageweather.com/maps/chesdel/m_region.htm','https://www.passageweather.com/maps/chesdel/m_region.htm','https://www.passageweather.com/maps/chesdel/m_region.htm','https://www.passageweather.com/maps/bermuda/m_region.htm','https://www.passageweather.com/maps/bermuda/m_region.htm'];
-var SB_PW=['https://www.passageweather.com/maps/bermuda/m_region.htm','https://www.passageweather.com/maps/bermuda/m_region.htm','https://www.passageweather.com/maps/bermuda/m_region.htm','https://www.passageweather.com/maps/chesdel/m_region.htm','https://www.passageweather.com/maps/chesdel/m_region.htm','https://www.passageweather.com/maps/chesdel/m_region.htm','https://www.passageweather.com/maps/chesdel/m_region.htm','https://www.passageweather.com/maps/florida/m_region.htm','https://www.passageweather.com/maps/florida/m_region.htm','https://www.passageweather.com/maps/florida/m_region.htm'];
+var NB_PW=['https://www.passageweather.com/maps/florida/m_region.htm','https://www.passageweather.com/maps/florida/m_region.htm','https://www.passageweather.com/maps/chesdel/m_region.htm','https://www.passageweather.com/maps/chesdel/m_region.htm','https://www.passageweather.com/maps/chesdel/m_region.htm','https://www.passageweather.com/maps/chesdel/m_region.htm','https://www.passageweather.com/maps/bermuda/m_region.htm','https://www.passageweather.com/maps/bermuda/m_region.htm'];
+var SB_PW=['https://www.passageweather.com/maps/bermuda/m_region.htm','https://www.passageweather.com/maps/bermuda/m_region.htm','https://www.passageweather.com/maps/bermuda/m_region.htm','https://www.passageweather.com/maps/chesdel/m_region.htm','https://www.passageweather.com/maps/chesdel/m_region.htm','https://www.passageweather.com/maps/chesdel/m_region.htm','https://www.passageweather.com/maps/florida/m_region.htm','https://www.passageweather.com/maps/florida/m_region.htm','https://www.passageweather.com/maps/florida/m_region.htm'];
 window.openPW=function(){
   var idx=currentDir==='nb'?nbCurrentStop:sbCurrentStop;
   var urls=currentDir==='nb'?NB_PW:SB_PW;
